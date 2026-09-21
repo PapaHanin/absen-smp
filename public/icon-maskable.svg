@@ -1,0 +1,91 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="50%" stop-color="#043328" />
+      <stop offset="100%" stop-color="#021c16" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Full Bleed Background (no rounded corners for maskable, to fill any arbitrary crop shape) -->
+  <rect width="512" height="512" fill="url(#bgGrad)" />
+
+  <!-- Inner Safe Zone Guide: 80% circle (radius ~ 204) -->
+  <!-- Outer Golden Border Ring inside safe zone -->
+  <circle cx="256" cy="256" r="185" stroke="url(#goldGrad)" stroke-width="6" opacity="0.9" />
+
+  <!-- Central Crest scaled down by safe zone (3.2x instead of 4x) -->
+  <g filter="url(#dropShadow)" transform="translate(96, 78) scale(3.2)">
+    <!-- 1. Belimbing Segi Lima -->
+    <path
+      d="M50 4 L94 36 L77 88 L23 88 L6 36 Z"
+      fill="#ffffff"
+      stroke="#d97706"
+      stroke-width="3.5"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M50 8 L90 37 L74 84 L26 84 L10 37 Z"
+      fill="none"
+      stroke="#0284c7"
+      stroke-width="2"
+      stroke-linejoin="round"
+    />
+
+    <!-- 2. Sayap Garuda -->
+    <path
+      d="M50 50 C40 42 22 45 16 56 C24 55 35 56 46 64 C35 63 22 66 18 73 C28 71 38 72 48 76 C40 76 28 80 26 83 C36 82 44 80 50 78 Z"
+      fill="#eab308"
+      opacity="0.95"
+    />
+    <path
+      d="M50 50 C60 42 78 45 84 56 C76 55 65 56 54 64 C65 63 78 66 82 73 C72 71 62 72 52 76 C60 76 72 80 74 83 C64 82 56 80 50 78 Z"
+      fill="#eab308"
+      opacity="0.95"
+    />
+
+    <!-- 3. Ekor Garuda -->
+    <path
+      d="M44 76 L44 86 L50 84 L56 86 L56 76 Z"
+      fill="#0284c7"
+    />
+
+    <!-- 4. Buku Terbuka -->
+    <path
+      d="M50 63 C44 59 36 60 30 63 L30 71 C36 68 44 67 50 70 C56 67 64 68 70 71 L70 63 C64 60 56 59 50 63 Z"
+      fill="#ffffff"
+      stroke="#0284c7"
+      stroke-width="2"
+      stroke-linejoin="round"
+    />
+    <line x1="50" y1="63" x2="50" y2="70" stroke="#0284c7" stroke-width="1.5" />
+
+    <!-- 5. Belencong / Api Menyala -->
+    <path
+      d="M50 22 C48 30 42 34 42 40 C42 46 46 50 50 50 C54 50 58 46 58 40 C58 34 52 30 50 22 Z"
+      fill="#dc2626"
+    />
+    <path
+      d="M50 28 C49 33 46 36 46 41 C46 44 48 47 50 47 C52 47 54 44 54 41 C54 36 51 33 50 28 Z"
+      fill="#f59e0b"
+    />
+    <path
+      d="M43 50 L57 50 L54 56 L46 56 Z"
+      fill="#0284c7"
+    />
+  </g>
+
+  <!-- Bottom Badge within safe zone -->
+  <g transform="translate(116, 386)">
+    <rect x="0" y="0" width="280" height="34" rx="17" fill="#043328" stroke="url(#goldGrad)" stroke-width="2.5" />
+    <text x="140" y="23" text-anchor="middle" fill="#fef08a" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="16" letter-spacing="2">SDI 2 ULATAN</text>
+  </g>
+</svg>
