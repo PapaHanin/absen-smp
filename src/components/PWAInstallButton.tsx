@@ -26,7 +26,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
             </div>
             <div>
               <h4 className="font-bold text-sm">Aplikasi Telah Terpasang (PWA)</h4>
-              <p className="text-xs text-emerald-700 dark:text-emerald-300">Aplikasi SD INPRES 2 ULATAN berjalan sebagai aplikasi native standalone.</p>
+              <p className="text-xs text-emerald-700 dark:text-emerald-300">Aplikasi SMP NEGERI SATAP 4 PALASA berjalan sebagai aplikasi native standalone.</p>
             </div>
           </div>
           <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-200 dark:bg-emerald-800 text-emerald-900 dark:text-emerald-100">
@@ -56,7 +56,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
         <button
           type="button"
           onClick={handleClick}
-          title="Install Aplikasi SD INPRES 2 ULATAN ke HP / Komputer"
+          title="Install Aplikasi SMP NEGERI SATAP 4 PALASA ke HP / Komputer"
           className={`group flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold shadow-xs transition-all duration-200 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-100 border border-emerald-500/40 hover:border-emerald-400 active:scale-95 ${className}`}
         >
           <div className="relative">

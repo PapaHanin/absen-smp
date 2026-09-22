@@ -605,28 +605,22 @@ export async function deleteBehaviorLogFromFirestore(logId: string): Promise<voi
  * Seeds initial database data if Firestore is currently completely empty
  */
 export async function seedInitialFirestoreDataIfEmpty(
-  initialStudents: Student[],
+  _initialStudents: Student[],
   initialTeachers: Teacher[],
   defaultSettings: SystemSettings,
-  initialAttendance: AttendanceRecord[]
+  _initialAttendance: AttendanceRecord[]
 ): Promise<void> {
   try {
-    const studentsSnap = await getDocs(collection(db, COLLECTIONS.STUDENTS));
-    if (studentsSnap.empty) {
-      console.log('Seeding initial students to Firestore...');
+    const teachersSnap = await getDocs(collection(db, COLLECTIONS.TEACHERS));
+    if (teachersSnap.empty) {
+      console.log('Seeding initial teachers and settings to Firestore...');
       const batch = writeBatch(db);
-      initialStudents.forEach((std) => {
-        batch.set(doc(db, COLLECTIONS.STUDENTS, std.id), std);
-      });
       initialTeachers.forEach((tch) => {
         batch.set(doc(db, COLLECTIONS.TEACHERS, tch.id), tch);
       });
       batch.set(doc(db, COLLECTIONS.SETTINGS, 'school'), defaultSettings);
-      initialAttendance.forEach((att) => {
-        batch.set(doc(db, COLLECTIONS.ATTENDANCE, att.id), att);
-      });
       await batch.commit();
-      console.log('Initial Firestore database seeded successfully!');
+      console.log('Initial teachers and settings seeded successfully!');
     }
   } catch (error) {
     console.warn('Could not check or seed Firestore (running in offline/local fallback mode):', error);
@@ -781,7 +775,7 @@ export async function batchSyncERaporRecapsToFirestore(
 ): Promise<{ success: boolean; count: number; studentCount: number; destinationDb: string; isConnectedToIIHBeres: boolean }> {
   const targetDb = getIIHHBeresFirestoreInstance();
   const targetDbId = getCustomIIHHBeresDatabaseId();
-  const destinationName = targetDb ? targetDbId : 'SD Inpres 2 Ulatan (Database Mandiri)';
+  const destinationName = targetDb ? targetDbId : 'SMP NEGERI SATAP 4 PALASA (Database Mandiri)';
 
   if (recaps.length === 0) {
     return {

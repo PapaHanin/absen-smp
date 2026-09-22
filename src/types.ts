@@ -3,9 +3,9 @@ export type AttendanceStatus = 'Hadir' | 'Terlambat' | 'Izin' | 'Sakit' | 'Alpa'
 export type Gender = 'Laki-laki' | 'Perempuan';
 
 export interface School {
-  id: string; // unique slug e.g. 'sd-inpres-2-ulatan', 'sdn-1-banggai'
-  code: string; // unique short code e.g. 'ULATAN2', 'SDN1BGI'
-  name: string; // e.g. 'SD INPRES 2 ULATAN'
+  id: string; // unique slug e.g. 'smp-satap-4-palasa', 'sdn-1-banggai'
+  code: string; // unique short code e.g. 'SATAP4', 'SMP4PLS'
+  name: string; // e.g. 'SMP NEGERI SATAP 4 PALASA'
   address: string;
   city?: string;
   academicYear: string;

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Student, AttendanceRecord, AttendanceStatus, SystemSettings, Teacher, ScheduledLeave, BehaviorLog } from '../types';
+import { Student, AttendanceRecord, AttendanceStatus, SystemSettings, Teacher, ScheduledLeave, BehaviorLog, LessonPeriod } from '../types';
 import { openWhatsAppNotification } from '../utils/whatsapp';
 import { generateAttendancePDFReport, generateMonthlyAttendancePDFReport } from '../utils/pdf';
 import { AttendanceTrendChart } from './AttendanceTrendChart';
@@ -33,6 +33,7 @@ interface DashboardTabProps {
   onSaveBehaviorLog?: (log: BehaviorLog) => void;
   onDeleteBehaviorLog?: (logId: string) => void;
   onOpenLessonSchedule?: () => void;
+  periods?: LessonPeriod[];
 }
 
 export const DashboardTab: React.FC<DashboardTabProps> = ({
@@ -45,6 +46,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
   settings,
   teachers = [],
   currentTeacher,
+  periods = [],
   onAddManualAttendance,
   onDeleteRecord,
   onUpdateAttendanceRecord,
@@ -57,6 +59,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
   const isAdmin = currentTeacher?.role === 'admin' || currentTeacher?.teacherType === 'admin';
   const isWaliKelas = !isAdmin && (currentTeacher?.teacherType === 'wali_kelas' || Boolean(currentTeacher?.homeroomClass));
   const myHomeroom = currentTeacher?.homeroomClass;
+  const isGuruMapel = !isAdmin && (currentTeacher?.teacherType === 'guru_mapel' || (!isWaliKelas && Boolean(currentTeacher?.subject)));
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedClass, setSelectedClass] = useState<string>(() => {
@@ -64,11 +67,28 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
     return 'Semua';
   });
   const [selectedStatus, setSelectedStatus] = useState<string>('Semua');
-  const [selectedTeacherFilter, setSelectedTeacherFilter] = useState<string>('Semua');
-  const [selectedTypeFilter, setSelectedTypeFilter] = useState<'Semua' | 'harian' | 'mapel'>('Semua');
+  const [selectedTeacherFilter, setSelectedTeacherFilter] = useState<string>(() => {
+    if (isGuruMapel && currentTeacher?.id) return currentTeacher.id;
+    return 'Semua';
+  });
+  const [selectedTypeFilter, setSelectedTypeFilter] = useState<'Semua' | 'harian' | 'mapel'>(() => {
+    if (isGuruMapel) return 'mapel';
+    return 'Semua';
+  });
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [exportAlertMessage, setExportAlertMessage] = useState<string | null>(null);
+
+  // Active target teacher for recap & filter (defaults to current teacher if Guru Mapel, or filter selection)
+  const activeRecapTeacher = useMemo(() => {
+    if (selectedTeacherFilter !== 'Semua') {
+      return teachers.find((t) => t.id === selectedTeacherFilter) || currentTeacher || null;
+    }
+    if (isGuruMapel) {
+      return currentTeacher || null;
+    }
+    return null;
+  }, [selectedTeacherFilter, isGuruMapel, teachers, currentTeacher]);
 
   // New Features Modals State
   const [isAutoAbsenteeOpen, setIsAutoAbsenteeOpen] = useState(false);
@@ -86,6 +106,32 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
   // Filter mode state: 'daily' | 'range' | 'monthly'
   const [filterMode, setFilterMode] = useState<'daily' | 'range' | 'monthly'>('daily');
   const [startDate, setStartDate] = useState<string>(selectedDate);
+
+  // Helper to resolve display time for mapel and daily attendance
+  const resolveDisplayTime = (record: AttendanceRecord): string => {
+    if (record.attendanceType === 'mapel') {
+      // 1. If periodName contains time range (e.g. 08:00 - 08:45)
+      if (record.periodName) {
+        const matched = record.periodName.match(/(\d{2}[:.]\d{2})/);
+        if (matched) return matched[1].replace('.', ':');
+      }
+      // 2. If periodNumber matches a period in periods
+      if (record.periodNumber && periods && periods.length > 0) {
+        const p = periods.find((item) => item.periodNumber === record.periodNumber);
+        if (p?.startTime) return p.startTime;
+      }
+      // 3. Fallback to record.time if present
+      if (record.time) {
+        return record.time.slice(0, 5);
+      }
+      return '08:00';
+    }
+    // Harian
+    if (record.time) {
+      return record.time.slice(0, 5);
+    }
+    return '-';
+  };
   const [endDate, setEndDate] = useState<string>(selectedDate);
   const [monthPicker, setMonthPicker] = useState<string>(() => selectedDate.slice(0, 7));
   const [monthlyViewMode, setMonthlyViewMode] = useState<'summary' | 'logs'>('summary');
@@ -113,14 +159,24 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
     const monthRecords = attendanceRecords.filter((r) => {
       if (!r.date.startsWith(monthPicker)) return false;
       if (activeClass !== 'Semua') {
-        return isHomeroomClassMatch(r.classRoom, activeClass) || r.classRoom === activeClass;
+        const matchClass = isHomeroomClassMatch(r.classRoom, activeClass) || r.classRoom === activeClass;
+        if (!matchClass) return false;
+      }
+      if (activeRecapTeacher) {
+        const resolved = resolveRecordTeacher(r, teachers, students, currentTeacher);
+        const matchTeacher =
+          r.teacherId === activeRecapTeacher.id ||
+          resolved.name.toLowerCase().trim() === activeRecapTeacher.name.toLowerCase().trim() ||
+          (r.teacherName && r.teacherName.toLowerCase().trim() === activeRecapTeacher.name.toLowerCase().trim()) ||
+          (activeRecapTeacher.subject && (r.subject === activeRecapTeacher.subject || r.teacherSubject?.includes(activeRecapTeacher.subject)));
+        if (!matchTeacher) return false;
       }
       return true;
     });
 
     const uniqueDates = new Set(monthRecords.map((r) => r.date));
-    return uniqueDates.size > 0 ? uniqueDates.size : 20;
-  }, [attendanceRecords, monthPicker, activeClass]);
+    return uniqueDates.size > 0 ? uniqueDates.size : (activeRecapTeacher ? 4 : 20);
+  }, [attendanceRecords, monthPicker, activeClass, activeRecapTeacher, teachers, students, currentTeacher]);
 
   // Uniform effective school days (can be adjusted by user)
   const effectiveSchoolDays = customEffectiveDays !== null ? customEffectiveDays : detectedEffectiveDays;
@@ -321,9 +377,24 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
     });
 
     return classStudents.map((s) => {
-      const recordsInMonth = attendanceRecords.filter(
-        (r) => r.date.startsWith(monthPicker) && (r.studentId === s.id || r.nis === s.nis)
-      );
+      const recordsInMonth = attendanceRecords.filter((r) => {
+        if (!r.date.startsWith(monthPicker)) return false;
+        if (r.studentId !== s.id && r.nis !== s.nis) return false;
+        if (activeRecapTeacher) {
+          const resolved = resolveRecordTeacher(r, teachers, students, currentTeacher);
+          const matchTeacher =
+            r.teacherId === activeRecapTeacher.id ||
+            resolved.name.toLowerCase().trim() === activeRecapTeacher.name.toLowerCase().trim() ||
+            (r.teacherName && r.teacherName.toLowerCase().trim() === activeRecapTeacher.name.toLowerCase().trim()) ||
+            (activeRecapTeacher.subject && (r.subject === activeRecapTeacher.subject || r.teacherSubject?.includes(activeRecapTeacher.subject)));
+          if (!matchTeacher) return false;
+        }
+        if (selectedTypeFilter !== 'Semua') {
+          const matchType = selectedTypeFilter === 'mapel' ? r.attendanceType === 'mapel' : r.attendanceType !== 'mapel';
+          if (!matchType) return false;
+        }
+        return true;
+      });
 
       let sakit = recordsInMonth.filter((r) => r.status === 'Sakit').length;
       let izin = recordsInMonth.filter((r) => r.status === 'Izin').length;
@@ -380,7 +451,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         percentage,
       };
     });
-  }, [filterMode, activeClass, students, searchTerm, attendanceRecords, monthPicker, scheduledLeaves, effectiveSchoolDays]);
+  }, [filterMode, activeClass, students, searchTerm, attendanceRecords, monthPicker, scheduledLeaves, effectiveSchoolDays, activeRecapTeacher, selectedTypeFilter, teachers, currentTeacher]);
 
   const handleExportPDF = () => {
     const hrTeacher = findHomeroomTeacher(teachers, activeClass, currentTeacher);
@@ -389,6 +460,43 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
       nip: settings.headmasterNip,
     };
     const adminTch = teachers.find((t) => t.teacherType === 'admin' || t.role === 'admin') || currentTeacher;
+
+    // Resolve teacher title, name, nip for PDF signature
+    const fullTeacher: Teacher | null =
+      activeRecapTeacher ||
+      (currentTeacher?.role !== 'admin' ? currentTeacher : null) ||
+      currentTeacher ||
+      (adminTch && 'teacherType' in adminTch ? (adminTch as Teacher) : null);
+
+    let exportTeacherTitle = 'Guru Mata Pelajaran';
+    let exportTeacherName = '( ........................................ )';
+    let exportTeacherNip: string | undefined = undefined;
+
+    if (fullTeacher) {
+      exportTeacherName = fullTeacher.name?.trim() || '( ........................................ )';
+      exportTeacherNip = fullTeacher.nip;
+
+      if (fullTeacher.subject) {
+        exportTeacherTitle = `Guru Mata Pelajaran ${fullTeacher.subject}`;
+      } else if (fullTeacher.teacherType === 'guru_mapel') {
+        exportTeacherTitle = 'Guru Mata Pelajaran';
+      } else if (fullTeacher.teacherType === 'wali_kelas' || fullTeacher.homeroomClass) {
+        const cls = fullTeacher.homeroomClass || (activeClass !== 'Semua' ? activeClass : '');
+        exportTeacherTitle = `Wali Kelas ${cls}`.trim();
+      } else if (fullTeacher.role === 'admin' || fullTeacher.teacherType === 'admin') {
+        exportTeacherTitle = activeClass !== 'Semua'
+          ? (hrTeacher?.classLabel || `Wali Kelas ${activeClass}`)
+          : 'Koordinator Presensi / Tenaga Administrasi';
+      }
+    } else if (activeClass !== 'Semua' && hrTeacher) {
+      exportTeacherTitle = hrTeacher.classLabel || `Wali Kelas ${activeClass}`;
+      exportTeacherName = hrTeacher.name?.trim() || '( ........................................ )';
+      exportTeacherNip = hrTeacher.nip;
+    } else {
+      exportTeacherTitle = 'Koordinator Presensi / Tenaga Administrasi';
+      exportTeacherName = adminTch?.name?.trim() || 'MOH. FADLI';
+      exportTeacherNip = adminTch?.nip || '199903202025211020';
+    }
 
     if (filterMode === 'monthly') {
       if (!monthlyStudentRecaps || monthlyStudentRecaps.length === 0) {
@@ -404,6 +512,10 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         homeroomTeacher: hrTeacher,
         headmaster: hm,
         adminTeacher: adminTch ? { name: adminTch.name, nip: adminTch.nip } : undefined,
+        currentTeacher,
+        teacherTitle: exportTeacherTitle,
+        teacherName: exportTeacherName,
+        teacherNip: exportTeacherNip,
       });
       return;
     }
@@ -421,6 +533,11 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
       stats,
       homeroomTeacher: hrTeacher,
       headmaster: hm,
+      adminTeacher: adminTch ? { name: adminTch.name, nip: adminTch.nip } : undefined,
+      currentTeacher,
+      teacherTitle: exportTeacherTitle,
+      teacherName: exportTeacherName,
+      teacherNip: exportTeacherNip,
     });
   };
 
@@ -1381,7 +1498,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                         {filterMode !== 'daily' && (
                           <td className="py-3 px-4 font-mono font-semibold text-slate-600 dark:text-slate-400">{record.date}</td>
                         )}
-                        <td className="py-3 px-4 font-mono font-bold text-indigo-700 dark:text-indigo-400">{record.time} WIB</td>
+                        <td className="py-3 px-4 font-mono font-bold text-indigo-700 dark:text-indigo-400">{resolveDisplayTime(record)} WIB</td>
                         <td className="py-3 px-4">{getStatusBadge(record.status)}</td>
                         <td className="py-3 px-4">
                           {record.attendanceType === 'mapel' ? (
@@ -1796,6 +1913,9 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
             nip: settings.headmasterNip,
           }}
           adminTeacher={teachers.find((t) => t.teacherType === 'admin' || t.role === 'admin') || currentTeacher}
+          currentTeacher={currentTeacher}
+          selectedTeacher={activeRecapTeacher}
+          subjectName={activeRecapTeacher?.subject || currentTeacher?.subject}
         />
       )}
     </div>

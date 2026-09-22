@@ -363,9 +363,9 @@ export const drawCustomizedCardPDF = (
   if (rawTpl === 'nusantara') templateId = 'emerald_gold';
   if (rawTpl === 'pelita') templateId = 'modern_minimalis';
 
-  const finalSchoolName = (schoolName || settings?.schoolName || 'SD INPRES 2 ULATAN').toUpperCase();
-  const schoolCity = settings?.schoolCity || 'Paser';
-  const schoolRegency = settings?.schoolRegency || (schoolCity ? `PEMERINTAH KABUPATEN ${schoolCity.toUpperCase()}` : 'PEMERINTAH KABUPATEN PASER');
+  const finalSchoolName = (schoolName || settings?.schoolName || 'SMP NEGERI SATAP 4 PALASA').toUpperCase();
+  const schoolCity = settings?.schoolCity || 'Parigi Moutong';
+  const schoolRegency = settings?.schoolRegency || (schoolCity ? `PEMERINTAH KABUPATEN ${schoolCity.toUpperCase()}` : 'PEMERINTAH KABUPATEN PARIGI MOUTONG');
   const schoolDepartment = settings?.schoolDepartment || 'DINAS PENDIDIKAN DAN KEBUDAYAAN';
   const cardTitle = settings?.cardTitle || 'KARTU TANDA SISWA & PRESENSI DIGITAL';
   const cardValidityText = settings?.cardValidityText || 'KARTU RESMI PELAJAR • BERLAKU SELAMA MENJADI SISWA';

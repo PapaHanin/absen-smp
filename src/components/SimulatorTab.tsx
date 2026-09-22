@@ -678,17 +678,17 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
             <div className="bento-card border-rose-200 bg-rose-50/30 space-y-3">
               <h3 className="text-sm font-extrabold text-rose-700 flex items-center gap-2">
                 <i className="fa-solid fa-triangle-exclamation"></i>
-                <span>Reset Data ke Awal (Demo)</span>
+                <span>Reset Database</span>
               </h3>
               <p className="text-xs text-slate-500">
-                Mengembalikan seluruh data siswa dan riwayat absensi ke data dummy sampel awal.
+                Mereset data absensi dan pengaturan ke nilai awal.
               </p>
               <button
                 type="button"
                 onClick={() => setShowResetConfirm(true)}
                 className="w-full py-2 bg-rose-100 hover:bg-rose-600 text-rose-800 hover:text-white border border-rose-200 font-bold text-xs rounded-xl cursor-pointer transition-all"
               >
-                Reset Data Sampel
+                Reset Database
               </button>
             </div>
           ) : (
@@ -715,7 +715,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
             <div className="space-y-1">
               <h4 className="text-base font-extrabold text-slate-900 dark:text-white">Reset Database</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400">
-                Apakah Anda yakin ingin mereset seluruh data absensi dan data siswa kembali ke data sampel awal?
+                Apakah Anda yakin ingin mereset riwayat absensi dan pengaturan sistem?
               </p>
             </div>
             <div className="flex gap-2 pt-2">

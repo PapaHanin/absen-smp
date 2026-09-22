@@ -216,7 +216,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                 <p className="text-xs text-emerald-200/90 mt-1 flex items-center gap-2 flex-wrap">
                   <span>
                     <i className="fa-regular fa-building mr-1"></i>
-                    {settings.schoolName || 'SD Inpres 2 Ulatan'}
+                    {settings.schoolName || 'SMP NEGERI SATAP 4 PALASA'}
                   </span>
                 </p>
               </div>

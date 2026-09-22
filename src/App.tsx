@@ -21,6 +21,9 @@ import {
   DEFAULT_PRIMARY_SCHOOL_ID,
   getTodayDateString,
   generateInitialAttendance,
+  isDummyStudent,
+  isDummyAttendance,
+  DUMMY_STUDENT_IDS,
 } from './data/initialData';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -36,7 +39,7 @@ import { AdminProfileModal } from './components/AdminProfileModal';
 import { CloudSyncModal } from './components/CloudSyncModal';
 import { DapodikAnnouncementModal, CURRENT_ANNOUNCEMENT_VERSION } from './components/DapodikAnnouncementModal';
 import { LessonScheduleModal } from './components/LessonScheduleModal';
-import { DEFAULT_LESSON_PERIODS, DEFAULT_WEEKLY_SCHEDULE } from './data/lessonSchedule';
+import { DEFAULT_LESSON_PERIODS, DEFAULT_WEEKLY_SCHEDULE, matchTeacherSubject } from './data/lessonSchedule';
 import { LessonPeriod, SubjectScheduleItem } from './types';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { testFirestoreConnection } from './firebase';
@@ -144,7 +147,7 @@ export default function App() {
     }
   });
 
-  // Students state with safe JSON parse
+  // Students state with safe JSON parse and dummy data removal
   const [students, setStudents] = useState<Student[]>(() => {
     try {
       if (safeGetItem('absensi_siswa_students_v1')) {
@@ -153,39 +156,13 @@ export default function App() {
       }
 
       const saved = safeGetItem(LOCAL_STORAGE_KEYS.STUDENTS);
-      let parsed: Student[] = saved ? JSON.parse(saved) : INITIAL_STUDENTS;
+      const parsed: Student[] = saved ? JSON.parse(saved) : [];
 
-      // If previous students in local storage are SD students, upgrade to SMP students
-      if (
-        parsed &&
-        parsed.length > 0 &&
-        parsed.every((s) => ['Kelas 1', 'Kelas 2', 'Kelas 3', 'Kelas 4', 'Kelas 5', 'Kelas 6'].includes(s.classRoom))
-      ) {
-        parsed = INITIAL_STUDENTS;
-      }
-
-      const filtered = parsed.filter(
-        (s) =>
-          ![
-            'std-1001',
-            'std-1002',
-            'std-1003',
-            'std-1004',
-            'std-1005',
-            'std-1006',
-            'std-1007',
-            'std-1008',
-            'std-1009',
-            'std-1010',
-            'std-1011',
-            'std-1012',
-            'std-1013',
-            'std-1014',
-          ].includes(s.id)
-      );
+      // Filter out all dummy students so only user-uploaded students remain
+      const filtered = parsed.filter((s) => !isDummyStudent(s));
 
       const seenIds = new Set<string>();
-      return filtered.map((s, index) => {
+      const result = filtered.map((s, index) => {
         let uniqueId = s.id;
         if (!uniqueId || seenIds.has(uniqueId)) {
           uniqueId = `std-${Date.now()}-${index}-${Math.random().toString(36).substring(2, 8)}`;
@@ -193,9 +170,13 @@ export default function App() {
         seenIds.add(uniqueId);
         return { ...s, id: uniqueId };
       });
+
+      // Synchronize cleaned list back to localStorage immediately
+      safeSetItem(LOCAL_STORAGE_KEYS.STUDENTS, JSON.stringify(result));
+      return result;
     } catch (e) {
       console.warn('Failed to parse students from localStorage:', e);
-      return INITIAL_STUDENTS;
+      return [];
     }
   });
 
@@ -203,39 +184,28 @@ export default function App() {
   const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>(() => {
     try {
       const saved = safeGetItem(LOCAL_STORAGE_KEYS.ATTENDANCE);
-      let parsed: AttendanceRecord[] = saved ? JSON.parse(saved) : generateInitialAttendance(todayStr);
+      const parsed: AttendanceRecord[] = saved ? JSON.parse(saved) : [];
 
-      // If previous records are purely SD classes, refresh to SMP
-      if (
-        parsed &&
-        parsed.length > 0 &&
-        parsed.every((r) => ['Kelas 1', 'Kelas 2', 'Kelas 3', 'Kelas 4', 'Kelas 5', 'Kelas 6'].includes(r.classRoom))
-      ) {
-        parsed = generateInitialAttendance(todayStr);
-      }
+      let filtered = parsed.filter((r) => !isDummyAttendance(r));
 
-      return parsed.filter(
-        (r) =>
-          ![
-            'std-1001',
-            'std-1002',
-            'std-1003',
-            'std-1004',
-            'std-1005',
-            'std-1006',
-            'std-1007',
-            'std-1008',
-            'std-1009',
-            'std-1010',
-            'std-1011',
-            'std-1012',
-            'std-1013',
-            'std-1014',
-          ].includes(r.studentId)
-      );
+      // Normalize mapel attendance times to the scheduled period start time (e.g. 08:00 for Jam Ke-2)
+      filtered = filtered.map((rec) => {
+        if (rec.attendanceType === 'mapel') {
+          if (rec.periodName) {
+            const matchTime = rec.periodName.match(/(\d{2}[:.]\d{2})/);
+            if (matchTime) {
+              return { ...rec, time: matchTime[1].replace('.', ':') };
+            }
+          }
+        }
+        return rec;
+      });
+
+      safeSetItem(LOCAL_STORAGE_KEYS.ATTENDANCE, JSON.stringify(filtered));
+      return filtered;
     } catch (e) {
       console.warn('Failed to parse attendance from localStorage:', e);
-      return generateInitialAttendance(todayStr);
+      return [];
     }
   });
 
@@ -518,12 +488,12 @@ export default function App() {
       console.warn('Firestore connection notice:', err);
     });
 
-    // Seed initial data to Firestore if completely empty
+    // Seed initial data to Firestore if completely empty (without dummy students)
     seedInitialFirestoreDataIfEmpty(
-      INITIAL_STUDENTS,
+      [],
       INITIAL_TEACHERS,
       DEFAULT_SETTINGS,
-      generateInitialAttendance(todayStr)
+      []
     ).catch((err) => {
       console.warn('Firestore initial data check notice:', err);
     });
@@ -531,6 +501,11 @@ export default function App() {
     // Ensure super admin PIN is synced to Hanin231221
     saveTeacherToFirestore({ ...INITIAL_TEACHERS[0], pin: 'Hanin231221' }).catch((err) => {
       console.warn('Super admin PIN sync notice:', err);
+    });
+
+    // Cleanse all dummy student IDs from Firestore in background
+    bulkDeleteStudentsFromFirestore(Array.from(DUMMY_STUDENT_IDS)).catch((err) => {
+      console.warn('Purge dummy student IDs notice:', err);
     });
 
     // Seed initial schools if empty
@@ -571,11 +546,13 @@ export default function App() {
       if (remoteAttendance && remoteAttendance.length > 0) {
         setAttendanceRecords((prev) => {
           const map = new Map<string, AttendanceRecord>();
-          prev.forEach((r) => map.set(r.id, r));
-          remoteAttendance.forEach((r) => {
-            const normalized: AttendanceRecord = { ...r, schoolId: r.schoolId || DEFAULT_PRIMARY_SCHOOL_ID };
-            map.set(normalized.id, normalized);
-          });
+          prev.filter((r) => !isDummyAttendance(r)).forEach((r) => map.set(r.id, r));
+          remoteAttendance
+            .filter((r) => !isDummyAttendance(r))
+            .forEach((r) => {
+              const normalized: AttendanceRecord = { ...r, schoolId: r.schoolId || DEFAULT_PRIMARY_SCHOOL_ID };
+              map.set(normalized.id, normalized);
+            });
           const merged = Array.from(map.values());
           safeSetItem(LOCAL_STORAGE_KEYS.ATTENDANCE, JSON.stringify(merged));
           return merged;
@@ -585,10 +562,16 @@ export default function App() {
 
     fetchAllStudentsFromFirestore().then((remoteStudents) => {
       if (remoteStudents && remoteStudents.length > 0) {
+        const dummyRemote = remoteStudents.filter(isDummyStudent);
+        if (dummyRemote.length > 0) {
+          bulkDeleteStudentsFromFirestore(dummyRemote.map((s) => s.id)).catch(console.warn);
+        }
+
+        const cleanRemote = remoteStudents.filter((s) => !isDummyStudent(s));
         setStudents((prev) => {
           const map = new Map<string, Student>();
-          prev.forEach((s) => map.set(s.id, s));
-          remoteStudents.forEach((s) => {
+          prev.filter((s) => !isDummyStudent(s)).forEach((s) => map.set(s.id, s));
+          cleanRemote.forEach((s) => {
             const normalized: Student = { ...s, schoolId: s.schoolId || DEFAULT_PRIMARY_SCHOOL_ID };
             map.set(normalized.id, normalized);
           });
@@ -622,24 +605,31 @@ export default function App() {
     // Subscribe to Firestore collections in real-time with safe merge to avoid data wipes
     const unsubStudents = subscribeToStudents((fsStudents) => {
       if (!fsStudents || fsStudents.length === 0) return;
+      const dummyFs = fsStudents.filter(isDummyStudent);
+      if (dummyFs.length > 0) {
+        bulkDeleteStudentsFromFirestore(dummyFs.map((s) => s.id)).catch(console.warn);
+      }
+
+      const cleanFsStudents = fsStudents.filter((s) => !isDummyStudent(s));
       let missing: Student[] = [];
       setStudents((prev) => {
         const prevMap = new Map<string, Student>();
-        prev.forEach((s) => prevMap.set(s.id, s));
+        prev.filter((s) => !isDummyStudent(s)).forEach((s) => prevMap.set(s.id, s));
 
         // Update/insert from Firestore with normalized schoolId
-        fsStudents.forEach((s) => {
+        cleanFsStudents.forEach((s) => {
           const normalized: Student = { ...s, schoolId: s.schoolId || DEFAULT_PRIMARY_SCHOOL_ID };
           prevMap.set(normalized.id, normalized);
         });
 
-        missing = prev.filter((p) => !fsStudents.some((f) => f.id === p.id));
+        // Only consider non-dummy students as missing
+        missing = prev.filter((p) => !isDummyStudent(p) && !cleanFsStudents.some((f) => f.id === p.id));
         const merged = Array.from(prevMap.values());
         safeSetItem(LOCAL_STORAGE_KEYS.STUDENTS, JSON.stringify(merged));
         return merged;
       });
 
-      // Backfill to Firestore any students that exist locally but not yet in Firestore
+      // Backfill to Firestore any uploaded students that exist locally but not yet in Firestore
       if (missing.length > 0) {
         syncAllStudentsToFirestore(missing).catch((err) =>
           console.warn('Backfill students notice:', err)
@@ -649,12 +639,15 @@ export default function App() {
 
     const unsubAttendance = subscribeToAttendance((fsRecords) => {
       if (!fsRecords || fsRecords.length === 0) return;
+      const cleanFsRecords = fsRecords.filter((r) => !isDummyAttendance(r));
       let missing: AttendanceRecord[] = [];
       setAttendanceRecords((prev) => {
         const prevMap = new Map<string, AttendanceRecord>();
-        prev.forEach((r) => prevMap.set(r.id, r));
+        prev
+          .filter((r) => !isDummyAttendance(r))
+          .forEach((r) => prevMap.set(r.id, r));
 
-        fsRecords.forEach((r) => {
+        cleanFsRecords.forEach((r) => {
           const raw = (r.teacherName || '').trim().toLowerCase();
           let record: AttendanceRecord = { ...r, schoolId: r.schoolId || DEFAULT_PRIMARY_SCHOOL_ID };
           if (
@@ -675,7 +668,11 @@ export default function App() {
           prevMap.set(record.id, record);
         });
 
-        missing = prev.filter((p) => !fsRecords.some((f) => f.id === p.id));
+        missing = prev.filter(
+          (p) =>
+            !isDummyAttendance(p) &&
+            !cleanFsRecords.some((f) => f.id === p.id)
+        );
         const merged = Array.from(prevMap.values());
         safeSetItem(LOCAL_STORAGE_KEYS.ATTENDANCE, JSON.stringify(merged));
         return merged;
@@ -770,15 +767,40 @@ export default function App() {
     []
   );
 
+  // Synchronize scanner mode and subject automatically whenever current teacher changes
+  useEffect(() => {
+    if (currentTeacher && currentTeacher.role !== 'admin' && currentTeacher.subject) {
+      const matched = matchTeacherSubject(currentTeacher.subject) || currentTeacher.subject;
+      if (matched) {
+        setSelectedSubjectForScanner(matched);
+        setScannerModeOverride('mapel');
+      }
+      if (currentTeacher.homeroomClass) {
+        setSelectedClassForScanner(currentTeacher.homeroomClass);
+      }
+    }
+  }, [currentTeacher]);
+
   // Teacher Login Handler
   const handleTeacherLogin = (teacher: Teacher) => {
     setCurrentTeacher(teacher);
     safeSetItem(LOCAL_STORAGE_KEYS.CURRENT_TEACHER, JSON.stringify(teacher));
     setIsLoginModalOpen(false);
 
+    if (teacher.role !== 'admin' && teacher.subject) {
+      const matched = matchTeacherSubject(teacher.subject) || teacher.subject;
+      if (matched) {
+        setSelectedSubjectForScanner(matched);
+        setScannerModeOverride('mapel');
+      }
+      if (teacher.homeroomClass) {
+        setSelectedClassForScanner(teacher.homeroomClass);
+      }
+    }
+
     addToast(
       'Login Berhasil',
-      `Selamat datang, ${teacher.name} (${teacher.role === 'admin' ? 'Admin' : teacher.subject})`,
+      `Selamat datang, ${teacher.name} (${teacher.role === 'admin' ? 'Admin' : `Guru Mapel ${teacher.subject}`})`,
       'success'
     );
   };
@@ -958,6 +980,8 @@ export default function App() {
         attendanceType?: 'harian' | 'mapel';
         periodNumber?: number;
         periodName?: string;
+        periodStartTime?: string;
+        time?: string;
         subject?: string;
         note?: string;
         status?: AttendanceStatus;
@@ -966,7 +990,7 @@ export default function App() {
     ): { record: AttendanceRecord; isDuplicate: boolean } => {
       const currentDate = customDate || getTodayDateString();
       const now = new Date();
-      const timeStr = now.toLocaleTimeString('id-ID', {
+      const realtimeStr = now.toLocaleTimeString('id-ID', {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
@@ -974,6 +998,27 @@ export default function App() {
       });
 
       const attType = options?.attendanceType || 'harian';
+
+      // For mapel attendance, use the period's scheduled start time (e.g. 08:00 for Jam Ke-2)
+      // rather than the real-time clock, as requested by the user
+      let timeStr: string;
+      if (attType === 'mapel') {
+        if (options?.time) {
+          timeStr = options.time.slice(0, 5);
+        } else if (options?.periodStartTime) {
+          timeStr = options.periodStartTime.slice(0, 5);
+        } else if (options?.periodNumber) {
+          const matchedPeriod = periods.find((p) => p.periodNumber === options.periodNumber);
+          timeStr = matchedPeriod ? matchedPeriod.startTime : '08:00';
+        } else if (options?.periodName) {
+          const matchedTime = options.periodName.match(/(\d{2}[:.]\d{2})/);
+          timeStr = matchedTime ? matchedTime[1].replace('.', ':') : '08:00';
+        } else {
+          timeStr = '08:00';
+        }
+      } else {
+        timeStr = options?.time ? options.time.slice(0, 5) : realtimeStr;
+      }
 
       // Check duplicate on same date (distinguishing between harian and specific subject/period)
       const existing = attendanceRecords.find((r) => {
@@ -1089,7 +1134,7 @@ export default function App() {
 
       return { record: newRecord, isDuplicate: false };
     },
-    [attendanceRecords, settings.lateCutoffTime, addToast, currentTeacher, teachers, currentSchoolId]
+    [attendanceRecords, settings.lateCutoffTime, addToast, currentTeacher, teachers, currentSchoolId, periods]
   );
 
   // Add Manual Attendance
@@ -1102,6 +1147,8 @@ export default function App() {
       attendanceType?: 'harian' | 'mapel';
       periodNumber?: number;
       periodName?: string;
+      periodStartTime?: string;
+      time?: string;
       subject?: string;
     }
   ) => {
@@ -1109,14 +1156,34 @@ export default function App() {
     if (!student) return;
 
     const now = new Date();
-    const timeStr =
-      customTime ||
-      now.toLocaleTimeString('id-ID', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-      });
+    const realtimeStr = now.toLocaleTimeString('id-ID', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    });
+
+    const attType = options?.attendanceType || 'harian';
+    let timeStr: string;
+    if (attType === 'mapel') {
+      if (customTime) {
+        timeStr = customTime.slice(0, 5);
+      } else if (options?.time) {
+        timeStr = options.time.slice(0, 5);
+      } else if (options?.periodStartTime) {
+        timeStr = options.periodStartTime.slice(0, 5);
+      } else if (options?.periodNumber) {
+        const matched = periods.find((p) => p.periodNumber === options.periodNumber);
+        timeStr = matched ? matched.startTime : '08:00';
+      } else if (options?.periodName) {
+        const matchTime = options.periodName.match(/(\d{2}[:.]\d{2})/);
+        timeStr = matchTime ? matchTime[1].replace('.', ':') : '08:00';
+      } else {
+        timeStr = '08:00';
+      }
+    } else {
+      timeStr = customTime ? customTime.slice(0, 5) : realtimeStr;
+    }
 
     // Teacher tracking information - always assign real teacher
     const homeroom = teachers.find(
@@ -1617,7 +1684,7 @@ export default function App() {
     }
   };
 
-  // Single School Scoped Data (Semua data terpusat untuk 1 sekolah - SD Inpres 2 Ulatan):
+  // Single School Scoped Data (Semua data terpusat untuk 1 sekolah - SMP NEGERI SATAP 4 PALASA):
   const effectiveStudents = students;
   const effectiveAttendance = attendanceRecords;
   const effectiveTeachers = teachers;
@@ -1679,6 +1746,7 @@ export default function App() {
                 settings={settings}
                 teachers={effectiveTeachers}
                 currentTeacher={currentTeacher}
+                periods={periods}
                 onAddManualAttendance={handleAddManualAttendance}
                 onUpdateAttendanceRecord={handleUpdateAttendanceRecord}
                 onDeleteRecord={handleDeleteRecord}

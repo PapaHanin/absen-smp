@@ -4,7 +4,7 @@ import { Student, AttendanceRecord, SystemSettings, Teacher, AttendanceStatus, L
 import { parseQRPayload } from '../utils/qr';
 import { playScanBeep } from '../utils/audio';
 import { openWhatsAppNotification, copyWAMessageToClipboard } from '../utils/whatsapp';
-import { DEFAULT_LESSON_PERIODS, DEFAULT_SMP_SUBJECTS, getCurrentLessonPeriod } from '../data/lessonSchedule';
+import { DEFAULT_LESSON_PERIODS, DEFAULT_SMP_SUBJECTS, getCurrentLessonPeriod, matchTeacherSubject } from '../data/lessonSchedule';
 import { SMP_CLASSES } from '../data/initialData';
 
 interface ScannerTabProps {
@@ -23,6 +23,8 @@ interface ScannerTabProps {
       attendanceType?: 'harian' | 'mapel';
       periodNumber?: number;
       periodName?: string;
+      periodStartTime?: string;
+      time?: string;
       subject?: string;
       note?: string;
       status?: AttendanceStatus;
@@ -76,6 +78,19 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
   const [isStartingCamera, setIsStartingCamera] = useState<boolean>(false);
   const [scanError, setScanError] = useState<string>('');
 
+  // Resolve whether current teacher is dedicated to a specific subject (non-admin)
+  const teacherMatchedSubject = useMemo(() => {
+    if (!currentTeacher) return null;
+    if (currentTeacher.role === 'admin' || currentTeacher.email === 'fadli46046@gmail.com') {
+      return null;
+    }
+    return matchTeacherSubject(currentTeacher.subject) || currentTeacher.subject || null;
+  }, [currentTeacher]);
+
+  const isLockedByTeacher = Boolean(teacherMatchedSubject);
+  // Subject is locked if opened by dedicated subject teacher OR during active QR camera scanning
+  const isSubjectLocked = isLockedByTeacher || isScanning;
+
   // Mode: Harian (Sekolah) vs Mapel (Guru Mapel SMP)
   const [internalScanMode, setInternalScanMode] = useState<'harian' | 'mapel'>('harian');
   const activeScanMode = scanMode !== undefined ? scanMode : internalScanMode;
@@ -92,7 +107,13 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
     setInternalPeriodId(id);
   };
 
-  const [internalSubject, setInternalSubject] = useState<string>(() => currentTeacher?.subject || DEFAULT_SMP_SUBJECTS[0]);
+  const [internalSubject, setInternalSubject] = useState<string>(() => {
+    if (teacherMatchedSubject) return teacherMatchedSubject;
+    if (currentTeacher?.subject) {
+      return matchTeacherSubject(currentTeacher.subject) || currentTeacher.subject;
+    }
+    return DEFAULT_SMP_SUBJECTS[0];
+  });
   const activeSubject = selectedSubject !== undefined ? selectedSubject : internalSubject;
   const setActiveSubject = (sub: string) => {
     if (onSelectSubject) onSelectSubject(sub);
@@ -105,6 +126,19 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
     if (onSelectClassRoom) onSelectClassRoom(cls);
     setInternalClassRoom(cls);
   };
+
+  // Automatically lock and apply subject when a subject teacher is active
+  useEffect(() => {
+    if (teacherMatchedSubject) {
+      setActiveSubject(teacherMatchedSubject);
+      if (activeScanMode !== 'mapel') {
+        setScanMode('mapel');
+      }
+      if (currentTeacher?.homeroomClass) {
+        setActiveClassRoom(currentTeacher.homeroomClass);
+      }
+    }
+  }, [teacherMatchedSubject, currentTeacher?.homeroomClass]);
 
   const [isQuickChecklistOpen, setIsQuickChecklistOpen] = useState<boolean>(false);
   const [quickChecklistSearch, setQuickChecklistSearch] = useState<string>('');
@@ -217,6 +251,8 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
               periodName: currentPeriodObj
                 ? `${currentPeriodObj.name} (${currentPeriodObj.startTime} - ${currentPeriodObj.endTime})`
                 : 'Jam Mapel',
+              periodStartTime: currentPeriodObj?.startTime,
+              time: currentPeriodObj?.startTime || '08:00',
               subject: activeSubject,
               teacherName: currentTeacher?.name,
               note: `Presensi Mapel ${activeSubject} - ${currentPeriodObj?.name || 'Jam Pelajaran'}`,
@@ -745,11 +781,21 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
             <button
               type="button"
               onClick={() => setScanMode('harian')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              disabled={isScanning || isLockedByTeacher}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                isScanning || isLockedByTeacher ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
+              } ${
                 activeScanMode === 'harian'
                   ? 'bg-white dark:bg-slate-700 text-indigo-700 dark:text-indigo-300 shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
+              title={
+                isScanning
+                  ? 'Terkunci saat kamera aktif memindai'
+                  : isLockedByTeacher
+                  ? `Akun Guru ${currentTeacher?.name} dikhususkan untuk presensi Mapel ${teacherMatchedSubject}`
+                  : undefined
+              }
             >
               <i className="fa-solid fa-door-open text-xs"></i>
               <span>Presensi Pagi / Gerbang</span>
@@ -757,14 +803,21 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
             <button
               type="button"
               onClick={() => setScanMode('mapel')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              disabled={isScanning}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                isScanning ? 'cursor-not-allowed' : 'cursor-pointer'
+              } ${
                 activeScanMode === 'mapel'
                   ? 'bg-emerald-600 text-white shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
+              title={isScanning ? 'Terkunci saat kamera aktif memindai' : undefined}
             >
               <i className="fa-solid fa-book-open-reader text-xs"></i>
               <span>Presensi Guru Mapel SMP</span>
+              {isLockedByTeacher && (
+                <i className="fa-solid fa-lock text-[10px] ml-0.5 text-emerald-200" title="Mapel terkunci sesuai akun guru"></i>
+              )}
             </button>
           </div>
         </div>
@@ -775,13 +828,26 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {/* Jam Pelajaran Selector */}
               <div>
-                <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                  Pilih Jam Pelajaran
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">
+                    Pilih Jam Pelajaran
+                  </label>
+                  {isScanning && (
+                    <span className="text-[9px] font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                      <i className="fa-solid fa-lock text-[8px]"></i> Terkunci
+                    </span>
+                  )}
+                </div>
                 <select
                   value={activePeriodId}
                   onChange={(e) => setActivePeriodId(e.target.value)}
-                  className="w-full text-xs font-semibold px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+                  disabled={isScanning}
+                  className={`w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all ${
+                    isScanning
+                      ? 'bg-slate-100 dark:bg-slate-800/80 cursor-not-allowed opacity-90'
+                      : 'bg-slate-50 dark:bg-slate-800 cursor-pointer'
+                  }`}
+                  title={isScanning ? 'Jam pelajaran terkunci selama kamera aktif memindai' : undefined}
                 >
                   {periods.map((p) => {
                     const isNow = activeCurrentPeriod?.id === p.id;
@@ -792,35 +858,101 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                     );
                   })}
                 </select>
+                {isScanning && (
+                  <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-1 font-semibold flex items-center gap-1">
+                    <i className="fa-solid fa-lock text-[9px]"></i>
+                    Terkunci saat kamera aktif
+                  </p>
+                )}
               </div>
 
-              {/* Mata Pelajaran Selector */}
+              {/* Mata Pelajaran Selector with Automatic Locking */}
               <div>
-                <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                  Mata Pelajaran
-                </label>
-                <select
-                  value={activeSubject}
-                  onChange={(e) => setActiveSubject(e.target.value)}
-                  className="w-full text-xs font-semibold px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 cursor-pointer"
-                >
-                  {DEFAULT_SMP_SUBJECTS.map((sub) => (
-                    <option key={sub} value={sub}>
-                      {sub}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <span>Mata Pelajaran</span>
+                    {isSubjectLocked && (
+                      <i className="fa-solid fa-lock text-emerald-600 dark:text-emerald-400 text-xs" title="Mata pelajaran terkunci"></i>
+                    )}
+                  </label>
+                  {isSubjectLocked && (
+                    <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded-md flex items-center gap-1 ${
+                      isLockedByTeacher
+                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                        : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
+                    }`}>
+                      <i className="fa-solid fa-lock text-[8px]"></i>
+                      {isLockedByTeacher ? 'Guru Mapel' : 'Kamera Aktif'}
+                    </span>
+                  )}
+                </div>
+                <div className="relative">
+                  <select
+                    value={activeSubject}
+                    onChange={(e) => setActiveSubject(e.target.value)}
+                    disabled={isSubjectLocked}
+                    className={`w-full text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all ${
+                      isSubjectLocked
+                        ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 font-extrabold cursor-not-allowed pr-8'
+                        : 'bg-slate-50 dark:bg-slate-800 cursor-pointer'
+                    }`}
+                    title={
+                      isLockedByTeacher
+                        ? `Mata pelajaran otomatis terkunci ke "${activeSubject}" untuk akun Guru ${currentTeacher?.name}`
+                        : isScanning
+                        ? 'Mata pelajaran terkunci selama kamera pemindai QR aktif'
+                        : undefined
+                    }
+                  >
+                    {DEFAULT_SMP_SUBJECTS.map((sub) => (
+                      <option key={sub} value={sub}>
+                        {sub}
+                      </option>
+                    ))}
+                  </select>
+                  {isSubjectLocked && (
+                    <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-emerald-600 dark:text-emerald-400">
+                      <i className="fa-solid fa-lock text-xs"></i>
+                    </div>
+                  )}
+                </div>
+
+                {/* Sub-label explaining lock status */}
+                {isLockedByTeacher ? (
+                  <p className="text-[10px] text-emerald-700 dark:text-emerald-400 mt-1 font-semibold flex items-center gap-1">
+                    <i className="fa-solid fa-circle-check text-[9px] text-emerald-600 dark:text-emerald-400"></i>
+                    Terkunci otomatis: <strong>{currentTeacher?.name}</strong> ({activeSubject})
+                  </p>
+                ) : isScanning ? (
+                  <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-1 font-semibold flex items-center gap-1">
+                    <i className="fa-solid fa-lock text-[9px]"></i>
+                    Terkunci saat kamera aktif memindai
+                  </p>
+                ) : null}
               </div>
 
               {/* Kelas SMP Selector */}
               <div>
-                <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">
-                  Kelas Siswa
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">
+                    Kelas Siswa
+                  </label>
+                  {isScanning && (
+                    <span className="text-[9px] font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                      <i className="fa-solid fa-lock text-[8px]"></i> Terkunci
+                    </span>
+                  )}
+                </div>
                 <select
                   value={activeClassRoom}
                   onChange={(e) => setActiveClassRoom(e.target.value)}
-                  className="w-full text-xs font-semibold px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+                  disabled={isScanning}
+                  className={`w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all ${
+                    isScanning
+                      ? 'bg-slate-100 dark:bg-slate-800/80 cursor-not-allowed opacity-90'
+                      : 'bg-slate-50 dark:bg-slate-800 cursor-pointer'
+                  }`}
+                  title={isScanning ? 'Pilihan kelas terkunci selama kamera aktif memindai' : undefined}
                 >
                   {((settings.customClasses && settings.customClasses.length > 0)
                     ? settings.customClasses
@@ -831,6 +963,12 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                     </option>
                   ))}
                 </select>
+                {isScanning && (
+                  <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-1 font-semibold flex items-center gap-1">
+                    <i className="fa-solid fa-lock text-[9px]"></i>
+                    Terkunci saat kamera aktif
+                  </p>
+                )}
               </div>
 
               {/* Actions: View Schedule & Quick Checklist */}
@@ -864,18 +1002,36 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
             </div>
 
             {/* Active Mode Notice Banner */}
-            <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-xl flex items-center justify-between text-xs text-emerald-900 dark:text-emerald-200 font-medium">
+            <div className={`p-2.5 rounded-xl border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs font-medium transition-all ${
+              isScanning
+                ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200'
+                : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200'
+            }`}>
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className={`w-2.5 h-2.5 rounded-full ${isScanning ? 'bg-amber-500 animate-ping' : 'bg-emerald-500 animate-pulse'}`}></span>
                 <span>
-                  <strong>Mode Presensi Mapel Aktif:</strong> Setiap scan QR code atau input NIS saat ini akan otomatis mencatat presensi untuk mata pelajaran <strong>{activeSubject}</strong> pada <strong>{periods.find((p) => p.id === activePeriodId)?.name || 'Jam Pelajaran'} ({periods.find((p) => p.id === activePeriodId)?.startTime} - {periods.find((p) => p.id === activePeriodId)?.endTime})</strong> untuk <strong>{activeClassRoom}</strong>.
+                  <strong>Mode Presensi Mapel Aktif:</strong> Setiap scan QR code atau input NIS saat ini akan otomatis mencatat presensi untuk mata pelajaran{' '}
+                  <strong className="underline decoration-emerald-500 decoration-2">{activeSubject}</strong>{' '}
+                  pada <strong>{periods.find((p) => p.id === activePeriodId)?.name || 'Jam Pelajaran'} ({periods.find((p) => p.id === activePeriodId)?.startTime} - {periods.find((p) => p.id === activePeriodId)?.endTime})</strong> untuk <strong>{activeClassRoom}</strong>.
                 </span>
               </div>
-              {activeCurrentPeriod && activeCurrentPeriod.id === activePeriodId && (
-                <span className="px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 font-extrabold text-[10px] shrink-0 ml-2">
-                  ★ Sesuai Jam Berjalan
-                </span>
-              )}
+              <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
+                {isLockedByTeacher && (
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 font-extrabold text-[10px] flex items-center gap-1">
+                    <i className="fa-solid fa-lock text-[9px]"></i> Terkunci ({activeSubject})
+                  </span>
+                )}
+                {isScanning && (
+                  <span className="px-2 py-0.5 rounded-full bg-amber-200 dark:bg-amber-900 text-amber-800 dark:text-amber-200 font-extrabold text-[10px] flex items-center gap-1">
+                    <i className="fa-solid fa-video text-[9px]"></i> Kamera Aktif
+                  </span>
+                )}
+                {activeCurrentPeriod && activeCurrentPeriod.id === activePeriodId && (
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 font-extrabold text-[10px]">
+                    ★ Sesuai Jam Berjalan
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Collapsible Quick Checklist for Active Class */}
@@ -920,6 +1076,8 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                               periodName: periodObj
                                 ? `${periodObj.name} (${periodObj.startTime} - ${periodObj.endTime})`
                                 : 'Jam Mapel',
+                              periodStartTime: periodObj?.startTime,
+                              time: periodObj?.startTime || '08:00',
                               subject: activeSubject,
                               status: 'Hadir',
                               teacherName: currentTeacher?.name,
@@ -1013,6 +1171,8 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                                         periodName: pObj
                                           ? `${pObj.name} (${pObj.startTime} - ${pObj.endTime})`
                                           : 'Jam Mapel',
+                                        periodStartTime: pObj?.startTime,
+                                        time: pObj?.startTime || '08:00',
                                         subject: activeSubject,
                                         status: st,
                                         teacherName: currentTeacher?.name,
@@ -1069,6 +1229,26 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
             <div className="w-full bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 min-h-[300px] flex items-center justify-center relative shadow-inner">
               {/* Dedicated empty DOM target for Html5Qrcode - React never places children inside this div */}
               <div id={scannerContainerId} className="w-full h-full min-h-[300px]" />
+
+              {/* Active Scanner Lock HUD Overlay */}
+              {isScanning && (
+                <div className="absolute top-2.5 left-2.5 right-2.5 z-20 px-3 py-1.5 rounded-xl bg-slate-950/85 backdrop-blur-md border border-emerald-500/50 flex items-center justify-between text-xs text-white shadow-lg pointer-events-none">
+                  <div className="flex items-center gap-2 font-bold">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span className="text-[11px] text-emerald-300 font-black tracking-wide">KAMERA SCANNER AKTIF</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 font-bold text-[11px] text-slate-200">
+                    <i className="fa-solid fa-lock text-emerald-400 text-[10px]"></i>
+                    <span className="text-emerald-300 font-extrabold">{activeScanMode === 'mapel' ? activeSubject : 'Harian Pagi'}</span>
+                    {activeScanMode === 'mapel' && (
+                      <>
+                        <span className="text-slate-500">•</span>
+                        <span>{activeClassRoom}</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {!isScanning && permissionState !== 'denied' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 space-y-3 z-10 bg-slate-900/95 pointer-events-auto">

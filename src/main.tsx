@@ -13,7 +13,7 @@ if (typeof window !== 'undefined' && 'serviceWorker' in navigator && import.meta
       console.log('Konten baru tersedia, memperbarui cache PWA secara otomatis...');
     },
     onOfflineReady() {
-      console.log('Aplikasi SD INPRES 2 ULATAN siap digunakan dalam mode offline.');
+      console.log('Aplikasi Presensi SMP NEGERI SATAP 4 PALASA siap digunakan dalam mode offline.');
     },
   });
 }

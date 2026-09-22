@@ -552,3 +552,32 @@ export function getIndonesianDayName(date?: Date | string): 'Senin' | 'Selasa' |
   if (dayName === 'Minggu') return 'Senin'; // fallback
   return dayName as 'Senin' | 'Selasa' | 'Rabu' | 'Kamis' | 'Jumat' | 'Sabtu';
 }
+
+/**
+ * Match a teacher's subject field with standard SMP subject list
+ */
+export function matchTeacherSubject(teacherSubject?: string): string | null {
+  if (!teacherSubject) return null;
+  const s = teacherSubject.trim().toLowerCase();
+
+  // Check exact match first
+  for (const subj of DEFAULT_SMP_SUBJECTS) {
+    if (subj.toLowerCase() === s) return subj;
+  }
+
+  // Normalized substring and acronym matches
+  if (s.includes('indonesia')) return 'Bahasa Indonesia';
+  if (s.includes('inggris')) return 'Bahasa Inggris';
+  if (s.includes('matematika') || s.includes('mtk')) return 'Matematika';
+  if (s.includes('ipa') || s.includes('alam')) return 'Ilmu Pengetahuan Alam (IPA)';
+  if (s.includes('ips') || s.includes('sosial')) return 'Ilmu Pengetahuan Sosial (IPS)';
+  if (s.includes('agama') || s.includes('pai') || s.includes('islam')) return 'Pendidikan Agama Islam (PAI)';
+  if (s.includes('pancasila') || s.includes('pkn') || s.includes('ppkn')) return 'Pendidikan Pancasila (PPKn)';
+  if (s.includes('pjok') || s.includes('penjas') || s.includes('olahraga')) return 'PJOK (Penjasorkes)';
+  if (s.includes('informatika') || s.includes('tik') || s.includes('komputer')) return 'Informatika';
+  if (s.includes('seni') || s.includes('budaya') || s.includes('rupa') || s.includes('musik')) return 'Seni Budaya';
+  if (s.includes('prakarya')) return 'Prakarya';
+
+  return null;
+}
+

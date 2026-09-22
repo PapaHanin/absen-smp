@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { AttendanceRecord, SystemSettings } from '../types';
+import { AttendanceRecord, SystemSettings, Teacher } from '../types';
 import { formatCleanNIP } from './classUtils';
 
 interface PDFReportOptions {
@@ -24,6 +24,14 @@ interface PDFReportOptions {
     name?: string;
     nip?: string;
   };
+  adminTeacher?: {
+    name?: string;
+    nip?: string;
+  };
+  currentTeacher?: Teacher | null;
+  teacherTitle?: string;
+  teacherName?: string;
+  teacherNip?: string;
   signatureDate?: string;
 }
 
@@ -35,6 +43,11 @@ export const generateAttendancePDFReport = ({
   stats,
   homeroomTeacher,
   headmaster,
+  adminTeacher,
+  currentTeacher,
+  teacherTitle,
+  teacherName,
+  teacherNip,
   signatureDate,
 }: PDFReportOptions) => {
   const doc = new jsPDF({
@@ -212,50 +225,88 @@ export const generateAttendancePDFReport = ({
   const city = settings.schoolCity || 'Kota';
   const locationDateStr = `${city}, ${dateFormatted}`;
 
-  // Left column: Wali Kelas masing-masing
+  // Left column: Mengetahui, Kepala Sekolah (Swapped to Left)
   const leftX = 20;
-  const waliTitle =
-    homeroomTeacher?.classLabel ||
-    (selectedClass !== 'Semua' ? `Wali Kelas ${selectedClass}` : 'Wali Kelas / Koordinator Presensi');
-  const waliName = homeroomTeacher?.name?.trim() || '( ........................................ )';
-  const waliNip = formatCleanNIP(homeroomTeacher?.nip);
-
-  doc.setFont('helvetica', 'normal');
-  doc.text('Mengetahui,', leftX, sigY + 5);
-  doc.setFont('helvetica', 'bold');
-  doc.text(waliTitle, leftX, sigY + 10);
-
-  // Underlined Wali Kelas Name & NIP
-  doc.setFont('helvetica', 'bold');
-  doc.text(waliName, leftX, sigY + 34);
-  const waliTextWidth = Math.max(doc.getTextWidth(waliName), 50);
-  doc.setDrawColor(71, 85, 105);
-  doc.setLineWidth(0.4);
-  doc.line(leftX, sigY + 35, leftX + waliTextWidth, sigY + 35);
-
-  doc.setFont('helvetica', 'normal');
-  doc.text(waliNip, leftX, sigY + 40);
-
-  // Right column: Kepala Sekolah
-  const sigRightX = pageWidth - 80;
   const headName =
     headmaster?.name?.trim() || settings.headmasterName?.trim() || '( ........................................ )';
   const headNip = formatCleanNIP(headmaster?.nip || settings.headmasterNip);
 
   doc.setFont('helvetica', 'normal');
-  doc.text(locationDateStr, sigRightX, sigY);
-  doc.text('Mengetahui,', sigRightX, sigY + 5);
+  doc.text('Mengetahui,', leftX, sigY + 5);
   doc.setFont('helvetica', 'bold');
-  doc.text('Kepala Sekolah', sigRightX, sigY + 10);
+  doc.text('Kepala Sekolah', leftX, sigY + 10);
 
   // Underlined Headmaster Name & NIP
   doc.setFont('helvetica', 'bold');
-  doc.text(headName, sigRightX, sigY + 34);
+  doc.text(headName, leftX, sigY + 34);
   const headTextWidth = Math.max(doc.getTextWidth(headName), 50);
-  doc.line(sigRightX, sigY + 35, sigRightX + headTextWidth, sigY + 35);
+  doc.setDrawColor(71, 85, 105);
+  doc.setLineWidth(0.4);
+  doc.line(leftX, sigY + 35, leftX + headTextWidth, sigY + 35);
 
   doc.setFont('helvetica', 'normal');
-  doc.text(headNip, sigRightX, sigY + 40);
+  doc.text(headNip, leftX, sigY + 40);
+
+  // Right column: Guru Mapel / Wali Kelas / Guru yang Login (Swapped to Right, below date)
+  const sigRightX = pageWidth - 80;
+
+  // Resolve signing teacher
+  let resolvedTitle = teacherTitle;
+  let resolvedName = teacherName;
+  let resolvedNip = teacherNip;
+
+  if (!resolvedName && currentTeacher) {
+    resolvedName = currentTeacher.name;
+    resolvedNip = currentTeacher.nip;
+    if (!resolvedTitle) {
+      if (currentTeacher.subject) {
+        resolvedTitle = `Guru Mata Pelajaran ${currentTeacher.subject}`;
+      } else if (currentTeacher.teacherType === 'guru_mapel') {
+        resolvedTitle = 'Guru Mata Pelajaran';
+      } else if (currentTeacher.teacherType === 'wali_kelas' || currentTeacher.homeroomClass) {
+        const cls = currentTeacher.homeroomClass || (selectedClass !== 'Semua' ? selectedClass : '');
+        resolvedTitle = `Wali Kelas ${cls}`.trim();
+      } else if (currentTeacher.role === 'admin' || currentTeacher.teacherType === 'admin') {
+        resolvedTitle = selectedClass !== 'Semua'
+          ? (homeroomTeacher?.classLabel || `Wali Kelas ${selectedClass}`)
+          : 'Koordinator Presensi / Tenaga Administrasi';
+      }
+    }
+  }
+
+  if (!resolvedTitle) {
+    if (selectedClass !== 'Semua') {
+      resolvedTitle = homeroomTeacher?.classLabel || `Wali Kelas ${selectedClass}`;
+    } else {
+      resolvedTitle = 'Koordinator Presensi / Tenaga Administrasi';
+    }
+  }
+
+  if (!resolvedName) {
+    resolvedName = selectedClass !== 'Semua'
+      ? (homeroomTeacher?.name?.trim() || '( ........................................ )')
+      : (adminTeacher?.name?.trim() || 'MOH. FADLI');
+  }
+
+  if (!resolvedNip) {
+    resolvedNip = formatCleanNIP(selectedClass !== 'Semua' ? homeroomTeacher?.nip : adminTeacher?.nip);
+  } else {
+    resolvedNip = formatCleanNIP(resolvedNip);
+  }
+
+  doc.setFont('helvetica', 'normal');
+  doc.text(locationDateStr, sigRightX, sigY);
+  doc.setFont('helvetica', 'bold');
+  doc.text(resolvedTitle, sigRightX, sigY + 10);
+
+  // Underlined Teacher Name & NIP
+  doc.setFont('helvetica', 'bold');
+  doc.text(resolvedName, sigRightX, sigY + 34);
+  const teacherTextWidth = Math.max(doc.getTextWidth(resolvedName), 50);
+  doc.line(sigRightX, sigY + 35, sigRightX + teacherTextWidth, sigY + 35);
+
+  doc.setFont('helvetica', 'normal');
+  doc.text(resolvedNip, sigRightX, sigY + 40);
 
   // Save the PDF
   const safeSchool = settings.schoolName.replace(/[\s\/\\]+/g, '_');
@@ -299,6 +350,10 @@ export interface MonthlyPDFReportOptions {
     name?: string;
     nip?: string;
   };
+  currentTeacher?: Teacher | null;
+  teacherTitle?: string;
+  teacherName?: string;
+  teacherNip?: string;
   signatureDate?: string;
 }
 
@@ -315,6 +370,10 @@ export const generateMonthlyAttendancePDFReport = ({
   homeroomTeacher,
   headmaster,
   adminTeacher,
+  currentTeacher,
+  teacherTitle,
+  teacherName,
+  teacherNip,
   signatureDate,
 }: MonthlyPDFReportOptions) => {
   const doc = new jsPDF({
@@ -519,51 +578,86 @@ export const generateMonthlyAttendancePDFReport = ({
   const city = settings.schoolCity || 'Kota';
   const locationDateStr = `${city}, ${dateFormatted}`;
 
-  // Left column: Wali Kelas or Admin Koordinator
+  // Left column: Mengetahui, Kepala Sekolah (Swapped to Left)
   const leftX = 25;
-  const isAllClasses = selectedClass === 'Semua';
-  const waliTitle = isAllClasses
-    ? 'Koordinator Presensi / Tenaga Administrasi'
-    : (homeroomTeacher?.classLabel || `Wali Kelas ${selectedClass}`);
-  const waliName = isAllClasses
-    ? (adminTeacher?.name?.trim() || 'MOH. FADLI')
-    : (homeroomTeacher?.name?.trim() || '( ........................................ )');
-  const waliNip = formatCleanNIP(isAllClasses ? (adminTeacher?.nip || '199903202025211020') : homeroomTeacher?.nip);
-
-  doc.setFont('helvetica', 'normal');
-  doc.text('Mengetahui,', leftX, sigY + 4);
-  doc.setFont('helvetica', 'bold');
-  doc.text(waliTitle, leftX, sigY + 9);
-
-  doc.setFont('helvetica', 'bold');
-  doc.text(waliName, leftX, sigY + 30);
-  const waliTextWidth = Math.max(doc.getTextWidth(waliName), 50);
-  doc.setDrawColor(71, 85, 105);
-  doc.setLineWidth(0.4);
-  doc.line(leftX, sigY + 31, leftX + waliTextWidth, sigY + 31);
-
-  doc.setFont('helvetica', 'normal');
-  doc.text(waliNip, leftX, sigY + 36);
-
-  // Right column: Kepala Sekolah
-  const sigRightX = pageWidth - 90;
   const headName =
     headmaster?.name?.trim() || settings.headmasterName?.trim() || '( ........................................ )';
   const headNip = formatCleanNIP(headmaster?.nip || settings.headmasterNip);
 
   doc.setFont('helvetica', 'normal');
-  doc.text(locationDateStr, sigRightX, sigY);
-  doc.text('Mengetahui,', sigRightX, sigY + 4);
+  doc.text('Mengetahui,', leftX, sigY + 4);
   doc.setFont('helvetica', 'bold');
-  doc.text('Kepala Sekolah', sigRightX, sigY + 9);
+  doc.text('Kepala Sekolah', leftX, sigY + 9);
 
   doc.setFont('helvetica', 'bold');
-  doc.text(headName, sigRightX, sigY + 30);
+  doc.text(headName, leftX, sigY + 30);
   const headTextWidth = Math.max(doc.getTextWidth(headName), 50);
-  doc.line(sigRightX, sigY + 31, sigRightX + headTextWidth, sigY + 31);
+  doc.setDrawColor(71, 85, 105);
+  doc.setLineWidth(0.4);
+  doc.line(leftX, sigY + 31, leftX + headTextWidth, sigY + 31);
 
   doc.setFont('helvetica', 'normal');
-  doc.text(headNip, sigRightX, sigY + 36);
+  doc.text(headNip, leftX, sigY + 36);
+
+  // Right column: Guru Mapel / Wali Kelas / Guru yang Login (Swapped to Right, below date)
+  const sigRightX = pageWidth - 90;
+
+  // Resolve signing teacher
+  let resolvedTitle = teacherTitle;
+  let resolvedName = teacherName;
+  let resolvedNip = teacherNip;
+
+  if (!resolvedName && currentTeacher) {
+    resolvedName = currentTeacher.name;
+    resolvedNip = currentTeacher.nip;
+    if (!resolvedTitle) {
+      if (currentTeacher.subject) {
+        resolvedTitle = `Guru Mata Pelajaran ${currentTeacher.subject}`;
+      } else if (currentTeacher.teacherType === 'guru_mapel') {
+        resolvedTitle = 'Guru Mata Pelajaran';
+      } else if (currentTeacher.teacherType === 'wali_kelas' || currentTeacher.homeroomClass) {
+        const cls = currentTeacher.homeroomClass || (selectedClass !== 'Semua' ? selectedClass : '');
+        resolvedTitle = `Wali Kelas ${cls}`.trim();
+      } else if (currentTeacher.role === 'admin' || currentTeacher.teacherType === 'admin') {
+        resolvedTitle = selectedClass !== 'Semua'
+          ? (homeroomTeacher?.classLabel || `Wali Kelas ${selectedClass}`)
+          : 'Koordinator Presensi / Tenaga Administrasi';
+      }
+    }
+  }
+
+  if (!resolvedTitle) {
+    if (selectedClass !== 'Semua') {
+      resolvedTitle = homeroomTeacher?.classLabel || `Wali Kelas ${selectedClass}`;
+    } else {
+      resolvedTitle = 'Koordinator Presensi / Tenaga Administrasi';
+    }
+  }
+
+  if (!resolvedName) {
+    resolvedName = selectedClass !== 'Semua'
+      ? (homeroomTeacher?.name?.trim() || '( ........................................ )')
+      : (adminTeacher?.name?.trim() || 'MOH. FADLI');
+  }
+
+  if (!resolvedNip) {
+    resolvedNip = formatCleanNIP(selectedClass !== 'Semua' ? homeroomTeacher?.nip : adminTeacher?.nip);
+  } else {
+    resolvedNip = formatCleanNIP(resolvedNip);
+  }
+
+  doc.setFont('helvetica', 'normal');
+  doc.text(locationDateStr, sigRightX, sigY);
+  doc.setFont('helvetica', 'bold');
+  doc.text(resolvedTitle, sigRightX, sigY + 9);
+
+  doc.setFont('helvetica', 'bold');
+  doc.text(resolvedName, sigRightX, sigY + 30);
+  const teacherTextWidth = Math.max(doc.getTextWidth(resolvedName), 50);
+  doc.line(sigRightX, sigY + 31, sigRightX + teacherTextWidth, sigY + 31);
+
+  doc.setFont('helvetica', 'normal');
+  doc.text(resolvedNip, sigRightX, sigY + 36);
 
   const safeSchool = settings.schoolName.replace(/[\s\/\\]+/g, '_');
   const safeMonth = monthLabel.replace(/[\s\/\\]+/g, '_');

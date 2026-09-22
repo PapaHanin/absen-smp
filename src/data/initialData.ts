@@ -259,259 +259,101 @@ export const INITIAL_TEACHERS: Teacher[] = [
 
 export const SAMPLE_TEACHER_IDS = INITIAL_TEACHERS.map((t) => t.id);
 
-export const INITIAL_STUDENTS: Student[] = [
-  // Kelas 7A
-  {
-    id: 'std-7a-01',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2401',
-    nisn: '0105432101',
-    name: 'ADITYA PRATAMA',
-    classRoom: 'Kelas 7A',
-    gender: 'Laki-laki',
-    birthPlace: 'Parigi',
-    birthDate: '2012-05-14',
-    address: 'Dusun 1 Ulatan',
-    parentPhone: '081234567801',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2025-01-01',
-  },
-  {
-    id: 'std-7a-02',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2402',
-    nisn: '0105432102',
-    name: 'AULIA NUR AZIZAH',
-    classRoom: 'Kelas 7A',
-    gender: 'Perempuan',
-    birthPlace: 'Palasa',
-    birthDate: '2012-08-20',
-    address: 'Desa Ulatan',
-    parentPhone: '081234567802',
-    avatarUrl: FEMALE_BW_AVATAR,
-    createdAt: '2025-01-01',
-  },
-  {
-    id: 'std-7a-03',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2403',
-    nisn: '0105432103',
-    name: 'BAGAS WIRATAMA',
-    classRoom: 'Kelas 7A',
-    gender: 'Laki-laki',
-    birthPlace: 'Palu',
-    birthDate: '2012-03-10',
-    address: 'Palasa Lambori',
-    parentPhone: '081234567803',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2025-01-01',
-  },
-  {
-    id: 'std-7a-04',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2404',
-    nisn: '0105432104',
-    name: 'CINTA ANGGRAENI',
-    classRoom: 'Kelas 7A',
-    gender: 'Perempuan',
-    birthPlace: 'Parigi',
-    birthDate: '2012-11-25',
-    address: 'Dusun 2 Ulatan',
-    parentPhone: '081234567804',
-    avatarUrl: FEMALE_BW_AVATAR,
-    createdAt: '2025-01-01',
-  },
+export const DUMMY_STUDENT_IDS = new Set<string>([
+  'std-7a-01', 'std-7a-02', 'std-7a-03', 'std-7a-04',
+  'std-7b-01', 'std-7b-02', 'std-7b-03',
+  'std-8a-01', 'std-8a-02', 'std-8a-03',
+  'std-8b-01', 'std-8b-02',
+  'std-9a-01', 'std-9a-02',
+  'std-9b-01', 'std-9b-02',
+  'std-1001', 'std-1002', 'std-1003', 'std-1004', 'std-1005', 'std-1006', 'std-1007',
+  'std-1008', 'std-1009', 'std-1010', 'std-1011', 'std-1012', 'std-1013', 'std-1014',
+]);
 
-  // Kelas 7B
-  {
-    id: 'std-7b-01',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2405',
-    nisn: '0105432105',
-    name: 'DIMAS ARYA KUSUMA',
-    classRoom: 'Kelas 7B',
-    gender: 'Laki-laki',
-    birthPlace: 'Ulatan',
-    birthDate: '2012-02-18',
-    address: 'Dusun 1 Ulatan',
-    parentPhone: '081234567805',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2025-01-01',
-  },
-  {
-    id: 'std-7b-02',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2406',
-    nisn: '0105432106',
-    name: 'FATIMAH AZ-ZAHRA',
-    classRoom: 'Kelas 7B',
-    gender: 'Perempuan',
-    birthPlace: 'Palasa',
-    birthDate: '2012-07-09',
-    address: 'Desa Palasa Tengah',
-    parentPhone: '081234567806',
-    avatarUrl: FEMALE_BW_AVATAR,
-    createdAt: '2025-01-01',
-  },
-  {
-    id: 'std-7b-03',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2407',
-    nisn: '0105432107',
-    name: 'GILANG RAMADHAN',
-    classRoom: 'Kelas 7B',
-    gender: 'Laki-laki',
-    birthPlace: 'Parigi Moutong',
-    birthDate: '2012-09-12',
-    address: 'Palasa Lambori',
-    parentPhone: '081234567807',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2025-01-01',
-  },
+export const DUMMY_STUDENT_NISNS = new Set<string>([
+  '0105432101', '0105432102', '0105432103', '0105432104', '0105432105', '0105432106', '0105432107',
+  '0115432201', '0115432202', '0115432203', '0115432204', '0115432205',
+  '0125432301', '0125432302', '0125432303', '0125432304',
+  '0012345678', '0012345679', '0012345680', '0012345681', '0012345682', '0012345683', '0012345684',
+  '0012345685', '0012345686', '0012345687', '0012345688', '0012345689', '0012345690', '0012345691',
+]);
 
-  // Kelas 8A
-  {
-    id: 'std-8a-01',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2301',
-    nisn: '0115432201',
-    name: 'HAFIDZ FADLILLAH',
-    classRoom: 'Kelas 8A',
-    gender: 'Laki-laki',
-    birthPlace: 'Ulatan',
-    birthDate: '2011-04-05',
-    address: 'Desa Ulatan',
-    parentPhone: '081234567808',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2024-07-01',
-  },
-  {
-    id: 'std-8a-02',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2302',
-    nisn: '0115432202',
-    name: 'INDRIANI SAPUTRI',
-    classRoom: 'Kelas 8A',
-    gender: 'Perempuan',
-    birthPlace: 'Parigi',
-    birthDate: '2011-06-19',
-    address: 'Palasa Lambori',
-    parentPhone: '081234567809',
-    avatarUrl: FEMALE_BW_AVATAR,
-    createdAt: '2024-07-01',
-  },
-  {
-    id: 'std-8a-03',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2303',
-    nisn: '0115432203',
-    name: 'JOKO SAMUDRA',
-    classRoom: 'Kelas 8A',
-    gender: 'Laki-laki',
-    birthPlace: 'Palasa',
-    birthDate: '2011-10-30',
-    address: 'Dusun 2 Ulatan',
-    parentPhone: '081234567810',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2024-07-01',
-  },
+export const DUMMY_STUDENT_NAMES = new Set<string>([
+  'ADITYA PRATAMA',
+  'AULIA NUR AZIZAH',
+  'BAGAS WIRATAMA',
+  'CINTA ANGGRAENI',
+  'DIMAS ARYA KUSUMA',
+  'FATIMAH AZ-ZAHRA',
+  'GILANG RAMADHAN',
+  'HAFIDZ FADLILLAH',
+  'INDRIANI SAPUTRI',
+  'JOKO SAMUDRA',
+  'KHAIRUNNISA PUTRI',
+  'LUTHFI AL-HAKIM',
+  'MUHAMMAD RIZKY MAULANA',
+  'NURUL HIDAYAH',
+  'REZA PAHLEVI',
+  'SALSABILA NADIA',
+  'AHMAD FAUZI',
+  'SITI NURHALIZA',
+  'BUDI SANTOSO',
+  'DEWI LESTARI',
+  'EKO PRASETYO',
+  'FITRI HANDAYANI',
+  'GALIH PERMANA',
+  'HANIFAH PUTRI',
+  'ILHAM RAMADHAN',
+  'JASMINE AQILA',
+  'KEVIN PRATAMA',
+  'LIDYA SAFITRI',
+  'MUHAMMAD RIZKI',
+  'NADIA UTAMI',
+]);
 
-  // Kelas 8B
-  {
-    id: 'std-8b-01',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2304',
-    nisn: '0115432204',
-    name: 'KHAIRUNNISA PUTRI',
-    classRoom: 'Kelas 8B',
-    gender: 'Perempuan',
-    birthPlace: 'Palasa Lambori',
-    birthDate: '2011-01-15',
-    address: 'Palasa Lambori',
-    parentPhone: '081234567811',
-    avatarUrl: FEMALE_BW_AVATAR,
-    createdAt: '2024-07-01',
-  },
-  {
-    id: 'std-8b-02',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2305',
-    nisn: '0115432205',
-    name: 'LUTHFI AL-HAKIM',
-    classRoom: 'Kelas 8B',
-    gender: 'Laki-laki',
-    birthPlace: 'Ulatan',
-    birthDate: '2011-08-08',
-    address: 'Desa Ulatan',
-    parentPhone: '081234567812',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2024-07-01',
-  },
+/**
+ * Checks if a student record is a mock/dummy sample student
+ */
+export const isDummyStudent = (s: Partial<Student> | null | undefined): boolean => {
+  if (!s) return false;
+  if (s.id && DUMMY_STUDENT_IDS.has(s.id)) return true;
+  if (s.id && (
+    s.id.startsWith('std-7a-') ||
+    s.id.startsWith('std-7b-') ||
+    s.id.startsWith('std-8a-') ||
+    s.id.startsWith('std-8b-') ||
+    s.id.startsWith('std-9a-') ||
+    s.id.startsWith('std-9b-') ||
+    (s.id.startsWith('std-10') && s.id.length <= 8)
+  )) return true;
+  if (s.nisn && DUMMY_STUDENT_NISNS.has(s.nisn.trim())) return true;
+  if (s.name && DUMMY_STUDENT_NAMES.has(s.name.trim().toUpperCase())) return true;
+  return false;
+};
 
-  // Kelas 9A
-  {
-    id: 'std-9a-01',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2201',
-    nisn: '0125432301',
-    name: 'MUHAMMAD RIZKY MAULANA',
-    classRoom: 'Kelas 9A',
-    gender: 'Laki-laki',
-    birthPlace: 'Parigi',
-    birthDate: '2010-03-24',
-    address: 'Desa Ulatan',
-    parentPhone: '081234567813',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2023-07-01',
-  },
-  {
-    id: 'std-9a-02',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2202',
-    nisn: '0125432302',
-    name: 'NURUL HIDAYAH',
-    classRoom: 'Kelas 9A',
-    gender: 'Perempuan',
-    birthPlace: 'Palasa',
-    birthDate: '2010-09-17',
-    address: 'Palasa Tengah',
-    parentPhone: '081234567814',
-    avatarUrl: FEMALE_BW_AVATAR,
-    createdAt: '2023-07-01',
-  },
+/**
+ * Checks if an attendance record belongs to a dummy student
+ */
+export const isDummyAttendance = (r: Partial<AttendanceRecord> | null | undefined): boolean => {
+  if (!r) return true;
+  if (r.studentId && DUMMY_STUDENT_IDS.has(r.studentId)) return true;
+  if (
+    r.studentId && (
+      r.studentId.startsWith('std-7a-') ||
+      r.studentId.startsWith('std-7b-') ||
+      r.studentId.startsWith('std-8a-') ||
+      r.studentId.startsWith('std-8b-') ||
+      r.studentId.startsWith('std-9a-') ||
+      r.studentId.startsWith('std-9b-') ||
+      (r.studentId.startsWith('std-10') && r.studentId.length <= 8)
+    )
+  ) return true;
+  if (r.studentName && DUMMY_STUDENT_NAMES.has(r.studentName.trim().toUpperCase())) return true;
+  return false;
+};
 
-  // Kelas 9B
-  {
-    id: 'std-9b-01',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2203',
-    nisn: '0125432303',
-    name: 'REZA PAHLEVI',
-    classRoom: 'Kelas 9B',
-    gender: 'Laki-laki',
-    birthPlace: 'Ulatan',
-    birthDate: '2010-12-05',
-    address: 'Dusun 1 Ulatan',
-    parentPhone: '081234567815',
-    avatarUrl: MALE_BW_AVATAR,
-    createdAt: '2023-07-01',
-  },
-  {
-    id: 'std-9b-02',
-    schoolId: DEFAULT_PRIMARY_SCHOOL_ID,
-    nis: '2204',
-    nisn: '0125432304',
-    name: 'SALSABILA NADIA',
-    classRoom: 'Kelas 9B',
-    gender: 'Perempuan',
-    birthPlace: 'Parigi Moutong',
-    birthDate: '2010-05-28',
-    address: 'Palasa Lambori',
-    parentPhone: '081234567816',
-    avatarUrl: FEMALE_BW_AVATAR,
-    createdAt: '2023-07-01',
-  },
-];
+// INITIAL_STUDENTS is set to empty to preserve ONLY user-uploaded data
+export const INITIAL_STUDENTS: Student[] = [];
 
 export const getTodayDateString = (): string => {
   const today = new Date();

@@ -31,9 +31,9 @@ export const StudentCardRenderer: React.FC<StudentCardRendererProps> = ({
   if (rawTpl === 'pelita') activeTemplate = 'modern_minimalis';
 
   const photoSrc = photoUrl || student.photo || student.avatarUrl;
-  const finalSchoolName = (settings.schoolName || 'SD INPRES 2 ULATAN').toUpperCase();
-  const schoolCity = settings.schoolCity || 'Paser';
-  const schoolRegency = settings.schoolRegency || (settings.schoolCity ? `PEMERINTAH KABUPATEN ${settings.schoolCity.toUpperCase()}` : 'PEMERINTAH KABUPATEN PASER');
+  const finalSchoolName = (settings.schoolName || 'SMP NEGERI SATAP 4 PALASA').toUpperCase();
+  const schoolCity = settings.schoolCity || 'Parigi Moutong';
+  const schoolRegency = settings.schoolRegency || (settings.schoolCity ? `PEMERINTAH KABUPATEN ${settings.schoolCity.toUpperCase()}` : 'PEMERINTAH KABUPATEN PARIGI MOUTONG');
   const schoolDepartment = settings.schoolDepartment || 'DINAS PENDIDIKAN DAN KEBUDAYAAN';
   const cardTitle = settings.cardTitle || 'KARTU TANDA SISWA & PRESENSI DIGITAL';
   const cardValidityText = settings.cardValidityText || 'KARTU RESMI PELAJAR • BERLAKU SELAMA MENJADI SISWA';

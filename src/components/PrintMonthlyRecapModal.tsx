@@ -22,6 +22,9 @@ interface PrintMonthlyRecapModalProps {
     nip?: string;
   };
   adminTeacher?: Teacher | null;
+  currentTeacher?: Teacher | null;
+  selectedTeacher?: Teacher | null;
+  subjectName?: string;
 }
 
 export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
@@ -36,6 +39,9 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
   homeroomTeacher,
   headmaster,
   adminTeacher,
+  currentTeacher,
+  selectedTeacher,
+  subjectName,
 }) => {
   if (!isOpen) return null;
 
@@ -53,6 +59,54 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
     month: 'long',
     year: 'numeric',
   });
+
+  // Resolve active signing teacher for Right Column (Guru yang sedang login / Guru Mapel / Wali Kelas)
+  const fullTeacher: Teacher | null =
+    selectedTeacher ||
+    (currentTeacher?.role !== 'admin' ? currentTeacher : null) ||
+    currentTeacher ||
+    adminTeacher ||
+    null;
+
+  let resolvedTeacherTitle = 'Guru Mata Pelajaran';
+  let resolvedTeacherName = '( ........................................ )';
+  let resolvedTeacherNip: string | undefined = undefined;
+
+  if (fullTeacher) {
+    resolvedTeacherName = fullTeacher.name?.trim() || '( ........................................ )';
+    resolvedTeacherNip = fullTeacher.nip;
+
+    if (fullTeacher.subject) {
+      resolvedTeacherTitle = `Guru Mata Pelajaran ${fullTeacher.subject}`;
+    } else if (subjectName) {
+      resolvedTeacherTitle = `Guru Mata Pelajaran ${subjectName}`;
+    } else if (fullTeacher.teacherType === 'guru_mapel') {
+      resolvedTeacherTitle = 'Guru Mata Pelajaran';
+    } else if (fullTeacher.teacherType === 'wali_kelas' || fullTeacher.homeroomClass) {
+      const cls = fullTeacher.homeroomClass || (selectedClass !== 'Semua' ? selectedClass : '');
+      resolvedTeacherTitle = `Wali Kelas ${cls}`.trim();
+    } else if (fullTeacher.role === 'admin' || fullTeacher.teacherType === 'admin') {
+      resolvedTeacherTitle = selectedClass !== 'Semua'
+        ? (homeroomTeacher?.classLabel || `Wali Kelas ${selectedClass}`)
+        : 'Koordinator Presensi / Tenaga Administrasi';
+    }
+  } else if (selectedClass !== 'Semua' && homeroomTeacher) {
+    resolvedTeacherTitle = homeroomTeacher.classLabel || `Wali Kelas ${selectedClass}`;
+    resolvedTeacherName = homeroomTeacher.name?.trim() || '( ........................................ )';
+    resolvedTeacherNip = homeroomTeacher.nip;
+  } else {
+    resolvedTeacherTitle = 'Koordinator Presensi / Tenaga Administrasi';
+    resolvedTeacherName = adminTeacher?.name?.trim() || 'MOH. FADLI';
+    resolvedTeacherNip = adminTeacher?.nip || '199903202025211020';
+  }
+
+  const headmasterName =
+    headmaster?.name?.trim() || settings.headmasterName?.trim() || 'RAHMAT, S.Pd., M.Pd';
+  const headmasterNip = formatCleanNIP(headmaster?.nip || settings.headmasterNip);
+
+  const resolvedSubject =
+    subjectName ||
+    (fullTeacher ? fullTeacher.subject : undefined);
 
   const handlePrint = () => {
     window.print();
@@ -93,7 +147,7 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
                 </span>
               </h2>
               <p className="text-xs text-slate-300">
-                Bulan {monthLabel} • Format Cetak Resmi SD Inpres 2 Ulatan
+                {monthLabel.startsWith('Bulan') ? monthLabel : `Bulan ${monthLabel}`} • Format Cetak Resmi {settings.schoolName || 'SMP NEGERI SATAP 4 PALASA'}
               </p>
             </div>
           </div>
@@ -192,19 +246,19 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
             id="printable-monthly-recap"
             className="bg-white text-slate-900 max-w-5xl mx-auto p-6 sm:p-8 rounded-xl shadow-md border border-slate-200"
           >
-            {/* Kop Surat Resmi SD Inpres 2 Ulatan */}
+            {/* Kop Surat Resmi Sekolah */}
             <div className="text-center pb-2">
               <h3 className="text-xs sm:text-sm font-bold tracking-wider text-slate-800 uppercase">
                 {settings.schoolRegency || 'PEMERINTAH KABUPATEN PARIGI MOUTONG'}
               </h3>
               <h3 className="text-xs sm:text-sm font-bold tracking-wider text-slate-800 uppercase">
-                DINAS PENDIDIKAN DAN KEBUDAYAAN
+                {settings.schoolDepartment || 'DINAS PENDIDIKAN DAN KEBUDAYAAN'}
               </h3>
               <h1 className="text-base sm:text-xl font-black text-slate-950 tracking-wide uppercase mt-0.5">
-                {settings.schoolName || 'SD INPRES 2 ULATAN'}
+                {settings.schoolName || 'SMP NEGERI SATAP 4 PALASA'}
               </h1>
               <p className="text-[11px] text-slate-600 font-medium mt-0.5">
-                NPSN: {settings.npsn || '40206214'} &bull; NSS: {settings.nss || '101180816027'}
+                NPSN: {settings.npsn || '69947184'} &bull; NSS: {settings.nss || '201180816004'}
               </p>
               <p className="text-[10px] text-slate-600 italic">
                 Alamat: {settings.schoolAddress || 'Desa Ulatan, Kec. Palasa, Kab. Parigi Moutong, Sulawesi Tengah'}
@@ -231,13 +285,21 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
                 <div>
                   <span className="font-bold inline-block w-28">Kelas</span>: {selectedClass === 'Semua' ? 'Semua Kelas' : selectedClass}
                 </div>
+                {resolvedSubject && (
+                  <div>
+                    <span className="font-bold inline-block w-28">Mata Pelajaran</span>: <strong className="text-indigo-900 font-bold">{resolvedSubject}</strong>
+                  </div>
+                )}
+                <div>
+                  <span className="font-bold inline-block w-28">{resolvedSubject ? 'Guru Pengampu' : 'Guru / Wali'}</span>: <strong className="text-slate-900 font-semibold">{resolvedTeacherName}</strong>
+                </div>
                 <div>
                   <span className="font-bold inline-block w-28">Jumlah Siswa</span>: {recaps.length} Orang
                 </div>
               </div>
               <div className="space-y-1 text-right sm:text-left sm:pl-8">
                 <div>
-                  <span className="font-bold inline-block w-36">Hari Efektif Sekolah</span>: <strong className="text-slate-950 font-bold">{effectiveSchoolDays} Hari (Seragam)</strong>
+                  <span className="font-bold inline-block w-36">Hari Efektif / Sesi</span>: <strong className="text-slate-950 font-bold">{effectiveSchoolDays} Hari (Seragam)</strong>
                 </div>
                 <div>
                   <span className="font-bold inline-block w-36">Rata-rata Kehadiran</span>: <strong className="text-emerald-700 font-bold">{averagePercentage}%</strong>
@@ -349,48 +411,41 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
                 Total Hadir = (Hadir + Terlambat). Hari Efektif = {effectiveSchoolDays} Hari Seragam.
               </div>
               <div className="font-mono font-semibold text-slate-500">
-                Sistem Presensi Digital &bull; SD Inpres 2 Ulatan
+                Sistem Presensi Digital &bull; {settings.schoolName || 'SMP NEGERI SATAP 4 PALASA'}
               </div>
             </div>
 
-            {/* Official Signatures Section */}
+            {/* Official Signatures Section - Swapped: Kepala Sekolah di Kiri, Guru Mapel / Guru Login di Kanan */}
             <div className="mt-8 pt-4 grid grid-cols-2 gap-8 text-xs text-slate-900">
-              {/* Left Signature: Wali Kelas or Koordinator */}
+              {/* Left Signature: Mengetahui, Kepala Sekolah */}
               <div className="text-center">
                 <p className="font-medium text-slate-700">Mengetahui,</p>
                 <p className="font-bold text-slate-900 mt-0.5">
-                  {selectedClass !== 'Semua'
-                    ? (homeroomTeacher?.classLabel || `Wali Kelas ${selectedClass}`)
-                    : 'Koordinator Presensi / Tenaga Administrasi'}
+                  Kepala Sekolah {settings.schoolName || 'SMP NEGERI SATAP 4 PALASA'}
                 </p>
                 <div className="h-16"></div>
                 <p className="font-bold underline text-slate-950">
-                  {selectedClass !== 'Semua'
-                    ? (homeroomTeacher?.name?.trim() || '( ........................................ )')
-                    : (adminTeacher?.name?.trim() || 'MOH. FADLI')}
+                  {headmasterName}
                 </p>
                 <p className="text-[11px] text-slate-700 font-mono">
-                  NIP.{' '}
-                  {selectedClass !== 'Semua'
-                    ? formatCleanNIP(homeroomTeacher?.nip)
-                    : (adminTeacher?.nip || '199903202025211020')}
+                  {headmasterNip}
                 </p>
               </div>
 
-              {/* Right Signature: Kepala Sekolah */}
+              {/* Right Signature: Di bawah tanggal kota -> Guru Mapel / Wali Kelas / Guru yang Login */}
               <div className="text-center">
                 <p className="font-medium text-slate-700">
-                  {settings.schoolCity || 'Ulatan'}, {todayFormatted}
+                  {settings.schoolCity || 'Parigi Moutong'}, {todayFormatted}
                 </p>
                 <p className="font-bold text-slate-900 mt-0.5">
-                  Kepala Sekolah {settings.schoolName || 'SD Inpres 2 Ulatan'}
+                  {resolvedTeacherTitle}
                 </p>
                 <div className="h-16"></div>
                 <p className="font-bold underline text-slate-950">
-                  {headmaster?.name?.trim() || settings.headmasterName || 'RAHMAT, S.Pd., M.Pd'}
+                  {resolvedTeacherName}
                 </p>
                 <p className="text-[11px] text-slate-700 font-mono">
-                  NIP. {formatCleanNIP(headmaster?.nip || settings.headmasterNip) || '19851204 200903 1 002'}
+                  {formatCleanNIP(resolvedTeacherNip)}
                 </p>
               </div>
             </div>

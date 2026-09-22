@@ -51,7 +51,7 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
             </div>
             <div>
               <h3 className="font-bold text-base text-white leading-tight">Install Aplikasi Presensi</h3>
-              <p className="text-xs text-emerald-200">SD INPRES 2 ULATAN (PWA Resmi)</p>
+              <p className="text-xs text-emerald-200">SMP NEGERI SATAP 4 PALASA (PWA Resmi)</p>
             </div>
           </div>
           <button
@@ -70,11 +70,11 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
           <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60">
             <img
               src="/pwa-192x192.png"
-              alt="Logo SDI 2 Ulatan"
+              alt="Logo SMPN Satap 4 Palasa"
               className="w-14 h-14 rounded-xl shadow-md border border-emerald-600/30 shrink-0 object-contain bg-[#043328] p-1"
             />
             <div className="min-w-0 flex-1">
-              <h4 className="font-bold text-slate-900 dark:text-white text-base leading-tight">SD INPRES 2 ULATAN</h4>
+              <h4 className="font-bold text-slate-900 dark:text-white text-base leading-tight">SMP NEGERI SATAP 4 PALASA</h4>
               <p className="text-xs text-emerald-700 dark:text-emerald-300 mt-0.5">Sistem Absensi Digital QR Code Siswa</p>
               <div className="flex items-center gap-1.5 mt-1 text-[11px] text-slate-600 dark:text-slate-400">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 font-semibold">
@@ -133,7 +133,7 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
                   Gulir ke bawah dan pilih menu <strong>Tambahkan ke Layar Utama</strong> (<PlusSquare className="w-3.5 h-3.5 inline mx-0.5 text-slate-700 dark:text-slate-300" /> <em>Add to Home Screen</em>).
                 </li>
                 <li className="leading-relaxed">
-                  Ketuk <strong>Tambah (Add)</strong> di pojok kanan atas. Ikon SD INPRES 2 ULATAN akan muncul di layar iPhone Anda!
+                  Ketuk <strong>Tambah (Add)</strong> di pojok kanan atas. Ikon SMP NEGERI SATAP 4 PALASA akan muncul di layar iPhone Anda!
                 </li>
               </ol>
             </div>

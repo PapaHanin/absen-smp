@@ -132,7 +132,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
   // WhatsApp Message Generator for Teacher Help
   const generateWhatsAppMessage = () => {
-    const schoolName = matchedSchool?.name || 'SD INPRES 2 ULATAN';
+    const schoolName = matchedSchool?.name || 'SMP NEGERI SATAP 4 PALASA';
     const teacherName = matchedTeacher?.name || 'Guru';
     const teacherEmail = matchedTeacher?.email || forgotEmail;
     const nipInfo = matchedTeacher?.nip ? ` (NIP: ${matchedTeacher.nip})` : '';
@@ -324,7 +324,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800 text-center">
               <p className="text-[11px] text-slate-400 dark:text-slate-500 flex items-center justify-center gap-1.5">
                 <i className="fa-solid fa-shield-halved text-emerald-500 text-xs"></i>
-                <span>Sistem Presensi Siswa Terverifikasi • SD Inpres 2 Ulatan</span>
+                <span>Sistem Presensi Siswa Terverifikasi • {matchedSchool?.name || 'SMP NEGERI SATAP 4 PALASA'}</span>
               </p>
             </div>
           </div>
@@ -436,7 +436,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
               <div className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl space-y-1">
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Instansi: <strong className="text-slate-800 dark:text-slate-200">{matchedSchool?.name || 'SD INPRES 2 ULATAN'}</strong>
+                  Instansi: <strong className="text-slate-800 dark:text-slate-200">{matchedSchool?.name || 'SMP NEGERI SATAP 4 PALASA'}</strong>
                 </p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Admin: <strong className="text-slate-800 dark:text-slate-200">MOH. FADLI</strong>
