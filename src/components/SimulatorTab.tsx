@@ -202,7 +202,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                   key={student.id}
                   className={`p-3 rounded-2xl border flex items-center justify-between gap-3 transition-all ${
                     hasScannedToday
-                      ? 'bg-emerald-50/50 border-emerald-200'
+                      ? 'bg-blue-50/50 border-blue-200'
                       : 'bg-slate-50 border-slate-200 hover:border-indigo-300'
                   }`}
                 >
@@ -229,7 +229,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                     }}
                     className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                       hasScannedToday
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                        ? 'bg-blue-100 text-blue-800 border border-blue-300'
                         : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs'
                     }`}
                   >
@@ -299,13 +299,13 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
 
             <form onSubmit={handleSaveSettings} className="space-y-3">
               {/* Dynamic Class Management (Tambah & Hapus Kelas Sekolah) */}
-              <div className="p-3.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 space-y-2.5">
+              <div className="p-3.5 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/60 space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-emerald-950 dark:text-emerald-200 flex items-center gap-1.5">
-                    <i className="fa-solid fa-layer-group text-emerald-600 dark:text-emerald-400"></i>
+                  <label className="text-xs font-bold text-blue-950 dark:text-blue-200 flex items-center gap-1.5">
+                    <i className="fa-solid fa-layer-group text-blue-600 dark:text-blue-400"></i>
                     <span>Kelola Rombongan Belajar / Kelas</span>
                   </label>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/80 text-emerald-800 dark:text-emerald-200 font-bold border border-emerald-300 dark:border-emerald-700">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/80 text-blue-800 dark:text-blue-200 font-bold border border-blue-300 dark:border-blue-700">
                     {classList.length} Kelas Aktif
                   </span>
                 </div>
@@ -318,9 +318,9 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                   {classList.map((cls) => (
                     <span
                       key={cls}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-emerald-300 dark:border-emerald-700/60 text-xs font-bold shadow-2xs group"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-blue-300 dark:border-blue-700/60 text-xs font-bold shadow-2xs group"
                     >
-                      <i className="fa-solid fa-graduation-cap text-[10px] text-emerald-600 dark:text-emerald-400"></i>
+                      <i className="fa-solid fa-graduation-cap text-[10px] text-blue-600 dark:text-blue-400"></i>
                       <span>{cls}</span>
                       {isAdmin && (
                         <button
@@ -350,12 +350,12 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                           handleAddClass();
                         }
                       }}
-                      className="flex-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100"
+                      className="flex-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100"
                     />
                     <button
                       type="button"
                       onClick={handleAddClass}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0 flex items-center gap-1"
+                      className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0 flex items-center gap-1"
                     >
                       <i className="fa-solid fa-plus text-xs"></i>
                       <span>Tambah Kelas</span>
@@ -531,7 +531,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                         <span>Pemberitahuan Beranda / Pop-up Ala Dapodik</span>
                       </div>
                       {isAdmin ? (
-                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1 shadow-2xs">
+                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-800 flex items-center gap-1 shadow-2xs">
                           <i className="fa-solid fa-shield-halved text-[9px]"></i>
                           Admin (Bisa Edit)
                         </span>
@@ -546,7 +546,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                     {!isAdmin && (
                       <div className="mb-2.5 p-2.5 rounded-xl bg-amber-50/90 dark:bg-[#043328] border border-amber-300/80 dark:border-[#0f6c56] flex items-start gap-2">
                         <i className="fa-solid fa-lock text-amber-600 dark:text-amber-400 text-xs mt-0.5 shrink-0"></i>
-                        <p className="text-[11px] text-amber-900 dark:text-emerald-200/90 leading-tight">
+                        <p className="text-[11px] text-amber-900 dark:text-blue-200/90 leading-tight">
                           <strong>Pengaturan Dikunci:</strong> Anda masuk sebagai{' '}
                           <em>{currentTeacher ? `${currentTeacher.name} (Guru)` : 'Bukan Admin'}</em>.
                           Hanya akun Administrator yang berhak mengubah isi dan judul pengumuman.
@@ -559,7 +559,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                         <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1 flex items-center justify-between">
                           <span>Judul Pengumuman Khusus (Opsional)</span>
                           {!isAdmin && (
-                            <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                            <span className="text-[9px] text-blue-600 dark:text-blue-400 font-semibold">
                               (Terkunci untuk Guru)
                             </span>
                           )}
@@ -577,8 +577,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                           onChange={(e) => setAnnouncementTitle(e.target.value)}
                           className={`w-full border rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none ${
                             !isAdmin
-                              ? 'bg-slate-100 dark:bg-[#02231c]/70 border-slate-200 dark:border-[#085241] text-slate-500 dark:text-emerald-300/60 cursor-not-allowed select-none'
-                              : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-emerald-500 focus:bg-white'
+                              ? 'bg-slate-100 dark:bg-[#09152e]/70 border-slate-200 dark:border-[#1e3a8a] text-slate-500 dark:text-blue-300/60 cursor-not-allowed select-none'
+                              : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-blue-500 focus:bg-white'
                           }`}
                         />
                       </div>
@@ -586,7 +586,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                         <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1 flex items-center justify-between">
                           <span>Isi Pesan Tambahan Sekolah (Akan tampil di pop-up)</span>
                           {!isAdmin && (
-                            <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                            <span className="text-[9px] text-blue-600 dark:text-blue-400 font-semibold">
                               (Terkunci untuk Guru)
                             </span>
                           )}
@@ -604,8 +604,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                           onChange={(e) => setAnnouncementContent(e.target.value)}
                           className={`w-full border rounded-xl px-3 py-2 text-xs font-medium focus:outline-none resize-none ${
                             !isAdmin
-                              ? 'bg-slate-100 dark:bg-[#02231c]/70 border-slate-200 dark:border-[#085241] text-slate-500 dark:text-emerald-300/60 cursor-not-allowed select-none'
-                              : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-emerald-500 focus:bg-white'
+                              ? 'bg-slate-100 dark:bg-[#09152e]/70 border-slate-200 dark:border-[#1e3a8a] text-slate-500 dark:text-blue-300/60 cursor-not-allowed select-none'
+                              : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-blue-500 focus:bg-white'
                           }`}
                         ></textarea>
                       </div>
@@ -631,7 +631,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                 <span>Pop-up Pemberitahuan (Dapodik)</span>
               </h3>
               {isAdmin ? (
-                <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-800">
+                <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-200 dark:bg-blue-950 text-blue-900 dark:text-blue-300 border border-blue-400 dark:border-blue-800">
                   Admin (Edit & Lihat)
                 </span>
               ) : (

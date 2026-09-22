@@ -164,9 +164,9 @@ export const AttendanceTrendChart: React.FC<AttendanceTrendChartProps> = ({
           </div>
 
           <div className="space-y-1 pt-0.5">
-            <div className="flex items-center justify-between text-emerald-400">
+            <div className="flex items-center justify-between text-blue-400">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span className="w-2 h-2 rounded-full bg-blue-400"></span>
                 <span>Hadir Tepat Waktu:</span>
               </span>
               <span className="font-bold font-mono">{data.hadir} siswa</span>
@@ -358,8 +358,8 @@ export const AttendanceTrendChart: React.FC<AttendanceTrendChartProps> = ({
             <AreaChart data={trendData} margin={{ top: 10, right: 12, left: -15, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorHadir" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0.0} />
                 </linearGradient>
                 <linearGradient id="colorTerlambat" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4} />
@@ -410,7 +410,7 @@ export const AttendanceTrendChart: React.FC<AttendanceTrendChartProps> = ({
                     type="monotone"
                     dataKey="onTimeRate"
                     name="Ketepatan Waktu (%)"
-                    stroke="#10b981"
+                    stroke="#2563eb"
                     strokeWidth={2}
                     fillOpacity={1}
                     fill="url(#colorHadir)"
@@ -422,7 +422,7 @@ export const AttendanceTrendChart: React.FC<AttendanceTrendChartProps> = ({
                     type="monotone"
                     dataKey="hadir"
                     name="Hadir Tepat Waktu"
-                    stroke="#10b981"
+                    stroke="#2563eb"
                     strokeWidth={2.5}
                     fillOpacity={1}
                     fill="url(#colorHadir)"
@@ -469,7 +469,7 @@ export const AttendanceTrendChart: React.FC<AttendanceTrendChartProps> = ({
                 iconType="circle"
                 wrapperStyle={{ fontSize: '11px', fontWeight: 600, paddingBottom: '4px' }}
               />
-              <Bar dataKey="hadir" name="Hadir Tepat Waktu" stackId="a" fill="#10b981" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="hadir" name="Hadir Tepat Waktu" stackId="a" fill="#2563eb" radius={[0, 0, 0, 0]} />
               <Bar dataKey="terlambat" name="Terlambat" stackId="a" fill="#f59e0b" radius={[0, 0, 0, 0]} />
               <Bar dataKey="izinSakit" name="Izin / Sakit" stackId="a" fill="#6366f1" radius={[0, 0, 0, 0]} />
               <Bar dataKey="alpa" name="Alpa" stackId="a" fill="#f43f5e" radius={[4, 4, 0, 0]} />

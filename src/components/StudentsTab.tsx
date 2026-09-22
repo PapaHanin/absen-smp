@@ -437,8 +437,8 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
         <div>
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <i className="fa-solid fa-id-card text-emerald-600 dark:text-emerald-400"></i>
-              <span>Data Siswa SD & Kartu Pelajar</span>
+              <i className="fa-solid fa-id-card text-blue-600 dark:text-blue-400"></i>
+              <span>Data Siswa SMP & Kartu Pelajar</span>
             </h2>
             {isAdmin ? (
               <span className="text-[10px] bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 px-2 py-0.5 rounded-full font-extrabold flex items-center gap-1">
@@ -446,7 +446,7 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
                 Akses Admin (Semua Kelas)
               </span>
             ) : isWaliKelas ? (
-              <span className="text-[10px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/60 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+              <span className="text-[10px] bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-700/60 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
                 <i className="fa-solid fa-user-graduate text-[9px]"></i>
                 Wali Kelas {myHomeroom} (Hak Edit Kelas {myHomeroom})
               </span>
@@ -475,7 +475,7 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
                   isWaliKelas && myHomeroom ? myHomeroom : selectedClass !== 'Semua' ? selectedClass : '1-A'
                 )
               }
-              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
               title="Unduh file template Excel acuan (.xlsx) dengan header: NIS, Nama, Kelas, No HP Orang Tua"
             >
               <i className="fa-solid fa-file-excel text-xs"></i>
@@ -581,14 +581,14 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
       )}
 
       {isWaliKelas && myHomeroom && (
-        <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 p-3 rounded-2xl flex items-center justify-between text-xs text-emerald-900 dark:text-emerald-200">
+        <div className="bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 p-3 rounded-2xl flex items-center justify-between text-xs text-blue-900 dark:text-blue-200">
           <div className="flex items-center gap-2">
-            <i className="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+            <i className="fa-solid fa-circle-check text-blue-600 text-sm"></i>
             <span>
               Anda login sebagai <strong>Wali Kelas {myHomeroom}</strong>. Tampilan dan pengelolaan data secara khusus difokuskan hanya untuk siswa <strong>Kelas {myHomeroom}</strong> guna menjaga integritas data antar kelas.
             </span>
           </div>
-          <span className="px-2.5 py-1 bg-emerald-600 text-white rounded-lg font-bold text-[11px] shrink-0 ml-2">
+          <span className="px-2.5 py-1 bg-blue-600 text-white rounded-lg font-bold text-[11px] shrink-0 ml-2">
             Terkunci Kelas {myHomeroom}
           </span>
         </div>
@@ -596,14 +596,14 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
 
       {/* Excel Import Banner Notification */}
       {importStatus && (
-        <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-3 rounded-2xl text-xs font-bold flex items-center justify-between">
+        <div className="bg-blue-50 border border-blue-200 text-blue-900 px-4 py-3 rounded-2xl text-xs font-bold flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <i className="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+            <i className="fa-solid fa-circle-check text-blue-600 text-sm"></i>
             <span>{importStatus}</span>
           </div>
           <button
             onClick={() => setImportStatus(null)}
-            className="text-emerald-700 hover:text-emerald-900 cursor-pointer font-bold"
+            className="text-blue-700 hover:text-blue-900 cursor-pointer font-bold"
           >
             &times;
           </button>
@@ -640,13 +640,13 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
           <div className="flex flex-wrap items-center gap-2">
             {/* Dropdown Filter Kelas */}
             {isWaliKelas && myHomeroom ? (
-              <div className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/60 rounded-xl px-3 py-1.5 text-xs text-emerald-800 dark:text-emerald-200">
-                <i className="fa-solid fa-graduation-cap text-emerald-600 dark:text-emerald-400 text-xs"></i>
-                <span className="font-semibold text-emerald-700 dark:text-emerald-300">Kelas:</span>
+              <div className="flex items-center gap-1.5 bg-blue-50 dark:bg-blue-950/60 border border-blue-300 dark:border-blue-700/60 rounded-xl px-3 py-1.5 text-xs text-blue-800 dark:text-blue-200">
+                <i className="fa-solid fa-graduation-cap text-blue-600 dark:text-blue-400 text-xs"></i>
+                <span className="font-semibold text-blue-700 dark:text-blue-300">Kelas:</span>
                 <select
                   value={selectedClass}
                   onChange={(e) => setSelectedClass(e.target.value)}
-                  className="bg-transparent text-emerald-900 dark:text-emerald-100 font-bold focus:outline-none cursor-pointer"
+                  className="bg-transparent text-blue-900 dark:text-blue-100 font-bold focus:outline-none cursor-pointer"
                 >
                   <option value={myHomeroom} className="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold">
                     Kelas Saya ({formatClassLabel(myHomeroom)}) • Bisa Edit ({classCounts[formatClassLabel(myHomeroom)] || classCounts[myHomeroom] || 0} siswa)
@@ -909,7 +909,7 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
                             )}
                             {student.address && (
                               <div className="text-[10px] text-slate-400 dark:text-slate-500 flex items-center gap-1 mt-0.5 truncate max-w-[220px]" title={student.address}>
-                                <i className="fa-solid fa-location-dot text-[9px] text-emerald-500"></i>
+                                <i className="fa-solid fa-location-dot text-[9px] text-blue-500"></i>
                                 <span>{student.address}</span>
                               </div>
                             )}
@@ -926,8 +926,8 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
                           <div className="text-[9.5px] text-slate-400 italic">NISN belum diisi</div>
                         )}
                       </td>
-                      <td className="py-3 px-4 font-bold text-emerald-700 dark:text-emerald-400">
-                        <span className="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/80 dark:border-emerald-800/60">
+                      <td className="py-3 px-4 font-bold text-blue-700 dark:text-blue-400">
+                        <span className="px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/60">
                           {student.classRoom}
                         </span>
                       </td>
@@ -939,7 +939,7 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
                             href={`https://wa.me/${formatPhoneNumberForWA(student.parentPhone)}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-emerald-600 hover:text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 p-1 rounded-md border border-emerald-200 dark:border-emerald-800/60 transition-colors cursor-pointer"
+                            className="text-blue-600 hover:text-blue-700 bg-blue-50 dark:bg-blue-950/60 p-1 rounded-md border border-blue-200 dark:border-blue-800/60 transition-colors cursor-pointer"
                             title={`Chat WhatsApp Orang Tua (${student.name})`}
                           >
                             <i className="fa-brands fa-whatsapp text-xs"></i>
@@ -1073,16 +1073,16 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
             </p>
 
             {!editingStudent && (
-              <div className="mb-4 bg-emerald-50 border border-emerald-200 p-3 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="mb-4 bg-blue-50 border border-blue-200 p-3 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <p className="text-xs font-bold text-emerald-900">Ingin Tambah Siswa Massal via Excel?</p>
-                  <p className="text-[11px] text-emerald-700">Unduh template acuan (NIS, Nama, Kelas, No HP Ortu) lalu unggah file Excel.</p>
+                  <p className="text-xs font-bold text-blue-900">Ingin Tambah Siswa Massal via Excel?</p>
+                  <p className="text-[11px] text-blue-700">Unduh template acuan (NIS, Nama, Kelas, No HP Ortu) lalu unggah file Excel.</p>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
                   <button
                     type="button"
                     onClick={() => downloadStudentImportTemplateExcel(formData.classRoom)}
-                    className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1"
+                    className="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1"
                   >
                     <i className="fa-solid fa-file-excel text-[10px]"></i>
                     <span>Template Excel</span>
@@ -1195,9 +1195,9 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
                     Kelas SD <span className="text-rose-500">*</span>
                   </label>
                   {isWaliKelas && myHomeroom ? (
-                    <div className="w-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 rounded-xl px-3 py-2 text-xs text-emerald-900 dark:text-emerald-200 font-bold flex items-center justify-between">
+                    <div className="w-full bg-blue-50 dark:bg-blue-950/60 border border-blue-300 dark:border-blue-700 rounded-xl px-3 py-2 text-xs text-blue-900 dark:text-blue-200 font-bold flex items-center justify-between">
                       <span>{formatClassLabel(myHomeroom)}</span>
-                      <span className="text-[9.5px] bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-100 px-1.5 py-0.5 rounded font-extrabold">
+                      <span className="text-[9.5px] bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-100 px-1.5 py-0.5 rounded font-extrabold">
                         Terkunci Wali Kelas
                       </span>
                     </div>
@@ -1463,7 +1463,7 @@ export const StudentsTab: React.FC<StudentsTabProps> = ({
                       </div>
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold shrink-0 ${
                         canDel
-                          ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
+                          ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300'
                           : 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300'
                       }`}>
                         {canDel ? `Kelas ${std.classRoom}` : 'Tidak Berizin'}

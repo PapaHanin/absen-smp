@@ -140,7 +140,7 @@ export interface QRPayload {
   classRoom: string;
 }
 
-export type ActiveTab = 'dashboard' | 'scanner' | 'students' | 'simulator';
+export type ActiveTab = 'home' | 'dashboard' | 'scanner' | 'students' | 'simulator';
 
 export interface ToastMessage {
   id: string;

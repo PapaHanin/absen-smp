@@ -163,7 +163,7 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
                   max="31"
                   value={effectiveSchoolDays}
                   onChange={(e) => onUpdateEffectiveDays(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-12 bg-slate-950 text-emerald-400 font-mono font-bold text-center rounded border border-slate-600 py-0.5"
+                  className="w-12 bg-slate-950 text-blue-400 font-mono font-bold text-center rounded border border-slate-600 py-0.5"
                   title="Sesuaikan jumlah hari efektif sekolah seragam untuk semua siswa"
                 />
                 <span className="text-slate-400">Hari</span>
@@ -173,7 +173,7 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
             <button
               type="button"
               onClick={handlePrint}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2 bg-blue-700 hover:bg-blue-600 active:bg-blue-800 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer"
             >
               <i className="fa-solid fa-print text-sm"></i>
               <span>Cetak Sekarang (Print)</span>
@@ -302,7 +302,7 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
                   <span className="font-bold inline-block w-36">Hari Efektif / Sesi</span>: <strong className="text-slate-950 font-bold">{effectiveSchoolDays} Hari (Seragam)</strong>
                 </div>
                 <div>
-                  <span className="font-bold inline-block w-36">Rata-rata Kehadiran</span>: <strong className="text-emerald-700 font-bold">{averagePercentage}%</strong>
+                  <span className="font-bold inline-block w-36">Rata-rata Kehadiran</span>: <strong className="text-blue-700 font-bold">{averagePercentage}%</strong>
                 </div>
                 <div>
                   <span className="font-bold inline-block w-36">Tanggal Cetak</span>: {todayFormatted}
@@ -320,7 +320,7 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
                     <th className="py-2 px-3 border border-slate-300 text-left">Nama Lengkap Siswa</th>
                     <th className="py-2 px-2 border border-slate-300 w-16">Kelas</th>
                     <th className="py-2 px-1 border border-slate-300 w-10">L/P</th>
-                    <th className="py-2 px-1.5 border border-slate-300 w-16 text-emerald-800">Hadir (H)</th>
+                    <th className="py-2 px-1.5 border border-slate-300 w-16 text-blue-900 bg-blue-50/50">Hadir (H)</th>
                     <th className="py-2 px-1.5 border border-slate-300 w-16 text-amber-800">Terlambat (T)</th>
                     <th className="py-2 px-1.5 border border-slate-300 w-14 text-indigo-800">Sakit (S)</th>
                     <th className="py-2 px-1.5 border border-slate-300 w-14 text-sky-800">Izin (I)</th>
@@ -340,7 +340,7 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
                         <td className="py-1 px-1 border border-slate-300 text-center font-bold">
                           {r.gender === 'Perempuan' ? 'P' : 'L'}
                         </td>
-                        <td className="py-1 px-1.5 border border-slate-300 text-center font-bold text-emerald-700">
+                        <td className="py-1 px-1.5 border border-slate-300 text-center font-bold text-blue-700">
                           {r.hadir} hr
                         </td>
                         <td className="py-1 px-1.5 border border-slate-300 text-center font-semibold text-amber-700">
@@ -377,7 +377,7 @@ export const PrintMonthlyRecapModal: React.FC<PrintMonthlyRecapModalProps> = ({
                       <td colSpan={5} className="py-1.5 px-3 border border-slate-300 uppercase text-center font-black">
                         TOTAL AKUMULASI KELAS ({recaps.length} SISWA)
                       </td>
-                      <td className="py-1.5 px-1 border border-slate-300 text-center text-emerald-800 font-black font-mono">
+                      <td className="py-1.5 px-1 border border-slate-300 text-center text-blue-900 font-black font-mono">
                         {totalHadir} hr
                       </td>
                       <td className="py-1.5 px-1 border border-slate-300 text-center text-amber-800 font-black font-mono">

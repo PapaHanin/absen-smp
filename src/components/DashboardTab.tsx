@@ -557,7 +557,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
     switch (status) {
       case 'Hadir':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-500/10 text-blue-500 border border-blue-500/20">
             <i className="fa-solid fa-circle-check text-[10px]"></i> Hadir
           </span>
         );
@@ -646,7 +646,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                 }
                 setIsPrintModalOpen(true);
               }}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-700 hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
               title="Cetak Laporan Rekapitulasi Presensi (Print Resmi)"
             >
               <i className="fa-solid fa-print"></i>
@@ -769,16 +769,16 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         </div>
 
         {/* Hadir */}
-        <div className="bento-card border-l-4 border-l-emerald-500 flex flex-col justify-between">
+        <div className="bento-card border-l-4 border-l-blue-600 flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="stat-label text-emerald-700">Hadir Tepat Waktu</span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-bold">
+            <span className="stat-label text-blue-700 dark:text-blue-400">Hadir Tepat Waktu</span>
+            <div className="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold">
               <i className="fa-solid fa-user-check"></i>
             </div>
           </div>
           <div className="mt-2">
-            <div className="stat-value text-emerald-700">{stats.hadir}</div>
-            <div className="text-[11px] font-semibold text-emerald-600 mt-1">
+            <div className="stat-value text-blue-700 dark:text-blue-400">{stats.hadir}</div>
+            <div className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 mt-1">
               {stats.totalStudents > 0
                 ? `${Math.round((stats.hadir / stats.totalStudents) * 100)}% dari total`
                 : '0%'}
@@ -856,7 +856,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                 {stats.unrecorded} Belum Hadir
               </span>
             ) : (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300">
                 Lengkap
               </span>
             )}
@@ -985,7 +985,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                     <div
                       className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 ${
                         isDone
-                          ? 'bg-emerald-600 text-white shadow-xs'
+                          ? 'bg-blue-700 text-white shadow-xs'
                           : 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
                       }`}
                     >
@@ -999,7 +999,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                         <span
                           className={`px-1.5 py-0.2 rounded text-[9px] font-extrabold ${
                             item.teacher.teacherType === 'wali_kelas'
-                              ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                               : item.teacher.teacherType === 'guru_mapel'
                               ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                               : 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300'
@@ -1018,7 +1018,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold shrink-0 ${
                       isDone
-                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 border border-blue-200 dark:border-blue-800'
                         : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
                     }`}
                   >
@@ -1205,7 +1205,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                   max="31"
                   value={effectiveSchoolDays}
                   onChange={(e) => setCustomEffectiveDays(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-11 text-center font-extrabold font-mono text-emerald-600 dark:text-emerald-400 bg-slate-50 dark:bg-slate-800 rounded border border-slate-300 dark:border-slate-700 py-0.5 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  className="w-11 text-center font-extrabold font-mono text-blue-600 dark:text-blue-400 bg-slate-50 dark:bg-slate-800 rounded border border-slate-300 dark:border-slate-700 py-0.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   title="Jumlah hari efektif sekolah seragam untuk semua siswa dalam 1 bulan"
                 />
                 <span className="text-slate-400 font-medium text-[11px]">Hari</span>
@@ -1239,7 +1239,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
               <button
                 type="button"
                 onClick={() => setIsPrintModalOpen(true)}
-                className="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 cursor-pointer border-l border-slate-200 dark:border-slate-700 ml-1 pl-2.5"
+                className="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 cursor-pointer border-l border-slate-200 dark:border-slate-700 ml-1 pl-2.5"
                 title="Buka Lembar Rekapan Cetak Resmi (Kop Sekolah & TTD)"
               >
                 <i className="fa-solid fa-print text-xs"></i>
@@ -1336,7 +1336,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                           {r.classRoom}
                         </td>
                         <td className="py-3 px-3 text-center">
-                          <span className="px-2 py-0.5 rounded-lg text-xs font-extrabold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                          <span className="px-2 py-0.5 rounded-lg text-xs font-extrabold bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
                             {r.hadir} hr
                           </span>
                         </td>
@@ -1375,7 +1375,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                               <div
                                 className={`h-full ${
                                   r.percentage >= 85
-                                    ? 'bg-emerald-500'
+                                    ? 'bg-blue-600'
                                     : r.percentage >= 70
                                     ? 'bg-amber-500'
                                     : 'bg-rose-500'
@@ -1399,7 +1399,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                                 window.open(`https://wa.me/${targetPhone}?text=${encodeURIComponent(message)}`, '_blank');
                               }}
                               title={`Kirim Rekap Bulanan via WA ke Ortu ${r.name} (${r.parentPhone})`}
-                              className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors cursor-pointer text-xs inline-flex items-center gap-1.5 font-bold shadow-2xs"
+                              className="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer text-xs inline-flex items-center gap-1.5 font-bold shadow-2xs"
                             >
                               <i className="fa-brands fa-whatsapp text-sm"></i>
                               <span>Kirim Rekap WA</span>
@@ -1431,7 +1431,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                     <td colSpan={3} className="py-3 px-4 uppercase text-xs tracking-wider">
                       TOTAL AKUMULASI KELAS ({monthlyStudentRecaps.length} SISWA)
                     </td>
-                    <td className="py-3 px-3 text-center text-emerald-700 dark:text-emerald-400 font-extrabold font-mono">
+                    <td className="py-3 px-3 text-center text-blue-700 dark:text-blue-400 font-extrabold font-mono">
                       {monthlyStudentRecaps.reduce((acc, c) => acc + c.hadir, 0)} hr
                     </td>
                     <td className="py-3 px-3 text-center text-amber-700 dark:text-amber-400 font-extrabold font-mono">
@@ -1512,7 +1512,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                               </span>
                             </div>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800">
+                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded-md border border-blue-200 dark:border-blue-800">
                               <i className="fa-solid fa-school-flag text-[9px]"></i>
                               Harian (Pagi)
                             </span>
@@ -1531,7 +1531,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                                   <span
                                     className={`px-1.5 py-0.5 rounded text-[9px] font-extrabold ${
                                       teacherInfo.type === 'wali_kelas'
-                                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
+                                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300'
                                         : teacherInfo.type === 'guru_mapel'
                                         ? 'bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300'
                                         : 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300'
@@ -1579,7 +1579,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                                   )
                                 }
                                 title={`Kirim WA Otomatis ke Ortu ${record.studentName} (${studentInfo.parentPhone || 'No HP Belum Ada'})`}
-                                className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors cursor-pointer text-xs flex items-center gap-1.5 font-bold shadow-2xs"
+                                className="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer text-xs flex items-center gap-1.5 font-bold shadow-2xs"
                               >
                                 <i className="fa-brands fa-whatsapp text-sm"></i>
                                 <span>Kirim WA</span>
@@ -1656,7 +1656,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                             <button
                               type="button"
                               onClick={() => setSelectedDate(latestRecordDate)}
-                              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
+                              className="px-3 py-1.5 bg-blue-700 hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
                             >
                               <i className="fa-solid fa-calendar-day"></i>
                               <span>Buka Presensi Terakhir ({latestRecordDate})</span>

@@ -442,7 +442,7 @@ export const TeacherManagementModal: React.FC<TeacherManagementModalProps> = ({
                   <select
                     value={homeroomClass}
                     onChange={(e) => setHomeroomClass(e.target.value)}
-                    className="w-full bg-emerald-50 border border-emerald-300 text-emerald-900 font-bold rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer"
+                    className="w-full bg-blue-50 border border-blue-300 text-blue-900 font-bold rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-blue-500 cursor-pointer"
                   >
                     {SD_CLASSES.map((cls) => (
                       <option key={cls} value={cls}>Wali {cls}</option>
@@ -563,7 +563,7 @@ export const TeacherManagementModal: React.FC<TeacherManagementModalProps> = ({
                             <div className="flex items-center gap-1.5 flex-wrap">
                               <span>{t.name}</span>
                               {isCurrent && (
-                                <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-bold">
+                                <span className="text-[9px] bg-blue-100 text-blue-800 px-1.5 py-0.2 rounded font-bold">
                                   Anda
                                 </span>
                               )}
@@ -606,8 +606,8 @@ export const TeacherManagementModal: React.FC<TeacherManagementModalProps> = ({
                                 Admin Sekolah
                               </span>
                             ) : isWali ? (
-                              <span className="text-[10px] bg-emerald-100 text-emerald-900 border border-emerald-200 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
-                                <i className="fa-solid fa-user-graduate text-emerald-700 text-[9px]"></i>
+                              <span className="text-[10px] bg-blue-100 text-blue-900 border border-blue-200 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                                <i className="fa-solid fa-user-graduate text-blue-700 text-[9px]"></i>
                                 Wali {t.homeroomClass} ({t.subject})
                               </span>
                             ) : (

@@ -196,16 +196,16 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
         />
 
         {/* Modal Header */}
-        <div className="px-5 sm:px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-gradient-to-r from-emerald-800 to-teal-900 text-white shrink-0">
+        <div className="px-5 sm:px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-gradient-to-r from-blue-800 to-sky-900 text-white shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-emerald-300 text-lg border border-white/20">
+            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-blue-300 text-lg border border-white/20">
               <i className="fa-solid fa-clock"></i>
             </div>
             <div>
               <h3 className="font-extrabold text-base sm:text-lg leading-tight">
                 Jadwal & Jam Pelajaran SMP
               </h3>
-              <p className="text-xs text-emerald-200/80">
+              <p className="text-xs text-blue-200/80">
                 Struktur Jam Pelajaran, Template Excel & Jadwal Mengajar Guru Mapel
               </p>
             </div>
@@ -220,13 +220,13 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
         </div>
 
         {/* Excel Quick Toolbar (Download Template & Unggah Ulang) */}
-        <div className="px-5 py-2.5 bg-emerald-900/90 text-white flex flex-wrap items-center justify-between gap-2 border-b border-emerald-800/80 text-xs shrink-0">
+        <div className="px-5 py-2.5 bg-blue-900/90 text-white flex flex-wrap items-center justify-between gap-2 border-b border-blue-800/80 text-xs shrink-0">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-emerald-200 flex items-center gap-1.5">
-              <i className="fa-solid fa-file-excel text-emerald-400"></i>
+            <span className="font-bold text-blue-200 flex items-center gap-1.5">
+              <i className="fa-solid fa-file-excel text-blue-400"></i>
               <span>Sinkronisasi Jadwal via Excel:</span>
             </span>
-            <span className="text-[11px] text-emerald-100/70 hidden md:inline">
+            <span className="text-[11px] text-blue-100/70 hidden md:inline">
               Download template, edit di Excel, lalu unggah ulang agar tersusun otomatis.
             </span>
           </div>
@@ -235,10 +235,10 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
             <button
               type="button"
               onClick={handleDownloadExcelTemplate}
-              className="px-3 py-1.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-emerald-100 hover:text-white font-bold transition-all flex items-center gap-1.5 shadow-2xs border border-emerald-600/60 cursor-pointer text-xs"
+              className="px-3 py-1.5 rounded-xl bg-blue-800 hover:bg-blue-700 text-blue-100 hover:text-white font-bold transition-all flex items-center gap-1.5 shadow-2xs border border-blue-600/60 cursor-pointer text-xs"
               title="Download Template Jadwal Pelajaran Excel (.xlsx)"
             >
-              <i className="fa-solid fa-download text-emerald-300"></i>
+              <i className="fa-solid fa-download text-blue-300"></i>
               <span>Download Template Excel</span>
             </button>
 
@@ -259,8 +259,8 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
 
         {/* Notification banner if import succeeded */}
         {importMessage && (
-          <div className="px-5 py-2 bg-emerald-100 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-200 border-b border-emerald-300 dark:border-emerald-800 text-xs font-bold flex items-center gap-2 animate-fadeIn shrink-0">
-            <i className="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400"></i>
+          <div className="px-5 py-2 bg-blue-100 dark:bg-blue-950 text-blue-900 dark:text-blue-200 border-b border-blue-300 dark:border-blue-800 text-xs font-bold flex items-center gap-2 animate-fadeIn shrink-0">
+            <i className="fa-solid fa-circle-check text-blue-600 dark:text-blue-400"></i>
             <span>{importMessage}</span>
           </div>
         )}
@@ -279,7 +279,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
                   onClick={() => setActiveDay(day)}
                   className={`px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                     isActive
-                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-700/30'
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-700/30'
                       : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
                   }`}
                 >
@@ -297,7 +297,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
             <div className="flex flex-wrap items-center gap-2">
               {/* Class Filter */}
               <div className="flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs shadow-2xs">
-                <i className="fa-solid fa-graduation-cap text-emerald-600 dark:text-emerald-400 text-xs"></i>
+                <i className="fa-solid fa-graduation-cap text-blue-600 dark:text-blue-400 text-xs"></i>
                 <span className="text-slate-500 font-medium">Kelas:</span>
                 <select
                   value={selectedClassFilter}
@@ -313,7 +313,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
 
               {/* Teacher Filter */}
               <div className="flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs shadow-2xs">
-                <i className="fa-solid fa-chalkboard-user text-emerald-600 dark:text-emerald-400 text-xs"></i>
+                <i className="fa-solid fa-chalkboard-user text-blue-600 dark:text-blue-400 text-xs"></i>
                 <span className="text-slate-500 font-medium">Guru:</span>
                 <select
                   value={selectedTeacherFilter}
@@ -342,7 +342,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
                     handleOpenAddNew();
                   }
                 }}
-                className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <i className={`fa-solid ${isAddingNew ? 'fa-xmark' : 'fa-plus'}`}></i>
                 <span>{isAddingNew ? 'Tutup Form' : 'Tambah Jadwal Mapel'}</span>
@@ -355,14 +355,14 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
         {isAddingNew && (
           <form
             onSubmit={handleSaveScheduleItem}
-            className="p-4 bg-emerald-50/80 dark:bg-emerald-950/40 border-b border-emerald-200 dark:border-emerald-800/60 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 text-xs shrink-0 animate-fadeIn"
+            className="p-4 bg-blue-50/80 dark:bg-blue-950/40 border-b border-blue-200 dark:border-blue-800/60 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 text-xs shrink-0 animate-fadeIn"
           >
             <div>
               <label className="block text-slate-600 dark:text-slate-300 font-semibold mb-1">Hari</label>
               <select
                 value={formDay}
                 onChange={(e) => setFormDay(e.target.value as any)}
-                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100"
               >
                 {['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'].map((d) => (
                   <option key={d} value={d}>{d}</option>
@@ -375,7 +375,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
               <select
                 value={formPeriodId}
                 onChange={(e) => setFormPeriodId(e.target.value)}
-                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100"
               >
                 {periods.filter((p) => !p.isBreak).map((p) => (
                   <option key={p.id} value={p.id}>
@@ -390,7 +390,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
               <select
                 value={formClassRoom}
                 onChange={(e) => setFormClassRoom(e.target.value)}
-                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100"
               >
                 {activeClassList.map((c) => (
                   <option key={c} value={c}>{c}</option>
@@ -403,7 +403,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
               <select
                 value={formSubject}
                 onChange={(e) => setFormSubject(e.target.value)}
-                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100"
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100"
               >
                 {DEFAULT_SMP_SUBJECTS.map((s) => (
                   <option key={s} value={s}>{s}</option>
@@ -417,7 +417,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
                 <select
                   value={formTeacherName}
                   onChange={(e) => setFormTeacherName(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-emerald-500 truncate text-slate-800 dark:text-slate-100"
+                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-1.5 font-bold focus:ring-2 focus:ring-blue-500 truncate text-slate-800 dark:text-slate-100"
                 >
                   {teachers.map((t) => (
                     <option key={t.id} value={t.name}>{t.name}</option>
@@ -425,7 +425,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
                 </select>
                 <button
                   type="submit"
-                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition-all shadow-xs cursor-pointer shrink-0"
+                  className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-xs cursor-pointer shrink-0"
                 >
                   {editingScheduleId ? 'Simpan Edit' : 'Simpan'}
                 </button>
@@ -462,11 +462,11 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
               return (
                 <div
                   key={period.id}
-                  className="p-3 sm:p-4 rounded-2xl bg-white dark:bg-slate-800/70 border border-slate-200/90 dark:border-slate-700/80 shadow-2xs hover:border-emerald-300 dark:hover:border-emerald-700 transition-all"
+                  className="p-3 sm:p-4 rounded-2xl bg-white dark:bg-slate-800/70 border border-slate-200/90 dark:border-slate-700/80 shadow-2xs hover:border-blue-300 dark:hover:border-blue-700 transition-all"
                 >
                   <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-slate-100 dark:border-slate-700/60">
                     <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-extrabold text-xs font-mono">
+                      <span className="px-2.5 py-0.5 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 font-extrabold text-xs font-mono">
                         {period.name}
                       </span>
                       <span className="text-xs text-slate-500 font-medium">
@@ -501,7 +501,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => handleOpenEditItem(item)}
-                                    className="text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-xs transition-colors p-1"
+                                    className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 text-xs transition-colors p-1"
                                     title="Edit Jadwal Mapel"
                                   >
                                     <i className="fa-solid fa-pen-to-square"></i>
@@ -535,7 +535,7 @@ export const LessonScheduleModal: React.FC<LessonScheduleModalProps> = ({
                                 onStartMapelAttendance(period, item.subject, item.classRoom);
                                 onClose();
                               }}
-                              className="mt-1 w-full py-1.5 px-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer"
+                              className="mt-1 w-full py-1.5 px-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer"
                             >
                               <i className="fa-solid fa-qrcode"></i>
                               <span>Absen Masuk Jam Ini</span>

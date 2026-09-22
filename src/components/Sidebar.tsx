@@ -35,12 +35,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isOpenMobile = false,
   onCloseMobile,
 }) => {
-  // Navigation Items requested strictly by the user:
-  // 1. DASHBOARD & REKAP
-  // 2. SCAN QR ABSENSI
-  // 3. DATA SISWA & KARTU
-  // 4. PENGATURAN
+  // Navigation Items:
+  // 1. BERANDA PWA (Tampilan Awal Layanan Presensi)
+  // 2. DASHBOARD & REKAP
+  // 3. SCAN QR ABSENSI
+  // 4. DATA SISWA & KARTU
+  // 5. PENGATURAN
   const mainNavItems = [
+    {
+      id: 'home' as ActiveTab,
+      label: 'BERANDA PWA',
+      icon: 'fa-solid fa-mobile-screen-button',
+      badge: 'BARU',
+      badgeClass: 'bg-cyan-400 text-slate-950 font-bold',
+    },
     {
       id: 'dashboard' as ActiveTab,
       label: 'DASHBOARD & REKAP',
@@ -83,12 +91,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const sidebarContent = (
-    <div className="flex flex-col h-full justify-between p-4 sm:p-5 text-emerald-100">
+    <div className="flex flex-col h-full justify-between p-4 sm:p-5 text-blue-100">
       {/* Top: School Brand Identity */}
       <div className="space-y-5">
-        <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#0d5947] dark:border-[#07382d]">
+        <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#1e3a8a] dark:border-[#162a52]">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 border border-emerald-400/30 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-emerald-950/50 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-800 border border-blue-400/40 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-blue-950/50 shrink-0">
               <i className="fa-solid fa-qrcode"></i>
             </div>
             <div className="min-w-0">
@@ -96,10 +104,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {settings.schoolName || 'SMP NEGERI SATAP 4 PALASA'}
               </h1>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="px-1.5 py-0.2 text-[9px] font-bold rounded bg-[#085241] text-emerald-200 border border-[#137b62]">
+                <span className="px-1.5 py-0.2 text-[9px] font-bold rounded bg-[#162f5c] text-blue-200 border border-[#234b91]">
                   TA {settings.academicYear}
                 </span>
-                <span className="text-[10px] text-emerald-300/70 truncate">
+                <span className="text-[10px] text-blue-300/70 truncate">
                   Presensi QR
                 </span>
               </div>
@@ -111,7 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               type="button"
               onClick={onCloseMobile}
-              className="md:hidden p-1.5 rounded-lg text-emerald-300 hover:text-white hover:bg-[#064536] transition-colors"
+              className="md:hidden p-1.5 rounded-lg text-blue-300 hover:text-white hover:bg-[#162f5c] transition-colors"
               title="Tutup Menu"
             >
               <i className="fa-solid fa-xmark text-lg"></i>
@@ -121,11 +129,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Section: Menu Navigasi Utama */}
         <div>
-          <div className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-300/70 mb-2.5 px-2">
+          <div className="text-[10px] font-extrabold uppercase tracking-wider text-blue-300/70 mb-2.5 px-2">
             Menu Navigasi
           </div>
           <nav className="space-y-1.5">
-            {/* 1-4. Main Tab Navigation with JADWAL JAM MAPEL placed directly under DATA SISWA & KARTU */}
+            {/* Main Tab Navigation */}
             {mainNavItems.map((item) => {
               const isActive = activeTab === item.id;
               return (
@@ -135,14 +143,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onClick={() => handleSelectTab(item.id)}
                     className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-sm shadow-emerald-950/40 border border-emerald-400/30'
-                        : 'text-emerald-200 hover:bg-[#064536] hover:text-white'
+                        ? 'bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-sm shadow-blue-950/40 border border-blue-400/40'
+                        : 'text-blue-100 hover:bg-[#162f5c] hover:text-white'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <i
                         className={`${item.icon} text-sm w-4 text-center ${
-                          isActive ? 'text-white' : 'text-emerald-300/70'
+                          isActive ? 'text-white' : 'text-blue-300/70'
                         }`}
                       ></i>
                       <span>{item.label}</span>
@@ -158,8 +166,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         <span
                           className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${
                             isActive
-                              ? 'bg-emerald-950/90 text-white'
-                              : 'bg-[#064536] text-emerald-200 border border-[#0f6c56]'
+                              ? 'bg-blue-950 text-white'
+                              : 'bg-[#162f5c] text-blue-200 border border-[#234b91]'
                           }`}
                         >
                           {todayCount}
@@ -173,7 +181,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <button
                       type="button"
                       onClick={() => handleTriggerAction(onOpenLessonSchedule)}
-                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-[#064536] hover:bg-[#0b5c49] text-emerald-100 hover:text-white border border-[#0f6c56] shadow-xs cursor-pointer ml-0"
+                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-[#162f5c] hover:bg-[#1e3e78] text-blue-100 hover:text-white border border-[#234b91] shadow-xs cursor-pointer ml-0"
                       title="Lihat Struktur Jam & Jadwal Pelajaran SMP (Template Excel & Edit Jadwal)"
                     >
                       <div className="flex items-center gap-3">
@@ -189,12 +197,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
               );
             })}
 
-            {/* 5. SINKRON DATA (WAJIB TIAP HARI SELESAI ABSEN) */}
+            {/* SINKRON DATA (WAJIB TIAP HARI SELESAI ABSEN) */}
             <div className="pt-1.5">
               <button
                 type="button"
                 onClick={() => handleTriggerAction(onOpenCloudSync)}
-                className="w-full flex flex-col items-start px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-emerald-950/80 hover:bg-emerald-900 text-amber-200 border border-amber-500/40 hover:border-amber-400 shadow-sm group cursor-pointer"
+                className="w-full flex flex-col items-start px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-blue-950/80 hover:bg-blue-900 text-amber-200 border border-amber-500/40 hover:border-amber-400 shadow-sm group cursor-pointer"
                 title="Sinkronisasi Data ke Firestore (Wajib Dilakukan Tiap Hari Setelah Presensi Selesai)"
               >
                 <div className="w-full flex items-center justify-between">
@@ -212,19 +220,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </button>
             </div>
 
-            {/* 6. DATA GURU & PENGGUNA */}
+            {/* DATA GURU & PENGGUNA */}
             <div className="pt-0.5">
               <button
                 type="button"
                 onClick={() => handleTriggerAction(onOpenTeacherManage)}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-[#064536] hover:bg-[#0b5c49] text-emerald-100 hover:text-white border border-[#0f6c56] shadow-xs cursor-pointer"
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-[#162f5c] hover:bg-[#1e3e78] text-blue-100 hover:text-white border border-[#234b91] shadow-xs cursor-pointer"
                 title="Kelola Data Guru, Akun Pengguna, dan PIN Akses"
               >
                 <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-users-gear text-emerald-400 text-sm w-4 text-center"></i>
+                  <i className="fa-solid fa-users-gear text-blue-300 text-sm w-4 text-center"></i>
                   <span>DATA GURU & PENGGUNA</span>
                 </div>
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700/60">
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-700/60">
                   Kelola
                 </span>
               </button>
@@ -234,48 +242,48 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Section: Pemberitahuan Sistem */}
         {onOpenAnnouncement && (
-          <div className="pt-2 border-t border-[#0d5947]/70 dark:border-[#07382d]">
+          <div className="pt-2 border-t border-[#1e3a8a]/70 dark:border-[#162a52]">
             <button
               type="button"
               onClick={() => handleTriggerAction(onOpenAnnouncement)}
               className={`w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
                 currentTeacher?.role === 'admin'
                   ? 'text-amber-200 bg-amber-950/50 hover:bg-amber-900/60 border border-amber-800/50'
-                  : 'text-emerald-200 bg-[#064536]/70 hover:bg-[#0b5c49] border border-[#0f6c56]/60'
+                  : 'text-blue-200 bg-[#162f5c]/70 hover:bg-[#1e3e78] border border-[#234b91]/60'
               }`}
               title="Buka Pemberitahuan Sistem Sekolah"
             >
               <div className="flex items-center gap-2.5 truncate">
                 <i
                   className={`fa-solid fa-bullhorn text-xs w-4 text-center shrink-0 ${
-                    currentTeacher?.role === 'admin' ? 'text-amber-400' : 'text-emerald-300'
+                    currentTeacher?.role === 'admin' ? 'text-amber-400' : 'text-blue-300'
                   }`}
                 ></i>
                 <span className="truncate text-[11px] font-bold">Pemberitahuan Sistem</span>
               </div>
-              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/10 text-emerald-200 shrink-0">
+              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/10 text-blue-200 shrink-0">
                 {(settings.notifications?.length || 0)}
               </span>
             </button>
           </div>
         )}
         {/* Section: Install Aplikasi (PWA) */}
-        <div className="pt-2 border-t border-[#0d5947]/70 dark:border-[#07382d]">
+        <div className="pt-2 border-t border-[#1e3a8a]/70 dark:border-[#162a52]">
           <PWAInstallButton variant="sidebar" />
         </div>
       </div>
 
       {/* Bottom: Profil Pengguna Aktif & Logout */}
-      <div className="pt-4 border-t border-[#0d5947] dark:border-[#07382d] mt-4">
+      <div className="pt-4 border-t border-[#1e3a8a] dark:border-[#162a52] mt-4">
         {currentTeacher ? (
-          <div className="bg-[#053d30] dark:bg-[#02231c] border border-[#0f6954] dark:border-[#084234] rounded-2xl p-3 shadow-2xs">
+          <div className="bg-[#132850] dark:bg-[#0c1b38] border border-[#1e3a8a] dark:border-[#162a52] rounded-2xl p-3 shadow-2xs">
             {/* Teacher Identity */}
             <div className="flex items-start gap-2.5">
               <div
                 className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 mt-0.5 ${
                   currentTeacher.role === 'admin'
                     ? 'bg-amber-600 text-white shadow-xs'
-                    : 'bg-emerald-600 text-white shadow-xs'
+                    : 'bg-blue-600 text-white shadow-xs'
                 }`}
               >
                 <i
@@ -290,7 +298,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="font-extrabold text-xs text-white truncate" title={currentTeacher.name}>
                   {currentTeacher.name}
                 </div>
-                <div className="text-[10px] text-emerald-300/70 truncate">
+                <div className="text-[10px] text-blue-300/70 truncate">
                   {currentTeacher.email || 'Guru Terdaftar'}
                 </div>
                 <div className="mt-1 flex flex-wrap items-center gap-1">
@@ -299,8 +307,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       currentTeacher.role === 'admin'
                         ? 'bg-amber-950 text-amber-300 border border-amber-800'
                         : currentTeacher.homeroomClass
-                        ? 'bg-[#0b5c49] text-emerald-200 border border-[#137b62]'
-                        : 'bg-[#064536] text-emerald-300'
+                        ? 'bg-[#1e3a8a] text-blue-200 border border-[#2563eb]'
+                        : 'bg-[#162f5c] text-blue-300'
                     }`}
                   >
                     {currentTeacher.role === 'admin'
@@ -314,14 +322,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
 
             {/* Quick Actions */}
-            <div className="mt-3 pt-2.5 border-t border-[#0d5947]/70 dark:border-[#07382d] space-y-1">
+            <div className="mt-3 pt-2.5 border-t border-[#1e3a8a]/70 dark:border-[#162a52] space-y-1">
               {currentTeacher.role === 'admin' && onOpenAdminProfile && (
                 <button
                   type="button"
                   onClick={() => handleTriggerAction(onOpenAdminProfile)}
-                  className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-[#064536] text-[11px] font-medium text-emerald-200 hover:text-white flex items-center gap-2 transition-colors cursor-pointer"
+                  className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-[#162f5c] text-[11px] font-medium text-blue-200 hover:text-white flex items-center gap-2 transition-colors cursor-pointer"
                 >
-                  <i className="fa-solid fa-school text-emerald-400 text-xs w-4"></i>
+                  <i className="fa-solid fa-school text-blue-300 text-xs w-4"></i>
                   <span>Profil Sekolah</span>
                 </button>
               )}
@@ -336,7 +344,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }
                   if (onCloseMobile) onCloseMobile();
                 }}
-                className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-emerald-950/80 text-[11px] font-semibold text-emerald-300 hover:text-emerald-100 flex items-center gap-2 transition-colors cursor-pointer"
+                className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-blue-950/80 text-[11px] font-semibold text-blue-300 hover:text-blue-100 flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <i className="fa-solid fa-right-from-bracket text-xs w-4"></i>
                 <span>Keluar (Logout)</span>
@@ -344,18 +352,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
         ) : (
-          <div className="bg-[#053d30] dark:bg-[#02231c] border border-[#0f6954] dark:border-[#084234] rounded-2xl p-3 text-center">
-            <div className="w-8 h-8 mx-auto mb-1.5 rounded-full bg-[#064536] flex items-center justify-center text-emerald-300 text-xs">
+          <div className="bg-[#132850] dark:bg-[#0c1b38] border border-[#1e3a8a] dark:border-[#162a52] rounded-2xl p-3 text-center">
+            <div className="w-8 h-8 mx-auto mb-1.5 rounded-full bg-[#162f5c] flex items-center justify-center text-blue-300 text-xs">
               <i className="fa-solid fa-user-lock"></i>
             </div>
             <p className="text-xs font-bold text-white">Belum Masuk Akun Guru</p>
-            <p className="text-[10px] text-emerald-300/70 mt-0.5 mb-2.5">
+            <p className="text-[10px] text-blue-300/70 mt-0.5 mb-2.5">
               Masuk untuk tanda tangan & presensi
             </p>
             <button
               type="button"
               onClick={() => handleTriggerAction(onOpenLogin)}
-              className="w-full py-2 px-3 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full py-2 px-3 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <i className="fa-solid fa-right-to-bracket text-xs"></i>
               <span>Login Akun Guru</span>
@@ -369,7 +377,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       {/* 1. Desktop Locked Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 lg:w-72 h-screen sticky top-0 shrink-0 bg-[#043328] dark:bg-[#011a14] border-r border-[#0d5947] dark:border-[#07382d] z-30 select-none overflow-y-auto">
+      <aside className="hidden md:flex flex-col w-64 lg:w-72 h-screen sticky top-0 shrink-0 bg-[#0f2347] dark:bg-[#09152e] border-r border-[#1e3a8a] dark:border-[#162a52] z-30 select-none overflow-y-auto">
         {sidebarContent}
       </aside>
 
@@ -381,15 +389,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
             onClick={onCloseMobile}
           ></div>
 
-          <aside className="relative flex flex-col w-72 max-w-[85vw] h-full bg-[#043328] dark:bg-[#011a14] border-r border-[#0d5947] z-50 overflow-y-auto shadow-2xl">
+          <aside className="relative flex flex-col w-72 max-w-[85vw] h-full bg-[#0f2347] dark:bg-[#09152e] border-r border-[#1e3a8a] z-50 overflow-y-auto shadow-2xl">
             {sidebarContent}
           </aside>
         </div>
       )}
 
       {/* 3. Mobile Sticky Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#043328]/95 dark:bg-[#011a14]/95 backdrop-blur-md border-t border-[#0d5947] z-40 px-2 py-1.5 shadow-lg">
-        <div className="grid grid-cols-5 gap-1 max-w-md mx-auto">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#0f2347]/95 dark:bg-[#09152e]/95 backdrop-blur-md border-t border-[#1e3a8a] z-40 px-2 py-1.5 shadow-lg">
+        <div className="grid grid-cols-6 gap-1 max-w-md mx-auto">
           {mainNavItems.map((item) => {
             const isActive = activeTab === item.id;
             return (
@@ -399,13 +407,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onClick={() => handleSelectTab(item.id)}
                 className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-[#085241] text-white border border-[#137b62] font-bold shadow-xs'
-                    : 'text-emerald-300/70 hover:text-white'
+                    ? 'bg-[#1d4ed8] text-white border border-blue-400/50 font-bold shadow-xs'
+                    : 'text-blue-300/70 hover:text-white'
                 }`}
               >
-                <i className={`${item.icon} text-sm mb-0.5 ${isActive ? 'text-white' : 'text-emerald-400'}`}></i>
+                <i className={`${item.icon} text-sm mb-0.5 ${isActive ? 'text-white' : 'text-blue-300'}`}></i>
                 <span className="text-[9px] truncate max-w-full font-bold">
-                  {item.id === 'dashboard' ? 'Rekap' : item.id === 'scanner' ? 'Scan' : item.id === 'students' ? 'Siswa' : 'Pengaturan'}
+                  {item.id === 'home' ? 'Beranda' : item.id === 'dashboard' ? 'Rekap' : item.id === 'scanner' ? 'Scan' : item.id === 'students' ? 'Siswa' : 'Pengaturan'}
                 </span>
               </button>
             );

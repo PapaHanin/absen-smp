@@ -321,7 +321,7 @@ export const BulkCardPrintModal: React.FC<BulkCardPrintModalProps> = ({
                   Cetak Kartu Siswa & Presensi QR (Format 8 / Lembar A4)
                 </h3>
                 {isWaliKelas && myHomeroom && (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
                     Wali Kelas {myHomeroom}
                   </span>
                 )}
@@ -337,7 +337,7 @@ export const BulkCardPrintModal: React.FC<BulkCardPrintModalProps> = ({
             <button
               onClick={handleExportPDF}
               disabled={isGeneratingQR || isExportingPDF || printableStudents.length === 0}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
               title="Unduh File PDF A4 Siap Cetak (8 Kartu / Lembar)"
             >
               <i className={`fa-solid ${isExportingPDF ? 'fa-spinner fa-spin' : 'fa-file-pdf'}`}></i>

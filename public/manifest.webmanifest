@@ -1,14 +1,14 @@
 {
   "id": "/",
-  "name": "SD INPRES 2 ULATAN",
-  "short_name": "Absen Ulatan",
-  "description": "Sistem Absensi Digital QR Code Siswa SD Inpres 2 Ulatan",
+  "name": "SMP NEGERI SATAP 4 PALASA",
+  "short_name": "Absen Satap 4",
+  "description": "Sistem Presensi Digital QR Code Siswa SMP Negeri Satap 4 Palasa",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "theme_color": "#043328",
-  "background_color": "#043328",
+  "theme_color": "#0f2347",
+  "background_color": "#0f2347",
   "icons": [
     {
       "src": "/pwa-192x192.png",

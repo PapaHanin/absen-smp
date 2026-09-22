@@ -39,6 +39,7 @@ import { AdminProfileModal } from './components/AdminProfileModal';
 import { CloudSyncModal } from './components/CloudSyncModal';
 import { DapodikAnnouncementModal, CURRENT_ANNOUNCEMENT_VERSION } from './components/DapodikAnnouncementModal';
 import { LessonScheduleModal } from './components/LessonScheduleModal';
+import { PWAPortalHome } from './components/PWAPortalHome';
 import { DEFAULT_LESSON_PERIODS, DEFAULT_WEEKLY_SCHEDULE, matchTeacherSubject } from './data/lessonSchedule';
 import { LessonPeriod, SubjectScheduleItem } from './types';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -401,7 +402,7 @@ export default function App() {
   };
 
   // Navigation & Date
-  const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [selectedDate, setSelectedDate] = useState<string>(todayStr);
 
   // Toast Notifications
@@ -1695,8 +1696,8 @@ export default function App() {
 
   return (
     <ErrorBoundary fallbackTitle="Terjadi Kendala pada Aplikasi Utama">
-      {/* Refined "Warna Latar Hijau yang Bagus": Fresh, elegant soft emerald/sage mint canvas in light mode, deep luxury emerald noir in dark mode */}
-      <div className="min-h-screen bg-emerald-50/50 dark:bg-[#031d17] text-slate-800 dark:text-slate-100 flex flex-row font-['Plus_Jakarta_Sans',sans-serif] selection:bg-emerald-600 selection:text-white transition-colors duration-200">
+      {/* Blue & White SMP Theme: Crisp, elegant white/cool slate canvas in light mode, deep navy slate in dark mode */}
+      <div className="min-h-screen bg-slate-50 dark:bg-[#071226] text-slate-800 dark:text-slate-100 flex flex-row font-['Plus_Jakarta_Sans',sans-serif] selection:bg-blue-600 selection:text-white transition-colors duration-200">
         {/* Locked Sidebar Navigation (Stays fixed on left, does NOT scroll down with content) */}
         <Sidebar
           activeTab={activeTab}
@@ -1734,6 +1735,22 @@ export default function App() {
 
           {/* Main Content View */}
           <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-12">
+          {activeTab === 'home' && (
+            <ErrorBoundary fallbackTitle="Terjadi Kendala pada Beranda PWA">
+              <PWAPortalHome
+                settings={settings}
+                currentTeacher={currentTeacher}
+                students={effectiveStudents}
+                attendanceRecords={effectiveAttendance}
+                onStartScan={() => setActiveTab('scanner')}
+                onOpenDashboard={() => setActiveTab('dashboard')}
+                onOpenStudents={() => setActiveTab('students')}
+                onOpenLogin={() => setIsLoginModalOpen(true)}
+                onOpenLessonSchedule={() => setIsLessonScheduleOpen(true)}
+              />
+            </ErrorBoundary>
+          )}
+
           {activeTab === 'dashboard' && (
             <ErrorBoundary fallbackTitle="Terjadi Kendala pada Dashboard Rekap">
               <DashboardTab
@@ -1917,11 +1934,11 @@ export default function App() {
         )}
 
           {/* Footer with Firebase Cloud status */}
-          <footer className="border-t border-[#0d5947] dark:border-[#07382d] bg-[#043328] dark:bg-[#011a14] py-4 text-center text-xs text-emerald-200/80 dark:text-emerald-300/70 no-print transition-colors">
+          <footer className="border-t border-[#1e3a8a] dark:border-[#162a52] bg-[#0f2347] dark:bg-[#09152e] py-4 text-center text-xs text-blue-200/80 dark:text-blue-300/70 no-print transition-colors">
             <div className="flex items-center justify-center gap-2 flex-wrap px-4">
               <span>&copy; {new Date().getFullYear()} {settings.schoolName} — Sistem Absensi QR Code Siswa</span>
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-800/80">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#162f5c] text-blue-200 border border-[#234b91]">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
                 Firebase Cloud Connected
               </span>
             </div>

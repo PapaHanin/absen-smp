@@ -174,11 +174,11 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
       }}
     >
       <div
-        className="relative w-full max-w-2xl bg-white dark:bg-[#032920] rounded-3xl shadow-2xl border border-slate-200 dark:border-[#0d5947] overflow-hidden my-auto flex flex-col max-h-[92vh]"
+        className="relative w-full max-w-2xl bg-white dark:bg-[#032920] rounded-3xl shadow-2xl border border-slate-200 dark:border-[#1d4ed8] overflow-hidden my-auto flex flex-col max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}
-        <div className="bg-gradient-to-r from-emerald-800 via-teal-900 to-[#02231c] text-white p-5 sm:p-6 relative shrink-0">
+        <div className="bg-gradient-to-r from-blue-800 via-sky-900 to-[#09152e] text-white p-5 sm:p-6 relative shrink-0">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-3.5">
               <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-xs flex items-center justify-center text-white text-xl sm:text-2xl shadow-inner shrink-0">
@@ -189,18 +189,18 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                   <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-400 text-slate-900 shadow-2xs">
                     Pemberitahuan Sistem
                   </span>
-                  <span className="text-[10px] font-bold text-emerald-200 bg-white/10 px-2 py-0.5 rounded-md border border-white/15">
+                  <span className="text-[10px] font-bold text-blue-200 bg-white/10 px-2 py-0.5 rounded-md border border-white/15">
                     {notifications.length} Pemberitahuan
                   </span>
 
                   {/* Access Badge */}
                   {isAdmin ? (
-                    <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-300 border border-emerald-700/80 flex items-center gap-1 shadow-2xs">
+                    <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-blue-950 text-blue-300 border border-blue-700/80 flex items-center gap-1 shadow-2xs">
                       <i className="fa-solid fa-shield-halved text-[9px]"></i>
                       Admin (Kelola & Hapus)
                     </span>
                   ) : (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-200 border border-emerald-800 flex items-center gap-1 shadow-2xs">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-950 text-blue-200 border border-blue-800 flex items-center gap-1 shadow-2xs">
                       <i className="fa-solid fa-lock text-[9px] text-amber-400"></i>
                       Guru (Hanya Melihat)
                     </span>
@@ -213,7 +213,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                 >
                   Informasi & Pemberitahuan Sekolah
                 </h2>
-                <p className="text-xs text-emerald-200/90 mt-1 flex items-center gap-2 flex-wrap">
+                <p className="text-xs text-blue-200/90 mt-1 flex items-center gap-2 flex-wrap">
                   <span>
                     <i className="fa-regular fa-building mr-1"></i>
                     {settings.schoolName || 'SMP NEGERI SATAP 4 PALASA'}
@@ -226,7 +226,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
             <button
               type="button"
               onClick={() => onClose(dontShowAgain)}
-              className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-emerald-200 hover:text-white transition-all cursor-pointer shrink-0"
+              className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-blue-200 hover:text-white transition-all cursor-pointer shrink-0"
               title="Tutup Pemberitahuan"
               aria-label="Tutup"
             >
@@ -236,11 +236,11 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
         </div>
 
         {/* Scrollable Content Body */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-4 text-slate-700 dark:text-emerald-100 text-xs sm:text-sm leading-relaxed">
+        <div className="p-5 sm:p-6 overflow-y-auto space-y-4 text-slate-700 dark:text-blue-100 text-xs sm:text-sm leading-relaxed">
           {/* Feedback alert if any */}
           {feedbackNotice && (
-            <div className="p-3 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 text-xs font-bold flex items-center gap-2 border border-emerald-300 dark:border-emerald-800 animate-fadeIn">
-              <i className="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+            <div className="p-3 rounded-2xl bg-blue-100 dark:bg-blue-950/80 text-blue-900 dark:text-blue-200 text-xs font-bold flex items-center gap-2 border border-blue-300 dark:border-blue-800 animate-fadeIn">
+              <i className="fa-solid fa-circle-check text-blue-600 text-sm"></i>
               <span>{feedbackNotice}</span>
             </div>
           )}
@@ -249,9 +249,9 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
           {isAdmin && isCreating && (
             <form
               onSubmit={handleSubmitNotification}
-              className="p-4 rounded-2xl bg-amber-50/90 dark:bg-[#043328] border-2 border-amber-400/80 dark:border-amber-600/80 space-y-3.5 shadow-sm animate-fadeIn"
+              className="p-4 rounded-2xl bg-amber-50/90 dark:bg-[#0f2347] border-2 border-amber-400/80 dark:border-amber-600/80 space-y-3.5 shadow-sm animate-fadeIn"
             >
-              <div className="flex items-center justify-between pb-2 border-b border-amber-200 dark:border-[#0d5947]">
+              <div className="flex items-center justify-between pb-2 border-b border-amber-200 dark:border-[#1d4ed8]">
                 <div className="flex items-center gap-2 text-amber-900 dark:text-amber-200 font-extrabold text-xs uppercase tracking-wide">
                   <i className="fa-solid fa-pen-to-square text-amber-600 dark:text-amber-400"></i>
                   <span>
@@ -271,7 +271,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 dark:text-emerald-200 mb-1">
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-blue-200 mb-1">
                   Judul Pemberitahuan: <span className="text-rose-500">*</span>
                 </label>
                 <input
@@ -279,13 +279,13 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Contoh: Rapat Dewan Guru & Evaluasi Presensi QR"
-                  className="w-full bg-white dark:bg-[#02231c] border border-amber-300 dark:border-[#0d6352] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full bg-white dark:bg-[#09152e] border border-amber-300 dark:border-[#2563eb] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 dark:text-emerald-200 mb-1">
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-blue-200 mb-1">
                   Tanggal:
                 </label>
                 <input
@@ -293,12 +293,12 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   placeholder="Contoh: 16 September 2026"
-                  className="w-full bg-white dark:bg-[#02231c] border border-amber-300 dark:border-[#0d6352] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full bg-white dark:bg-[#09152e] border border-amber-300 dark:border-[#2563eb] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 dark:text-emerald-200 mb-1">
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-blue-200 mb-1">
                   Isi Pesan Pemberitahuan: <span className="text-rose-500">*</span>
                 </label>
                 <textarea
@@ -306,7 +306,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Tuliskan rincian pemberitahuan untuk dewan guru dan staf sekolah..."
-                  className="w-full bg-white dark:bg-[#02231c] border border-amber-300 dark:border-[#0d6352] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                  className="w-full bg-white dark:bg-[#09152e] border border-amber-300 dark:border-[#2563eb] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
                   required
                 ></textarea>
               </div>
@@ -318,13 +318,13 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                     setIsCreating(false);
                     setEditingNotifId(null);
                   }}
-                  className="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-[#0d6352] text-slate-700 dark:text-emerald-200 hover:bg-slate-200 dark:hover:bg-[#064739] text-xs font-bold transition-all cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-[#2563eb] text-slate-700 dark:text-blue-200 hover:bg-slate-200 dark:hover:bg-[#162f5c] text-xs font-bold transition-all cursor-pointer"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-bold shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-sky-700 hover:from-blue-500 hover:to-sky-600 text-white text-xs font-bold shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
                 >
                   <i className="fa-solid fa-paper-plane text-xs"></i>
                   <span>{editingNotifId ? 'Simpan Perubahan' : 'Terbitkan Pemberitahuan'}</span>
@@ -335,7 +335,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
 
           {/* Action Header for Admin (Add notification & Clear all) */}
           {isAdmin && !isCreating && (
-            <div className="flex items-center justify-between gap-2 p-2 bg-slate-50 dark:bg-[#02231c] border border-slate-200 dark:border-[#0d5947] rounded-2xl flex-wrap">
+            <div className="flex items-center justify-between gap-2 p-2 bg-slate-50 dark:bg-[#09152e] border border-slate-200 dark:border-[#1d4ed8] rounded-2xl flex-wrap">
               <button
                 type="button"
                 onClick={() => {
@@ -344,7 +344,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                   setEditingNotifId(null);
                   setIsCreating(true);
                 }}
-                className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
               >
                 <i className="fa-solid fa-plus text-xs"></i>
                 <span>Buat Pemberitahuan Baru</span>
@@ -366,15 +366,15 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
 
           {/* List of Active Notifications */}
           {notifications.length === 0 ? (
-            <div className="py-12 px-6 text-center space-y-3 rounded-2xl border-2 border-dashed border-slate-200 dark:border-[#0d5947] bg-slate-50/50 dark:bg-[#02231c]/50">
-              <div className="w-14 h-14 mx-auto rounded-2xl bg-emerald-100/80 dark:bg-[#064536] text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-2xl shadow-inner">
+            <div className="py-12 px-6 text-center space-y-3 rounded-2xl border-2 border-dashed border-slate-200 dark:border-[#1d4ed8] bg-slate-50/50 dark:bg-[#09152e]/50">
+              <div className="w-14 h-14 mx-auto rounded-2xl bg-blue-100/80 dark:bg-[#162a52] text-blue-600 dark:text-blue-300 flex items-center justify-center text-2xl shadow-inner">
                 <i className="fa-regular fa-bell-slash"></i>
               </div>
               <div className="max-w-md mx-auto space-y-1">
                 <h4 className="font-extrabold text-slate-800 dark:text-white text-sm">
                   Tidak Ada Pemberitahuan Sistem Saat Ini
                 </h4>
-                <p className="text-xs text-slate-500 dark:text-emerald-300/70">
+                <p className="text-xs text-slate-500 dark:text-blue-300/70">
                   Daftar pembaruan dan fitur terbaru 1-6 telah dikosongkan. Jika ada pemberitahuan baru yang diajukan oleh Administrator, pemberitahuan tersebut akan tampil di sini.
                 </p>
               </div>
@@ -382,7 +382,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                 <button
                   type="button"
                   onClick={() => setIsCreating(true)}
-                  className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs cursor-pointer transition-all"
+                  className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs cursor-pointer transition-all"
                 >
                   <i className="fa-solid fa-plus text-xs"></i>
                   <span>Tambah Pemberitahuan Pertama</span>
@@ -394,16 +394,16 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
               {notifications.map((item, idx) => (
                 <div
                   key={item.id || idx}
-                  className="p-4 rounded-2xl bg-slate-50 dark:bg-[#043328] border border-slate-200 dark:border-[#095243] hover:border-emerald-400/40 transition-all space-y-2 shadow-2xs"
+                  className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0f2347] border border-slate-200 dark:border-[#1e3a8a] hover:border-blue-400/40 transition-all space-y-2 shadow-2xs"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800">
                           {item.date}
                         </span>
                         {item.author && (
-                          <span className="text-[10px] text-slate-500 dark:text-emerald-300/70">
+                          <span className="text-[10px] text-slate-500 dark:text-blue-300/70">
                             oleh: {item.author}
                           </span>
                         )}
@@ -419,7 +419,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                         <button
                           type="button"
                           onClick={() => handleStartEdit(item)}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-slate-200 dark:hover:bg-[#064739] dark:text-emerald-300 transition-colors cursor-pointer"
+                          className="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-slate-200 dark:hover:bg-[#162f5c] dark:text-blue-300 transition-colors cursor-pointer"
                           title="Edit pemberitahuan ini"
                         >
                           <i className="fa-solid fa-pen-to-square text-xs"></i>
@@ -436,7 +436,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                     )}
                   </div>
 
-                  <p className="text-xs text-slate-700 dark:text-emerald-100 whitespace-pre-line leading-relaxed font-normal pt-1">
+                  <p className="text-xs text-slate-700 dark:text-blue-100 whitespace-pre-line leading-relaxed font-normal pt-1">
                     {item.content}
                   </p>
                 </div>
@@ -446,13 +446,13 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
         </div>
 
         {/* Footer */}
-        <div className="p-4 sm:p-5 bg-slate-50 dark:bg-[#02231c] border-t border-slate-200/90 dark:border-[#0d5947] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
-          <label className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-emerald-200 cursor-pointer select-none">
+        <div className="p-4 sm:p-5 bg-slate-50 dark:bg-[#09152e] border-t border-slate-200/90 dark:border-[#1d4ed8] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+          <label className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-blue-200 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={dontShowAgain}
               onChange={(e) => setDontShowAgain(e.target.checked)}
-              className="w-4 h-4 rounded text-emerald-700 focus:ring-emerald-600 dark:focus:ring-emerald-500 cursor-pointer accent-emerald-700"
+              className="w-4 h-4 rounded text-blue-700 focus:ring-blue-600 dark:focus:ring-blue-500 cursor-pointer accent-blue-700"
             />
             <span>Jangan tampilkan lagi secara otomatis</span>
           </label>
@@ -465,7 +465,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
                   onClose(dontShowAgain);
                   onNavigateToSettings();
                 }}
-                className="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-[#0d6352] text-slate-700 dark:text-emerald-200 hover:bg-slate-200 dark:hover:bg-[#064739] text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                className="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-[#2563eb] text-slate-700 dark:text-blue-200 hover:bg-slate-200 dark:hover:bg-[#162f5c] text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <i className="fa-solid fa-gear text-xs"></i>
                 <span>Pengaturan</span>
@@ -475,7 +475,7 @@ export const DapodikAnnouncementModal: React.FC<DapodikAnnouncementModalProps> =
             <button
               type="button"
               onClick={() => onClose(dontShowAgain)}
-              className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-extrabold shadow-md shadow-emerald-950/40 transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-sky-700 hover:from-blue-500 hover:to-sky-600 text-white text-xs font-extrabold shadow-md shadow-blue-950/40 transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               <i className="fa-solid fa-check text-xs"></i>
               <span>Tutup</span>

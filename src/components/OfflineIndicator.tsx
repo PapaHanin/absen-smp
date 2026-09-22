@@ -39,9 +39,9 @@ export const OfflineIndicator: React.FC = () => {
     return (
       <aside
         aria-label="Status Jaringan"
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-600 text-white text-xs font-semibold shadow-xl border border-emerald-400/40 animate-in fade-in slide-in-from-bottom-4 duration-300 pointer-events-none"
+        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-semibold shadow-xl border border-blue-400/40 animate-in fade-in slide-in-from-bottom-4 duration-300 pointer-events-none"
       >
-        <Wifi className="w-4 h-4 text-emerald-100 animate-pulse" />
+        <Wifi className="w-4 h-4 text-blue-100 animate-pulse" />
         <span>Koneksi Internet Pulih — Sinkronisasi siap dilanjutkan</span>
       </aside>
     );

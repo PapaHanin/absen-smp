@@ -327,10 +327,10 @@ export const CloudSyncModal: React.FC<CloudSyncModalProps> = ({
           <button
             onClick={() => setActiveTab('gsheets')}
             className={`flex-1 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-              activeTab === 'gsheets' ? 'bg-white text-emerald-600 shadow-xs' : 'hover:text-slate-900'
+              activeTab === 'gsheets' ? 'bg-white text-blue-600 shadow-xs' : 'hover:text-slate-900'
             }`}
           >
-            <i className="fa-solid fa-table text-emerald-600"></i>
+            <i className="fa-solid fa-table text-blue-600"></i>
             <span>Google Sheets</span>
           </button>
           <button
@@ -357,15 +357,15 @@ export const CloudSyncModal: React.FC<CloudSyncModalProps> = ({
         {activeTab === 'gsheets' && (
           <div className="space-y-4">
             {/* Google Authentication Box */}
-            <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl space-y-3">
+            <div className="bg-blue-50 border border-blue-100 p-4 rounded-2xl space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm font-bold shadow-2xs">
+                  <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-sm font-bold shadow-2xs">
                     <i className="fa-solid fa-table"></i>
                   </div>
                   <div>
-                    <h4 className="text-xs font-black text-emerald-950">Integrasi Google Sheets Realtime</h4>
-                    <p className="text-[10px] text-emerald-800">Simpan otomatis rekap absensi ke Google Drive Anda</p>
+                    <h4 className="text-xs font-black text-blue-950">Integrasi Google Sheets Realtime</h4>
+                    <p className="text-[10px] text-blue-800">Simpan otomatis rekap absensi ke Google Drive Anda</p>
                   </div>
                 </div>
               </div>
@@ -387,12 +387,12 @@ export const CloudSyncModal: React.FC<CloudSyncModalProps> = ({
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center justify-between bg-white p-2.5 rounded-xl border border-emerald-200">
+                <div className="flex items-center justify-between bg-white p-2.5 rounded-xl border border-blue-200">
                   <div className="flex items-center gap-2 overflow-hidden">
                     {googleUser.photoURL ? (
                       <img src={googleUser.photoURL} alt="Avatar" className="w-7 h-7 rounded-full border" />
                     ) : (
-                      <div className="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">
+                      <div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs">
                         {googleUser.email?.charAt(0).toUpperCase()}
                       </div>
                     )}
@@ -422,12 +422,12 @@ export const CloudSyncModal: React.FC<CloudSyncModalProps> = ({
                       placeholder="Masukkan Spreadsheet ID (atau buat baru)"
                       value={spreadsheetId}
                       onChange={(e) => setSpreadsheetId(e.target.value)}
-                      className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono font-medium focus:outline-none focus:border-emerald-500"
+                      className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono font-medium focus:outline-none focus:border-blue-500"
                     />
                     <button
                       onClick={handleCreateNewSpreadsheet}
                       disabled={isCreatingSheet}
-                      className="px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shrink-0 disabled:opacity-50"
+                      className="px-3 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shrink-0 disabled:opacity-50"
                       title="Buat Spreadsheet Baru"
                     >
                       <i className={`fa-solid ${isCreatingSheet ? 'fa-spinner fa-spin' : 'fa-plus'}`}></i>
@@ -437,13 +437,13 @@ export const CloudSyncModal: React.FC<CloudSyncModalProps> = ({
                 </div>
 
                 {spreadsheetUrl && (
-                  <div className="flex items-center justify-between text-xs bg-emerald-50 text-emerald-900 p-2.5 rounded-xl border border-emerald-200 font-medium">
+                  <div className="flex items-center justify-between text-xs bg-blue-50 text-blue-900 p-2.5 rounded-xl border border-blue-200 font-medium">
                     <span className="truncate">Spreadsheet Aktif Terhubung</span>
                     <a
                       href={spreadsheetUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs font-extrabold text-emerald-700 hover:underline flex items-center gap-1 shrink-0 ml-2"
+                      className="text-xs font-extrabold text-blue-700 hover:underline flex items-center gap-1 shrink-0 ml-2"
                     >
                       <span>Buka Sheet</span>
                       <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
@@ -454,7 +454,7 @@ export const CloudSyncModal: React.FC<CloudSyncModalProps> = ({
                 <button
                   onClick={handleSyncToGoogleSheets}
                   disabled={isExportingSheets || !spreadsheetId}
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   <i className={`fa-solid ${isExportingSheets ? 'fa-spinner fa-spin' : 'fa-file-export'}`}></i>
                   <span>{isExportingSheets ? 'Mengekspor Data...' : 'Ekspor & Sync Data Ke Google Sheets'}</span>

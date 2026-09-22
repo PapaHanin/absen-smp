@@ -288,8 +288,8 @@ export const ScheduledLeaveModal: React.FC<ScheduledLeaveModalProps> = ({
           )}
 
           {formSuccess && (
-            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 rounded-2xl text-xs text-emerald-700 dark:text-emerald-300 font-semibold flex items-center gap-2">
-              <i className="fa-solid fa-circle-check text-emerald-600"></i>
+            <div className="p-3 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 rounded-2xl text-xs text-blue-700 dark:text-blue-300 font-semibold flex items-center gap-2">
+              <i className="fa-solid fa-circle-check text-blue-600"></i>
               <span>{formSuccess}</span>
             </div>
           )}
@@ -602,7 +602,7 @@ export const ScheduledLeaveModal: React.FC<ScheduledLeaveModalProps> = ({
                                 {formatClassLabel(leave.classRoom)}
                               </span>
                               {isOngoing && (
-                                <span className="px-2 py-0.2 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 animate-pulse">
+                                <span className="px-2 py-0.2 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 animate-pulse">
                                   ● Berlangsung Hari Ini
                                 </span>
                               )}
@@ -639,7 +639,7 @@ export const ScheduledLeaveModal: React.FC<ScheduledLeaveModalProps> = ({
 
                             <button
                               onClick={() => handleSendWA(leave)}
-                              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all cursor-pointer shadow-xs"
+                              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-all cursor-pointer shadow-xs"
                               title="Kirim konfirmasi ke WhatsApp Orang Tua"
                             >
                               <i className="fa-brands fa-whatsapp text-sm"></i>

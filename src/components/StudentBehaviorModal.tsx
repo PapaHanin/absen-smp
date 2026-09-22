@@ -293,13 +293,13 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
       };
 
       let predicate = 'Baik (B)';
-      let badgeClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300';
+      let badgeClass = 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300';
       if (stats.totalPoints >= 115) {
         predicate = 'Sangat Baik (A)';
         badgeClass = 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300';
       } else if (stats.totalPoints >= 95) {
         predicate = 'Baik (B)';
-        badgeClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300';
+        badgeClass = 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300';
       } else if (stats.totalPoints >= 80) {
         predicate = 'Cukup (C)';
         badgeClass = 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300';
@@ -443,8 +443,8 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
           
           {/* Notification Alert */}
           {formAlert && (
-            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 rounded-2xl text-xs text-emerald-700 dark:text-emerald-300 font-semibold flex items-center gap-2">
-              <i className="fa-solid fa-circle-check text-emerald-600"></i>
+            <div className="p-3 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 rounded-2xl text-xs text-blue-700 dark:text-blue-300 font-semibold flex items-center gap-2">
+              <i className="fa-solid fa-circle-check text-blue-600"></i>
               <span>{formAlert}</span>
             </div>
           )}
@@ -466,7 +466,7 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
                       onClick={() => handleApplyPreset(preset)}
                       className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer text-xs flex flex-col justify-between gap-1 shadow-2xs hover:scale-101 ${
                         preset.type === 'positive'
-                          ? 'bg-emerald-50/60 hover:bg-emerald-100 border-emerald-200 dark:bg-emerald-950/40 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200'
+                          ? 'bg-blue-50/60 hover:bg-blue-100 border-blue-200 dark:bg-blue-950/40 dark:border-blue-800 text-blue-900 dark:text-blue-200'
                           : 'bg-rose-50/60 hover:bg-rose-100 border-rose-200 dark:bg-rose-950/40 dark:border-rose-800 text-rose-900 dark:text-rose-200'
                       }`}
                     >
@@ -475,7 +475,7 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
                         <span
                           className={`font-mono font-black text-[10px] px-1.5 py-0.2 rounded-md ${
                             preset.type === 'positive'
-                              ? 'bg-emerald-200/80 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300'
+                              ? 'bg-blue-200/80 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
                               : 'bg-rose-200/80 text-rose-800 dark:bg-rose-900 dark:text-rose-300'
                           }`}
                         >
@@ -527,7 +527,7 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
                       }}
                       className={`py-2 px-3 rounded-xl text-xs font-extrabold border transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                         logType === 'positive'
-                          ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
                           : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
                       }`}
                     >
@@ -731,7 +731,7 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
                               <span
                                 className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase ${
                                   isPositive
-                                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                    ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                                     : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
                                 }`}
                               >
@@ -749,7 +749,7 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
                               <span
                                 className={`font-mono font-black text-xs px-2 py-0.2 rounded-full ${
                                   isPositive
-                                    ? 'bg-emerald-600 text-white'
+                                    ? 'bg-blue-600 text-white'
                                     : 'bg-rose-600 text-white'
                                 }`}
                               >
@@ -776,7 +776,7 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
                           <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
                             <button
                               onClick={() => handleSendWA(log)}
-                              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all cursor-pointer shadow-xs"
+                              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-all cursor-pointer shadow-xs"
                               title="Kirim laporan catatan ke WhatsApp orang tua"
                             >
                               <i className="fa-brands fa-whatsapp text-sm"></i>
@@ -830,7 +830,7 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
 
                 <button
                   onClick={handleExportExcel}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all cursor-pointer shadow-xs shrink-0"
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition-all cursor-pointer shadow-xs shrink-0"
                 >
                   <i className="fa-solid fa-file-excel"></i>
                   <span>Ekspor Rekap Excel (.xlsx)</span>
@@ -871,7 +871,7 @@ export const StudentBehaviorModal: React.FC<StudentBehaviorModalProps> = ({
                           <td className="py-3 px-4 font-semibold text-slate-600 dark:text-slate-300">
                             {formatClassLabel(item.student.classRoom)}
                           </td>
-                          <td className="py-3 px-4 text-center font-bold text-emerald-600 dark:text-emerald-400">
+                          <td className="py-3 px-4 text-center font-bold text-blue-600 dark:text-blue-400">
                             {item.stats.positiveCount}
                           </td>
                           <td className="py-3 px-4 text-center font-bold text-rose-600 dark:text-rose-400">

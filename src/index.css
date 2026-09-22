@@ -79,15 +79,15 @@
   }
 
   .status-present {
-    background-color: #dcfce7;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
   }
 
   .dark .status-present {
-    background-color: #064e3b;
-    color: #6ee7b7;
-    border-color: #047857;
+    background-color: #172554;
+    color: #93c5fd;
+    border-color: #1e40af;
   }
 
   .status-late {
@@ -129,10 +129,10 @@
     position: absolute;
     width: 100%;
     height: 3px;
-    background: #10b981;
+    background: #3b82f6;
     top: 0;
     animation: scan 3s linear infinite;
-    box-shadow: 0 0 15px #10b981, 0 0 5px #10b981;
+    box-shadow: 0 0 15px #3b82f6, 0 0 5px #60a5fa;
     z-index: 10;
     pointer-events: none;
   }
@@ -144,43 +144,43 @@
   100% { top: 0%; }
 }
 
-/* Global Dark Mode Overrides (Emerald & Forest Green Palette) */
+/* Global Dark Mode Overrides (Navy Blue & SMP Slate Palette) */
 .dark body {
-  background-color: #02231c;
-  color: #e6fbf3;
+  background-color: #0a1428;
+  color: #f1f5f9;
 }
 
 .dark input, 
 .dark select, 
 .dark textarea {
-  background-color: #043328 !important;
-  color: #f0fdf9 !important;
-  border-color: #0d5f4e !important;
+  background-color: #0f1f3d !important;
+  color: #f8fafc !important;
+  border-color: #1e3a8a !important;
 }
 
 .dark input::placeholder,
 .dark textarea::placeholder {
-  color: #6ee7b7 !important;
+  color: #93c5fd !important;
 }
 
 .dark .bg-white {
-  background-color: #04362b !important;
+  background-color: #0f1f3d !important;
 }
 
 .dark .bg-slate-50 {
-  background-color: #02261e !important;
+  background-color: #0a1428 !important;
 }
 
 .dark .bg-slate-100 {
-  background-color: #053f32 !important;
+  background-color: #142852 !important;
 }
 
 .dark .bg-slate-800 {
-  background-color: #064739 !important;
+  background-color: #132448 !important;
 }
 
 .dark .bg-slate-900 {
-  background-color: #021f18 !important;
+  background-color: #091224 !important;
 }
 
 .dark .text-slate-900 {
@@ -188,71 +188,71 @@
 }
 
 .dark .text-slate-800 {
-  color: #e6fbf3 !important;
+  color: #f1f5f9 !important;
 }
 
 .dark .text-slate-700 {
-  color: #c7f6e4 !important;
+  color: #e2e8f0 !important;
 }
 
 .dark .text-slate-600 {
-  color: #a7f3d0 !important;
+  color: #cbd5e1 !important;
 }
 
 .dark .text-slate-500 {
-  color: #6ee7b7 !important;
+  color: #94a3b8 !important;
 }
 
 .dark .border-slate-100,
 .dark .border-slate-200 {
-  border-color: #095243 !important;
+  border-color: #1e3a8a !important;
 }
 
 .dark .border-slate-300 {
-  border-color: #0d6352 !important;
+  border-color: #2563eb !important;
 }
 
 .dark .border-slate-700,
 .dark .border-slate-800 {
-  border-color: #095243 !important;
+  border-color: #1e3a8a !important;
 }
 
 .dark .hover\:bg-slate-50:hover {
-  background-color: #064739 !important;
+  background-color: #162c5b !important;
 }
 
 .dark .hover\:bg-slate-100:hover {
-  background-color: #064739 !important;
+  background-color: #162c5b !important;
 }
 
 .dark .hover\:bg-slate-200:hover {
-  background-color: #0d5f4e !important;
+  background-color: #1e3a8a !important;
 }
 
-/* Custom Scrollbar - Emerald Green Styling */
+/* Custom Scrollbar - Navy Blue SMP Styling */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #032d24;
+  background: #0f2347;
 }
 ::-webkit-scrollbar-thumb {
-  background: #0d6352;
+  background: #1e40af;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #10b981;
+  background: #3b82f6;
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: #011914;
+  background: #070e1c;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: #095243;
+  background: #1e3a8a;
 }
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #0d6352;
+  background: #2563eb;
 }
 
 /* Print Stylesheet for Student Card */

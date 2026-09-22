@@ -616,7 +616,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${
                       activeT.teacherType === 'wali_kelas'
-                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                         : activeT.teacherType === 'guru_mapel'
                         ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                         : 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300'
@@ -722,7 +722,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                 type="button"
                 onClick={onManualSyncCloud}
                 disabled={isSyncingCloud}
-                className="inline-flex items-center gap-2 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer disabled:opacity-50"
                 title="Simpan & pastikan semua data tersinkron ke Cloud Firestore sebelum membersihkan browser"
               >
                 <i className={`fa-solid ${isSyncingCloud ? 'fa-spinner fa-spin' : 'fa-cloud-arrow-up'} text-xs`}></i>
@@ -752,7 +752,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
 
         {/* Browser Cache Safety Note */}
         <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-3 py-1.5 rounded-xl">
-          <i className="fa-solid fa-shield-halved text-emerald-600 text-xs"></i>
+          <i className="fa-solid fa-shield-halved text-blue-600 text-xs"></i>
           <span>
             <strong>Perlindungan Data Riwayat Browser:</strong> Setiap absensi otomatis tersimpan ke Cloud Firestore. Anda dapat mengklik tombol <em>"Simpan Semua ke Cloud"</em> sebelum membersihkan riwayat/cache browser agar 100% data tersinkron aman.
           </span>
@@ -763,7 +763,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
       <div className="bento-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl space-y-4 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-sm font-bold shadow-2xs">
+            <div className="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shadow-2xs">
               <i className="fa-solid fa-graduation-cap"></i>
             </div>
             <div>
@@ -808,7 +808,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                 isScanning ? 'cursor-not-allowed' : 'cursor-pointer'
               } ${
                 activeScanMode === 'mapel'
-                  ? 'bg-emerald-600 text-white shadow-xs'
+                  ? 'bg-blue-600 text-white shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
               title={isScanning ? 'Terkunci saat kamera aktif memindai' : undefined}
@@ -816,7 +816,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
               <i className="fa-solid fa-book-open-reader text-xs"></i>
               <span>Presensi Guru Mapel SMP</span>
               {isLockedByTeacher && (
-                <i className="fa-solid fa-lock text-[10px] ml-0.5 text-emerald-200" title="Mapel terkunci sesuai akun guru"></i>
+                <i className="fa-solid fa-lock text-[10px] ml-0.5 text-blue-200" title="Mapel terkunci sesuai akun guru"></i>
               )}
             </button>
           </div>
@@ -842,7 +842,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                   value={activePeriodId}
                   onChange={(e) => setActivePeriodId(e.target.value)}
                   disabled={isScanning}
-                  className={`w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all ${
+                  className={`w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-blue-500 transition-all ${
                     isScanning
                       ? 'bg-slate-100 dark:bg-slate-800/80 cursor-not-allowed opacity-90'
                       : 'bg-slate-50 dark:bg-slate-800 cursor-pointer'
@@ -872,13 +872,13 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                   <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                     <span>Mata Pelajaran</span>
                     {isSubjectLocked && (
-                      <i className="fa-solid fa-lock text-emerald-600 dark:text-emerald-400 text-xs" title="Mata pelajaran terkunci"></i>
+                      <i className="fa-solid fa-lock text-blue-600 dark:text-blue-400 text-xs" title="Mata pelajaran terkunci"></i>
                     )}
                   </label>
                   {isSubjectLocked && (
                     <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded-md flex items-center gap-1 ${
                       isLockedByTeacher
-                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                         : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                     }`}>
                       <i className="fa-solid fa-lock text-[8px]"></i>
@@ -891,9 +891,9 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                     value={activeSubject}
                     onChange={(e) => setActiveSubject(e.target.value)}
                     disabled={isSubjectLocked}
-                    className={`w-full text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all ${
+                    className={`w-full text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-blue-500 transition-all ${
                       isSubjectLocked
-                        ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 font-extrabold cursor-not-allowed pr-8'
+                        ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-300 dark:border-blue-800 text-blue-900 dark:text-blue-200 font-extrabold cursor-not-allowed pr-8'
                         : 'bg-slate-50 dark:bg-slate-800 cursor-pointer'
                     }`}
                     title={
@@ -911,7 +911,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                     ))}
                   </select>
                   {isSubjectLocked && (
-                    <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-emerald-600 dark:text-emerald-400">
+                    <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-blue-600 dark:text-blue-400">
                       <i className="fa-solid fa-lock text-xs"></i>
                     </div>
                   )}
@@ -919,8 +919,8 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
 
                 {/* Sub-label explaining lock status */}
                 {isLockedByTeacher ? (
-                  <p className="text-[10px] text-emerald-700 dark:text-emerald-400 mt-1 font-semibold flex items-center gap-1">
-                    <i className="fa-solid fa-circle-check text-[9px] text-emerald-600 dark:text-emerald-400"></i>
+                  <p className="text-[10px] text-blue-700 dark:text-blue-400 mt-1 font-semibold flex items-center gap-1">
+                    <i className="fa-solid fa-circle-check text-[9px] text-blue-600 dark:text-blue-400"></i>
                     Terkunci otomatis: <strong>{currentTeacher?.name}</strong> ({activeSubject})
                   </p>
                 ) : isScanning ? (
@@ -947,7 +947,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                   value={activeClassRoom}
                   onChange={(e) => setActiveClassRoom(e.target.value)}
                   disabled={isScanning}
-                  className={`w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all ${
+                  className={`w-full text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-blue-500 transition-all ${
                     isScanning
                       ? 'bg-slate-100 dark:bg-slate-800/80 cursor-not-allowed opacity-90'
                       : 'bg-slate-50 dark:bg-slate-800 cursor-pointer'
@@ -990,8 +990,8 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                   onClick={() => setIsQuickChecklistOpen((prev) => !prev)}
                   className={`flex-1 px-3 py-2 rounded-xl border text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs ${
                     isQuickChecklistOpen
-                      ? 'bg-emerald-600 text-white border-emerald-600'
-                      : 'border-emerald-200 dark:border-emerald-800 bg-emerald-50/80 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60'
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'border-blue-200 dark:border-blue-800 bg-blue-50/80 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60'
                   }`}
                   title="Buka daftar siswa kelas ini untuk centang manual / absen massal"
                 >
@@ -1005,19 +1005,19 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
             <div className={`p-2.5 rounded-xl border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs font-medium transition-all ${
               isScanning
                 ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200'
-                : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200'
+                : 'bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-800 text-blue-900 dark:text-blue-200'
             }`}>
               <div className="flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 rounded-full ${isScanning ? 'bg-amber-500 animate-ping' : 'bg-emerald-500 animate-pulse'}`}></span>
+                <span className={`w-2.5 h-2.5 rounded-full ${isScanning ? 'bg-amber-500 animate-ping' : 'bg-blue-500 animate-pulse'}`}></span>
                 <span>
                   <strong>Mode Presensi Mapel Aktif:</strong> Setiap scan QR code atau input NIS saat ini akan otomatis mencatat presensi untuk mata pelajaran{' '}
-                  <strong className="underline decoration-emerald-500 decoration-2">{activeSubject}</strong>{' '}
+                  <strong className="underline decoration-blue-500 decoration-2">{activeSubject}</strong>{' '}
                   pada <strong>{periods.find((p) => p.id === activePeriodId)?.name || 'Jam Pelajaran'} ({periods.find((p) => p.id === activePeriodId)?.startTime} - {periods.find((p) => p.id === activePeriodId)?.endTime})</strong> untuk <strong>{activeClassRoom}</strong>.
                 </span>
               </div>
               <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
                 {isLockedByTeacher && (
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 font-extrabold text-[10px] flex items-center gap-1">
+                  <span className="px-2 py-0.5 rounded-full bg-blue-200 dark:bg-blue-900 text-blue-800 dark:text-blue-200 font-extrabold text-[10px] flex items-center gap-1">
                     <i className="fa-solid fa-lock text-[9px]"></i> Terkunci ({activeSubject})
                   </span>
                 )}
@@ -1027,7 +1027,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                   </span>
                 )}
                 {activeCurrentPeriod && activeCurrentPeriod.id === activePeriodId && (
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 font-extrabold text-[10px]">
+                  <span className="px-2 py-0.5 rounded-full bg-blue-200 dark:bg-blue-900 text-blue-800 dark:text-blue-200 font-extrabold text-[10px]">
                     ★ Sesuai Jam Berjalan
                   </span>
                 )}
@@ -1088,7 +1088,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                         });
                         alert(`Berhasil menandai ${count} siswa ${activeClassRoom} sebagai Hadir di Mapel ${activeSubject}!`);
                       }}
-                      className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shadow-2xs shrink-0"
+                      className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shadow-2xs shrink-0"
                       title="Tandai semua siswa yang belum absen di jam ini sebagai Hadir"
                     >
                       <i className="fa-solid fa-check-double text-xs"></i>
@@ -1145,7 +1145,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                               <span
                                 className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                                   existingRecord.status === 'Hadir'
-                                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
+                                    ? 'bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300'
                                     : existingRecord.status === 'Terlambat'
                                     ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300'
                                     : existingRecord.status === 'Sakit'
@@ -1181,7 +1181,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                                     }}
                                     className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition-colors ${
                                       st === 'Hadir'
-                                        ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200'
+                                        ? 'bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white border border-blue-200'
                                         : st === 'Sakit'
                                         ? 'bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white border border-indigo-200'
                                         : st === 'Izin'
@@ -1213,7 +1213,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
             <button
               type="button"
               onClick={() => setScanMode('mapel')}
-              className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[10px] cursor-pointer transition-colors shrink-0 ml-2"
+              className="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[10px] cursor-pointer transition-colors shrink-0 ml-2"
             >
               Ganti ke Presensi Mapel &rarr;
             </button>
@@ -1232,14 +1232,14 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
 
               {/* Active Scanner Lock HUD Overlay */}
               {isScanning && (
-                <div className="absolute top-2.5 left-2.5 right-2.5 z-20 px-3 py-1.5 rounded-xl bg-slate-950/85 backdrop-blur-md border border-emerald-500/50 flex items-center justify-between text-xs text-white shadow-lg pointer-events-none">
+                <div className="absolute top-2.5 left-2.5 right-2.5 z-20 px-3 py-1.5 rounded-xl bg-slate-950/85 backdrop-blur-md border border-blue-500/50 flex items-center justify-between text-xs text-white shadow-lg pointer-events-none">
                   <div className="flex items-center gap-2 font-bold">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span className="text-[11px] text-emerald-300 font-black tracking-wide">KAMERA SCANNER AKTIF</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span>
+                    <span className="text-[11px] text-blue-300 font-black tracking-wide">KAMERA SCANNER AKTIF</span>
                   </div>
                   <div className="flex items-center gap-1.5 font-bold text-[11px] text-slate-200">
-                    <i className="fa-solid fa-lock text-emerald-400 text-[10px]"></i>
-                    <span className="text-emerald-300 font-extrabold">{activeScanMode === 'mapel' ? activeSubject : 'Harian Pagi'}</span>
+                    <i className="fa-solid fa-lock text-blue-400 text-[10px]"></i>
+                    <span className="text-blue-300 font-extrabold">{activeScanMode === 'mapel' ? activeSubject : 'Harian Pagi'}</span>
                     {activeScanMode === 'mapel' && (
                       <>
                         <span className="text-slate-500">•</span>
@@ -1360,7 +1360,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
               <span className="font-semibold">Auto Focus QR</span>
             </div>
             <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-              <i className="fa-solid fa-bell text-emerald-600 text-sm mb-1 block"></i>
+              <i className="fa-solid fa-bell text-blue-600 text-sm mb-1 block"></i>
               <span className="font-semibold">Audio Beep</span>
             </div>
             <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
@@ -1486,7 +1486,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                 </div>
                 <div>
                   <span className="text-[10px] text-slate-400 font-bold block">Jam Masuk</span>
-                  <span className="font-mono font-extrabold text-emerald-600">
+                  <span className="font-mono font-extrabold text-blue-600">
                     {lastScanResult.record.time} WIB
                   </span>
                 </div>
@@ -1504,11 +1504,11 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                 </div>
 
                 {lastScanResult.record.attendanceType === 'mapel' && (
-                  <div className="col-span-2 bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-left">
-                    <span className="text-[10px] text-emerald-600 font-bold block uppercase tracking-wider">
+                  <div className="col-span-2 bg-blue-50 border border-blue-200 rounded-lg p-2 text-left">
+                    <span className="text-[10px] text-blue-600 font-bold block uppercase tracking-wider">
                       Presensi Mata Pelajaran SMP
                     </span>
-                    <div className="text-xs font-black text-emerald-900 flex items-center justify-between">
+                    <div className="text-xs font-black text-blue-900 flex items-center justify-between">
                       <span>Mapel: {lastScanResult.record.subject}</span>
                       <span>{lastScanResult.record.periodName || `Jam ke-${lastScanResult.record.periodNumber}`}</span>
                     </div>
@@ -1516,7 +1516,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                 )}
               </div>
 
-              <div className="flex items-center justify-center gap-1.5 text-[11px] font-bold text-emerald-600 bg-emerald-50 py-1.5 px-2.5 rounded-lg border border-emerald-100">
+              <div className="flex items-center justify-center gap-1.5 text-[11px] font-bold text-blue-600 bg-blue-50 py-1.5 px-2.5 rounded-lg border border-blue-100">
                 <i className="fa-solid fa-cloud-arrow-up text-xs"></i>
                 <span>Tersimpan aman di Cloud Firestore</span>
               </div>
@@ -1531,7 +1531,7 @@ export const ScannerTab: React.FC<ScannerTabProps> = ({
                       settings.schoolName
                     )
                   }
-                  className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+                  className="w-full py-2 px-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
                 >
                   <i className="fa-brands fa-whatsapp text-sm"></i>
                   <span>Kirim WA Notifikasi ke Orang Tua</span>

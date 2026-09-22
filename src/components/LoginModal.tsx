@@ -213,8 +213,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
             {/* Success message banner from recent actions */}
             {successMsg && (
-              <div className="mb-4 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 rounded-xl p-3 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-start gap-2 animate-fade-in">
-                <i className="fa-solid fa-circle-check mt-0.5 shrink-0 text-emerald-600"></i>
+              <div className="mb-4 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/80 rounded-xl p-3 text-blue-800 dark:text-blue-200 text-xs font-semibold flex items-start gap-2 animate-fade-in">
+                <i className="fa-solid fa-circle-check mt-0.5 shrink-0 text-blue-600"></i>
                 <p>{successMsg}</p>
               </div>
             )}
@@ -323,7 +323,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
             <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800 text-center">
               <p className="text-[11px] text-slate-400 dark:text-slate-500 flex items-center justify-center gap-1.5">
-                <i className="fa-solid fa-shield-halved text-emerald-500 text-xs"></i>
+                <i className="fa-solid fa-shield-halved text-blue-500 text-xs"></i>
                 <span>Sistem Presensi Siswa Terverifikasi • {matchedSchool?.name || 'SMP NEGERI SATAP 4 PALASA'}</span>
               </p>
             </div>
@@ -409,7 +409,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                       </p>
                     </div>
                   </div>
-                  <span className="shrink-0 text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-md">
+                  <span className="shrink-0 text-[10px] bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 font-bold px-2 py-0.5 rounded-md">
                     Terdaftar
                   </span>
                 </div>
@@ -444,7 +444,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               </div>
 
               {copiedWhatsAppText && (
-                <div className="bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 text-[11px] p-2 rounded-lg font-semibold flex items-center gap-1.5">
+                <div className="bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-200 text-[11px] p-2 rounded-lg font-semibold flex items-center gap-1.5">
                   <i className="fa-solid fa-check"></i>
                   <span>Teks pesan bantuan berhasil disalin ke clipboard!</span>
                 </div>
@@ -455,7 +455,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   id={`whatsapp-send-btn-${modalId}`}
                   type="button"
                   onClick={handleOpenWhatsAppAdmin}
-                  className="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-600/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-600/20 transition-all cursor-pointer flex items-center justify-center gap-2"
                 >
                   <i className="fa-brands fa-whatsapp text-sm"></i>
                   <span>Kirim Pesan ke Admin</span>
