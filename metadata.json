@@ -1,6 +1,6 @@
 {
-  "name": "ABSEN QR SMP",
-  "description": "Sistem Absensi QR Code Siswa dengan Dashboard, Pemindai Kamera Interaktif, Data Siswa \u0026 Kartu Digital, serta Ekspor CSV",
+  "name": "SMP NEGERI SATAP 4 PALASA",
+  "description": "Sistem Absensi QR Code Siswa SMP Negeri Satap 4 Palasa dengan Dashboard Rekap, Pemindai Kamera Interaktif, Jadwal Jam Mapel, dan Kartu Pelajar Digital",
   "requestFramePermissions": [
     "camera"
   ],

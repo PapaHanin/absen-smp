@@ -1,7 +1,7 @@
 {
   "id": "/",
   "name": "SMP NEGERI SATAP 4 PALASA",
-  "short_name": "Absen Satap 4",
+  "short_name": "SMPN 4 PALASA",
   "description": "Sistem Presensi Digital QR Code Siswa SMP Negeri Satap 4 Palasa",
   "start_url": "/",
   "scope": "/",

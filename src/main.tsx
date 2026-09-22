@@ -7,10 +7,11 @@ import './index.css';
 
 // Register PWA Service Worker for offline capability & asset precaching in production
 if (typeof window !== 'undefined' && 'serviceWorker' in navigator && import.meta.env.PROD) {
-  registerSW({
+  const updateSW = registerSW({
     immediate: true,
     onNeedRefresh() {
       console.log('Konten baru tersedia, memperbarui cache PWA secara otomatis...');
+      updateSW(true);
     },
     onOfflineReady() {
       console.log('Aplikasi Presensi SMP NEGERI SATAP 4 PALASA siap digunakan dalam mode offline.');

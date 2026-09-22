@@ -1,9 +1,9 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#064e3b" />
-      <stop offset="50%" stop-color="#043328" />
-      <stop offset="100%" stop-color="#021c16" />
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="50%" stop-color="#0f2347" />
+      <stop offset="100%" stop-color="#09152e" />
     </linearGradient>
     <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#fef08a" />
@@ -88,8 +88,8 @@
   </g>
 
   <!-- Bottom Badge Banner with School Name -->
-  <g transform="translate(86, 420)">
-    <rect x="0" y="0" width="340" height="42" rx="21" fill="#043328" stroke="url(#goldGrad)" stroke-width="3" />
-    <text x="170" y="27" text-anchor="middle" fill="#fef08a" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="20" letter-spacing="2">SD INPRES 2 ULATAN</text>
+  <g transform="translate(66, 418)">
+    <rect x="0" y="0" width="380" height="44" rx="22" fill="#0f2347" stroke="url(#goldGrad)" stroke-width="3" />
+    <text x="190" y="28" text-anchor="middle" fill="#fef08a" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="18" letter-spacing="1.5">SMPN SATAP 4 PALASA</text>
   </g>
 </svg>

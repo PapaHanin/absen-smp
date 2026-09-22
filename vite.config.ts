@@ -23,10 +23,10 @@ export default defineConfig(() => {
         manifest: {
           id: '/',
           name: 'SMP NEGERI SATAP 4 PALASA',
-          short_name: 'Absen SMP',
+          short_name: 'SMPN 4 PALASA',
           description: 'Sistem Absensi Digital QR Code Siswa SMP Negeri Satap 4 Palasa',
-          theme_color: '#043328',
-          background_color: '#043328',
+          theme_color: '#0f2347',
+          background_color: '#0f2347',
           display: 'standalone',
           orientation: 'portrait-primary',
           start_url: '/',

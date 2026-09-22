@@ -359,15 +359,8 @@ export default function App() {
   const [selectedClassForScanner, setSelectedClassForScanner] = useState<string>('Kelas 7A');
   const [scannerModeOverride, setScannerModeOverride] = useState<'harian' | 'mapel'>('harian');
 
-  // Dapodik-style Announcement Pop-up on initial enter
-  const [isAnnouncementOpen, setIsAnnouncementOpen] = useState<boolean>(() => {
-    try {
-      const acknowledgedVersion = safeGetItem('dapodik_announcement_acknowledged');
-      return acknowledgedVersion !== CURRENT_ANNOUNCEMENT_VERSION;
-    } catch {
-      return true;
-    }
-  });
+  // Dapodik-style Announcement Pop-up on manual trigger (default false so PWA Portal Home opens directly)
+  const [isAnnouncementOpen, setIsAnnouncementOpen] = useState<boolean>(false);
 
   // Dark / Light Theme Mode
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
